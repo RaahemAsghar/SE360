@@ -1,10 +1,9 @@
 import React from 'react';
+import Content from './ContentScreen.js';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import SearchIcon from '@material-ui/icons/Search';
 import Box from '@material-ui/core/Box';
-import { Icon } from '@material-ui/core';
 import Heart from '@material-ui/icons/FavoriteBorder';
 import Cart from '@material-ui/icons/ShoppingCartOutlined';
 
@@ -18,9 +17,6 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         paddingLeft: "10px",
     },
-    content:{
-        
-    },
     header:{
         borderBottom: "10px solid #355093",
     },
@@ -29,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
 function Homepage() {
     const classes = useStyles(); 
     const [categories, setCategories] = React.useState(["Groceries","Electronics","Sports","Toys","Men","Women","Furniture"]);
+
+
     return(
         <div>
             <Grid container className={classes.root} direction="column">
@@ -62,7 +60,7 @@ function Homepage() {
                 <Box mt={-2.8} height="100%" width="100%">
                     <Grid item xs={12} container>
                         <Grid item xs={2} md={1} >
-                            <div className={classes.navbar} style={{height:"515px"}} >
+                            <div className={classes.navbar} style={{height:"600px"}} >
                                 <div>
                                     <h4>Accounts</h4>
                                     <h5 style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer"}}>Login</h5>
@@ -81,26 +79,8 @@ function Homepage() {
                                 </div>
                             </div>
                         </Grid>
-                        <Grid container item xs={10} md={11}>
-
-                            <Grid item xs={12}>
-                                <div style={{marginLeft:"5%",marginTop:"3%"}}>
-                                    <h4>Slideshow</h4>
-                                </div>
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <div style={{marginLeft:"5%",marginTop:"3%"}}>
-                                    <h4>Top Selling Sroducts</h4>
-                                </div>
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <div style={{marginLeft:"5%",marginTop:"3%"}}>
-                                    <h4>Products On Sale</h4>
-                                </div>
-                            </Grid>
-
+                        <Grid container alignItems="center" item xs={10} md={11}>
+                            <Content/>
                         </Grid>
                     </Grid>
                 </Box>
