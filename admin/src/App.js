@@ -1,11 +1,16 @@
 import React from 'react'
+import Homepage from './Homepage.js'
+import Sidebar from './Sidebar.js'
 
 function App() {
   return(
     <div>
-      <h1>This is the root component of our admin site. Start righting your code here.</h1>
+      <Sidebar/>
+      <Homepage/>
+
     </div>
   );
 }
 
 export default App;
+
