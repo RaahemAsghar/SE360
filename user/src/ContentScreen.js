@@ -43,7 +43,7 @@ function Content(){
     }
 
     return(
-    <div>
+    <>
          {/* <Grid item xs={12}>
                 <div style={{marginLeft:"5%",marginTop:"3%"}}>
                     <h4>Slide show</h4>
@@ -62,7 +62,7 @@ function Content(){
 
         {
         topFour.map((obj,index)=>(
-        <Slide direction="left" timeout={600} in>
+        <Slide key={index} direction="left" timeout={600} in>
         <Grid item xs={2}>
             <div style={{borderRadius:"15px",backgroundColor:"#84CEEB",marginTop:"-20%",height:"220px"}}>
                 <div style={{textAlign:"center",marginBottom:"-12%"}}>
@@ -97,7 +97,7 @@ function Content(){
             <Grid item xs={1}></Grid>
 
             {
-            SaleFour.map((obj,index)=>(<Slide direction="left" timeout={600} in><Grid item xs={2}>
+            SaleFour.map((obj,index)=>(<Slide key={index} direction="left" timeout={600} in><Grid item xs={2}>
                 <div style={{transform:"translateY(-20px)",borderRadius:"15px",backgroundColor:"#84CEEB",marginTop:"-20%",height:"220px"}}>
                     <div style={{position:"relative",textAlign:"center",marginBottom:"-12%"}}>
                         <span style={{float:"right",backgroundColor:"red",color:"white",width:"20%",paddingLeft:"3%",paddingRight:"3%",marginTop:"-10px"}}>Sale</span>
@@ -121,7 +121,7 @@ function Content(){
 
         </Grid>
 
-    </div>
+    </>
 );}
 
 export default Content;
