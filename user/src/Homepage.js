@@ -8,6 +8,9 @@ import Heart from '@material-ui/icons/FavoriteBorder';
 import Cart from '@material-ui/icons/ShoppingCartOutlined';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+      },
     footer:{
         backgroundColor: '#C3EAFA',
         textAlign: "center",
@@ -97,6 +100,5 @@ function Homepage() {
         </div>
     )
 }
-
 
 export default Homepage;

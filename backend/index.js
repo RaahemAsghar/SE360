@@ -3,48 +3,94 @@ let firebase = require('firebase')
 let bodyParser = require('body-parser');
 let cors = require('cors')
 let path  = require('path')
+const port = 5000;
 
 let app = express()
-let port = 5000;
+
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve('./public')));
 
 let firebaseConfig = {
-    apiKey: "AIzaSyDNlnyhStKtfNc1f4LHeI_27UAwBs4XicA",
-    authDomain: "cs-soft-eng.firebaseapp.com",
-    projectId: "cs-soft-eng",
-    storageBucket: "cs-soft-eng.appspot.com",
-    messagingSenderId: "142288427446",
-    appId: "1:142288427446:web:967a1c8b6a59d7ea32c917",
-    measurementId: "G-Q090KBE4EW"
+    apiKey: "AIzaSyB0tpxxFNyI3ktDvOxqKpkiY9gxkrbSeVI",
+    authDomain: "software-engineering-123.firebaseapp.com",
+    databaseURL: "https://software-engineering-123-default-rtdb.firebaseio.com",
+    projectId: "software-engineering-123",
+    storageBucket: "software-engineering-123.appspot.com",
+    messagingSenderId: "358980638650",
+    appId: "1:358980638650:web:6e0bfb2afbe58da05f6f83",
+    measurementId: "G-Y3345Q4E33"
   };
+
+
+let productTemplate = {
+  name:"Dell Latitude-5880",
+  brand_name: "Dell",
+  category:"Electronics",
+  price:3000,
+  stock_left: 5,
+  total_sold: 0,
+  discout: 0,
+  rating:2,
+  url:"https://i.gadgets360cdn.com/products/laptops/large/1525206065_635_inspiron-5559.jpg?downsize=*:180&output-quality=80&output-format=webp",
+  description: "laptop featuring ci7 and SSD "
+}
+
+let userTemplate = {
+  email: "hamza123@gmail.com",
+  name: "Hamza Shahzad",
+  password: "123456",
+  city: "Lahore",
+  address: "Fairyland close to demon castle Mars",
+  contact: "03014598454",
+  news_letter: false
+}
+let reviewTemplate = {
+  product_name: "Dell Latitude-5880",
+  email: "hamza123@gamil.com",
+  rating: 4,
+  comments: "this is a nice product"
+} 
+
+let wishlistTemplate={  //should we place it inside userTemplate
+  email: "hamza",
+  product_name: "Dell Latitude 5580",
+  wished: true
+}
+
+let categoriesTemplate = ["Groceries","Electronics","Sports","Toys","Men","Women","Furniture"]
+
+let adminDetailTemplate = {
+  email: "king@storex.com",
+  password: "123456",
+  name: "king"
+}
+
+let complaintTemplate = {
+  user_email: "hamza@gmail.com",
+  comments: "I got a faulty product"
+}
+
+let pendingOrderTemplate = {
+  user_email: "hamza@gmail.com",
+  products: ["Dell Latitude 5880","Sony Xperia 321","ps5 digital edition"] 
+}
+
+let TransactionTemplate = {
+  user_email: "hamza@yahoo.com",
+  products: ["Dell Latitude 5880","Sony Xperia 321","ps5 digital edition"],
+  date: "06/2/2021",
+  bill: 100000 
+}
 
 firebase.initializeApp(firebaseConfig);
 
 let db = firebase.database();
 
-function Push(Path,obj){
-
-	db.ref(Path).push(obj)
-}
-
-async function Get(Path){
-	let ref = db.ref(Path);
-	let snapshot  = await ref.orderByChild('cost').equalTo(31).once('value')
-	let response = snapshot.val()
-	return response;
-}
-
-var productTemplate = {
-	name:"phone132",
-	desciption:"this is a smart phone",
-	cost: 31,
-	url: "www.google.com"
-}
-//Push("products",productTemplate)
-
-Get("products").then((x)=>{console.log(x)})
-
-
+// db.ref(Path).push(obj)
+// db.ref("products").once('value').then((snap)=>{
+//   let obj = snap.val();
+//   let values = Object.keys(obj).map((key)=>obj[key]) 
+//   console.log(values);
+// })
