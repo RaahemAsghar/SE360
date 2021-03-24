@@ -1,15 +1,15 @@
 let express = require('express')
 let firebase = require('firebase')
-let bodyParser = require('body-parser');
+//let bodyParser = require('body-parser');
 let cors = require('cors')
 let path  = require('path')
-const port = 5000;
+const port = 8000;
 
 let app = express()
 
 app.use(cors())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.json())
+//app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve('./public')));
 
 let firebaseConfig = {
@@ -53,9 +53,9 @@ let reviewTemplate = {
   comments: "this is a nice product"
 } 
 
-let wishlistTemplate={  //should we place it inside userTemplate
+let wishlistTemplate={ 
   email: "hamza",
-  product_name: "Dell Latitude 5580",
+  product_name: ["Dell Latitude 980","Dell Latitude 780","Dell Latitude 680"],
   wished: true
 }
 
@@ -94,3 +94,16 @@ let db = firebase.database();
 //   let values = Object.keys(obj).map((key)=>obj[key]) 
 //   console.log(values);
 // })
+
+app.get('/products',(req,res)=>{
+
+  db.ref("products").once('value').then((snap)=>{
+       let obj = snap.val();
+       let values = Object.keys(obj).map((key)=>obj[key]) 
+       res.send(JSON.stringify(values));
+     })
+})
+
+
+
+app.listen(port,()=>{console.log(`listening at localhost:${port}`)})
