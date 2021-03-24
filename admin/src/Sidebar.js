@@ -45,12 +45,79 @@ function Sidebar(){
     return(
         <SideNav className={classes.sidebar}>
             <SideNav.Nav>
-            <NavItem eventKey="home">
-            <NavText style={{position: 'static',  width: '167px', fontfamily: 'Manrope',textalign: 'center',}}>
-                Home
+            <NavItem eventKey="Admin Panel">
+            <NavIcon>
+                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+            </NavIcon>
+            <NavText>
+                Admin Panel
             </NavText>
         </NavItem>
-
+        <NavItem eventKey="Dashboard">
+            <NavText>
+                Dashboard
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="inventory">
+            <NavText>
+                View Inventory
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="stock">
+            <NavText>
+                Stock Update
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="add">
+            <NavText>
+                Add Products
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="discounts">
+            <NavText>
+                Discounts
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="addC">
+            <NavText>
+                Add Category
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="deleteP">
+            <NavText>
+                Delete Products
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="orders">
+            <NavText>
+                Orders
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="newsletter">
+            <NavText>
+                Newsletter
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="sales">
+            <NavText>
+                Sales Analytics
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="web">
+            <NavText>
+                Website Analytics
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="complaints">
+            <NavText>
+                Complaints
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="suggestions">
+            <NavText>
+                Suggestion
+            </NavText>
+        </NavItem>
             </SideNav.Nav>
     
         </SideNav>
