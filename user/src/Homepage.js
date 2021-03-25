@@ -7,6 +7,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Box from '@material-ui/core/Box';
 import Heart from '@material-ui/icons/FavoriteBorder';
 import Cart from '@material-ui/icons/ShoppingCartOutlined';
+import ShoppingCart from './cart.js';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 function Homepage() {
     const classes = useStyles(); 
 
-    const [focus,Setfocus] = React.useState(["homescreen","Null"])
+    const [focus,Setfocus] = React.useState(["cart","Null"])
     const [navcolor,setColor] = React.useState("null")
 
     const changeFocus = (newFocus) => {
@@ -42,6 +43,9 @@ function Homepage() {
         }
         else if(focus[0] === "category"){
             return <DisplayCategory label={focus[1]} router={changeFocus} navHighLight={setColor}/>
+        }
+        else if(focus[0] === "cart"){
+            return <ShoppingCart/>
         }
     }
 
@@ -61,7 +65,7 @@ function Homepage() {
                             <Navbar router={changeFocus} navHighLight={setColor} currentHighLight={navcolor}/>
                         </Grid>
 
-                        <Grid container alignItems="center" item xs={10} md={11}>
+                        <Grid container item xs={10} md={11}>
                             {choose()}
                         </Grid>
                     </Grid>

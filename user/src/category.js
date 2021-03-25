@@ -45,7 +45,7 @@ function DisplayCategory({label, router,navHighLight}){
     return(
         <>
 
-            <Grid container style={{marginLeft:"10%",marginRight:"15%"}} item xs={12} spacing={3}>
+            <Grid container alignItems="center" style={{marginLeft:"10%",marginRight:"15%",marginTop:"5%",marginBottom:"5%"}} item xs={12} spacing={3}>
 
             {
             display.map((obj,index)=>(
