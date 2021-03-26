@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 function Homepage() {
     const classes = useStyles(); 
 
-    const [focus,Setfocus] = React.useState(["cart","Null"])
+    const [focus,Setfocus] = React.useState(["homescreen","Null"])
     const [navcolor,setColor] = React.useState("null")
 
     const changeFocus = (newFocus) => {
@@ -45,7 +45,7 @@ function Homepage() {
             return <DisplayCategory label={focus[1]} router={changeFocus} navHighLight={setColor}/>
         }
         else if(focus[0] === "cart"){
-            return <ShoppingCart/>
+            return <ShoppingCart router={changeFocus} navHighLight={setColor}/>
         }
     }
 
@@ -86,14 +86,14 @@ function Homepage() {
 
 function Header({router,navHighLight}){
     const classes = useStyles();
-    const route = (event)=>{
-        router(["homescreen","null"]);
+    const route = (label)=>{
+        router([label,"null"]);
         navHighLight("null");
     } 
     return(
     <>
         <Grid item xs={4}>
-            <h1 onClick={route} style={{cursor:"pointer",color:"#355093",display:"inline-block",transform:"translateY(10px)",marginLeft:"8px"}}>StoreX</h1>
+            <h1 onClick={()=>route("homescreen")} style={{cursor:"pointer",color:"#355093",display:"inline-block",transform:"translateY(10px)",marginLeft:"8px"}}>StoreX</h1>
         </Grid>
 
         <Grid item xs={4}>
@@ -105,10 +105,10 @@ function Header({router,navHighLight}){
 
         <Grid item xs={4}>
             <div style={{textAlign:"end",transform:"translateY(10px)"}}>
-                <h3 onClick={route} style={{display:"inline-block",color:"#355093",transform:"translateY(-5px)",cursor:"pointer"}}>Home</h3>
+                <h3 onClick={()=>route("homescreen")} style={{display:"inline-block",color:"#355093",transform:"translateY(-5px)",cursor:"pointer"}}>Home</h3>
                 <h3 style={{display:"inline-block",marginLeft:"5%",color:"#EE1313",fontStyle:"italic",transform:"translateY(-5px)",cursor:"pointer"}}>Sale</h3>
                 <Heart fontSize="large" style={{transform:"translateY(8px)",marginLeft:"5%",cursor:"pointer"}}/>  
-                <Cart fontSize="large" style={{transform:"translateY(8px)",marginLeft:"5%",marginRight:"5%",cursor:"pointer"}}/>
+                <Cart onClick={()=>route("cart")} fontSize="large" style={{transform:"translateY(8px)",marginLeft:"5%",marginRight:"5%",cursor:"pointer"}}/>
             </div>
         </Grid>
     </>

@@ -1,8 +1,40 @@
 import React from 'react'
 import { Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Arrow from '@material-ui/icons/ArrowBack';
 
-function ShoppingCart(){
+const useStyles = makeStyles((theme) => ({
+    list: {
+        overflowY: "auto",
+        margin: 0,
+        padding: 0,
+        listStyle: "none",
+        height: "100%",
+        '&::-webkit-scrollbar': {
+          width: '0.4em'
+        },
+        '&::-webkit-scrollbar-track': {
+          boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+          webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+        },
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor: '#84CEEB',
+        }
+      },
+    in: {
+        width:"70%",
+        marginLeft:"10%",
+        height:"28px",
+        borderRadius:"6px",
+    }
+  }));
 
+function ShoppingCart({router,navHighLight}){
+    const route = ()=>{
+        router(["homescreen","null"]);
+        navHighLight("null");
+    }
+    const classes = useStyles();
     const product = {
         url:"https://i.gadgets360cdn.com/products/laptops/large/1525206065_635_inspiron-5559.jpg?downsize=*:180&output-quality=80&output-format=webp",
         category:"Electronics",
@@ -11,7 +43,8 @@ function ShoppingCart(){
         description: "Lorem OPsum tosum askdasknasfnafss asjdksajkd",
         price:2000,
     }
-    let productList = [product];
+
+    let productList = [product,product,product,product];
     return (
         <Grid item container xs={12}>
             <Grid item xs={12}>
@@ -19,17 +52,28 @@ function ShoppingCart(){
             </Grid>
 
             <Grid item style={{marginTop:"-10%",marginLeft:"8%"}} xs={5}>
-                <div style={{marginTop:"-3.2%",textAlign:"center",backgroundColor:"#355093",color:"white",height:"40px"}}>
+                <div style={{marginTop:"-4%",textAlign:"center",backgroundColor:"#355093",color:"white",height:"40px"}}>
                     <h4 style={{transform:"translateY(33%)"}}> Fill out your checkout details here</h4>
                 </div>
+                <form>
+                    <h4 style={{marginLeft:"10%"}}>Contact Information</h4>
+                    <input className={classes.in} type="text" placeholder=" Email"></input>
+                    <h4 style={{marginLeft:"10%"}}>Shipping Information</h4>
+                    <input className={classes.in} type="text" placeholder=" Full Name"></input>
+                    <input style={{marginTop:"5%"}} className={classes.in} type="text" placeholder=" shipping Address"></input>
+                    <input style={{marginTop:"5%"}} className={classes.in} type="text" placeholder=" City"></input>
+                    <input style={{marginTop:"5%"}} className={classes.in} type="text" placeholder=" Phone"></input><br/>
+                    <button onClick={route} style={{cursor:"pointer",border:"none",backgroundColor:"#84CEEB",padding:"4px",transform:"translateY(30px) translateX(70%)"}}>Homepage</button>
+                    <button style={{cursor:"pointer",border:"none",backgroundColor:"#84CEEB",padding:"4px",transform:"translateY(30px)translateX(280%)"}}>Ship Products</button>
+                </form>
        
             </Grid>
 
-            <Grid item style={{backgroundColor:"#F2F2F2",marginTop:"-10%",marginBottom:"5%"}} xs={5}>
-                <div style={{marginTop:"-3.2%",textAlign:"center",backgroundColor:"#355093",color:"white",height:"40px"}}>
+            <Grid item style={{backgroundColor:"#D8D8D8",marginTop:"-10%",marginBottom:"5%"}} xs={5}>
+                <div style={{marginTop:"-4%",textAlign:"center",backgroundColor:"#355093",color:"white",height:"40px"}}>
                     <h4 style={{transform:"translateY(33%)"}}>You have the following items in your cart</h4>
                 </div>     
-                <div style={{ height:"260px",overflow:"auto"}}>
+                <div className={classes.list} style={{ height:"260px",overflow:"auto"}}>
                     {productList.map((obj)=>(
                         <div>
                         <div style={{marginLeft:"10%",display:"inline-block"}}>
