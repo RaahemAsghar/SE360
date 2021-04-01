@@ -5,8 +5,8 @@ import Sidebar from './Sidebar.js'
 function App() {
   return(
     <div>
-      <Sidebar/>
       <Homepage/>
+      <Sidebar/>
 
     </div>
   );

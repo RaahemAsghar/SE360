@@ -1,10 +1,11 @@
 import React from 'react';
+import Navbars from './Navbars.js'
 
 function Homepage(){
     return(
-        <div>
+        <Navbars/>
              
-        </div>
+       
     )
 }
 
