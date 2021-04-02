@@ -9,6 +9,8 @@ import Heart from '@material-ui/icons/FavoriteBorder';
 import Cart from '@material-ui/icons/ShoppingCartOutlined';
 import ShoppingCart from './cart.js';
 import ProductPage from './productPage.js';
+import Login from './LoginPage.js'
+import Settings from './accountsettings.js'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 function Homepage() {
     const classes = useStyles(); 
 
-    const [focus,Setfocus] = React.useState(["productpage","Null"])
+    const [focus,Setfocus] = React.useState(["homescreen","Null"])
     const [navcolor,setColor] = React.useState("null")
 
     const changeFocus = (newFocus) => {
@@ -50,6 +52,12 @@ function Homepage() {
         }
         else if(focus[0] === "productpage"){
             return <ProductPage />
+        }
+        else if(focus[0] === "login"){
+            return <Login />
+        }
+        else if(focus[0] === "settings"){
+            return <Settings/>
         }
     }
 
@@ -125,17 +133,24 @@ function Navbar({router,navHighLight,currentHighLight}){
     const [categories, setCategories] = React.useState(["Groceries","Electronics","Sports","Toys","Men","Women","Furniture"]);
     
     const handleClick = (event)=>{
-        router(["category",event.target.innerText]);
+        if(event.target.innerText == "Login"){
+            router(["login"]);
+        }
+        else if(event.target.innerText == "Settings"){
+            router(["settings"]);
+        }
+        else{
+            router(["category",event.target.innerText]);
+        }
         navHighLight(event.target.innerText);
-    
     }
 
     return(
     <div className={classes.navbar} style={{height:"600px"}} >
         <div>
             <h4>Accounts</h4>
-            <h5 style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer"}}>Login</h5>
-            <h5 style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer"}}></h5>
+            <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="Login" ? "orange" :"white")}}>Login</h5>
+            <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="Settings" ? "orange" :"white")}}>Settings</h5>
         </div>
         
         <div>
