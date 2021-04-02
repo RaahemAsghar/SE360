@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import Heart from '@material-ui/icons/FavoriteBorder';
 import Cart from '@material-ui/icons/ShoppingCartOutlined';
 import ShoppingCart from './cart.js';
+import ProductPage from './productPage.js';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 function Homepage() {
     const classes = useStyles(); 
 
-    const [focus,Setfocus] = React.useState(["homescreen","Null"])
+    const [focus,Setfocus] = React.useState(["productpage","Null"])
     const [navcolor,setColor] = React.useState("null")
 
     const changeFocus = (newFocus) => {
@@ -46,6 +47,9 @@ function Homepage() {
         }
         else if(focus[0] === "cart"){
             return <ShoppingCart router={changeFocus} navHighLight={setColor}/>
+        }
+        else if(focus[0] === "productpage"){
+            return <ProductPage />
         }
     }
 
@@ -131,7 +135,7 @@ function Navbar({router,navHighLight,currentHighLight}){
         <div>
             <h4>Accounts</h4>
             <h5 style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer"}}>Login</h5>
-            <h5 style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer"}}>Sign up</h5>
+            <h5 style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer"}}></h5>
         </div>
         
         <div>
