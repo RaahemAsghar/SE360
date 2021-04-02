@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
         width: '240px',
         height: '48px',
         left: '0px',
-        top: '48px',
+        top: '44px',
 
         
           },
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     width: '240px',
     height: '864px',
     left: '0px',
-    top: '100px',
+    top: '80px',
     background: '#355093',
     },
   }));
@@ -35,17 +35,17 @@ function Sidebar(){
     return(
         
         <SideNav className={classes.sidebar}>
+            <div></div>
             <SideNav.Nav>
             <NavItem eventKey="Admin Panel" class={classes.root}>
             
-                <p style={{color: '#ffffff', fontSize: '28px', align:'center'}}>Admin Panel</p>
+                <p style={{color: '#ffffff', fontSize: '24px', align:'center'}}>Admin Panel</p>
             
         </NavItem>
         <NavItem eventKey="Dashboard" class={classes.root}>
             
                 
         <NavText>
-            <Icon icon={bxsDashboard} style={{color: '#C1C8E4', fontSize: '28px', align:'center', position:"absolute"}} />
                 <p style={{color: '#ffffff', fontSize: '14px', align:'center'}}>Dashboard</p>
         </NavText>
         
