@@ -5,26 +5,33 @@ import Rating from '@material-ui/lab/Rating';
 import Heart from '@material-ui/icons/FavoriteBorder';
 import AddCart from '@material-ui/icons/AddShoppingCart';
 import Arrow from '@material-ui/icons/ArrowForward';
+import {fireApp} from './fireapp.js'
+import Load from '@material-ui/core/CircularProgress';
 
-function Content(){
-    const product = {
-        url:"https://i.gadgets360cdn.com/products/laptops/large/1525206065_635_inspiron-5559.jpg?downsize=*:180&output-quality=80&output-format=webp",
-        category:"Electronics",
-        name:"Dell Latitude-5880",
-        rating:1,
-        price:2000,
+function Content({router,addToCart}){
+
+    const route2 = (event)=>{
+        let id = event.target.dataset.id;
+        router(["productpage",id]);
     }
 
-    const product2 = {
-        url:"https://cdn.mos.cms.futurecdn.net/vEcELHdn998wRTcCzqV5m9-970-80.jpg.webp",
-        category:"Electronics",
-        name:"Dell Latitude-5880",
-        rating:3,
-        price:100,
-    }
+    const [TopSellingList,setTop] = React.useState(undefined) //plug into database
+    const [SaleList,setSale] = React.useState(undefined) //plug into database
 
-    const TopSellingList = [product,product,product,product,product,product2,product2,product2]; //plug into database
-    const SaleList = [product,product,product,product,product,product2,product2,product2]; //plug into database
+    React.useEffect(()=>{
+        let db = fireApp.database();
+        db.ref("products").once('value').then((snap)=>{
+        let obj = snap.val();
+        let data = Object.keys(obj).map((key)=>{
+            obj[key].id = key;
+            return obj[key]
+        })
+        let sale = data.filter(ele=>ele.discount>0)
+        let normal_data =  data.filter(ele=>ele.discount==0)
+        setTop(normal_data)
+        setSale(sale)
+     })
+    },[])
 
     const [startindexTop,setIndexTop] = React.useState(0);
     const [startindexSale,setIndexSale] = React.useState(0);
@@ -32,15 +39,19 @@ function Content(){
     const topFour = [];
     const SaleFour = [];
 
-    for(let i=startindexTop;i<startindexTop+5;i++){
-        let ind = i % TopSellingList.length;
-        topFour.push(TopSellingList[ind]);
+    if(TopSellingList && SaleList){
+        
+        for(let i=startindexTop;i<startindexTop+5;i++){
+            let ind = i % TopSellingList.length;
+            topFour.push(TopSellingList[ind]);
+        }
+    
+        for(let i=startindexSale;i<startindexSale+5;i++){
+            let ind = i % SaleList.length;
+            SaleFour.push(SaleList[ind]);
+        }
     }
 
-    for(let i=startindexSale;i<startindexSale+5;i++){
-        let ind = i % SaleList.length;
-        SaleFour.push(SaleList[ind]);
-    }
 
     return(
     <>
@@ -66,13 +77,13 @@ function Content(){
         <Grid item xs={2}>
             <div style={{borderRadius:"15px",backgroundColor:"#84CEEB",marginTop:"-20%",height:"220px"}}>
                 <div style={{textAlign:"center",marginBottom:"-12%"}}>
-                    <img style={{borderRadius:"12px",transform:"translateY(10px)",marginBottom:"-10px"}} src={obj.url} width="90%" height="120px"></img>
+                    <img data-id={obj.id} onClick={route2} style={{borderRadius:"12px",transform:"translateY(10px)",marginBottom:"-10px"}} src={obj.url} width="90%" height="120px"></img>
                     <h5>{obj.category}</h5>
                     <h5 style={{transform:"translateY(-20px)"}}><strong>{obj.name}</strong></h5>
                     <Rating size="small" style={{transform:"translateY(-45px)"}} name="read-only" value={obj.rating} readOnly />
                 </div>
                 <div style={{transform:"translateY(-30px)"}}>
-                    <AddCart style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}}fontSize="small"/>
+                    <AddCart onClick={()=>addToCart(obj.id)} style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}}fontSize="small"/>
                     <Heart style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}} fontSize="small"/>
                     <h5 style={{display:"inline",marginLeft:"24%"}}><strong>RS:{obj.price}</strong></h5>
                 </div>
@@ -101,13 +112,13 @@ function Content(){
                 <div style={{transform:"translateY(-20px)",borderRadius:"15px",backgroundColor:"#84CEEB",marginTop:"-20%",height:"220px"}}>
                     <div style={{position:"relative",textAlign:"center",marginBottom:"-12%"}}>
                         <span style={{float:"right",backgroundColor:"red",color:"white",width:"20%",paddingLeft:"3%",paddingRight:"3%",marginTop:"-10px"}}>Sale</span>
-                        <img style={{borderRadius:"12px",transform:"translateY(10px)",marginTop:"-11px"}} src={obj.url} width="90%" height="120px"></img>
+                        <img data-id={obj.id} onClick={route2} style={{borderRadius:"12px",transform:"translateY(10px)",marginTop:"-11px"}} src={obj.url} width="90%" height="120px"></img>
                         <h5 style={{marginTop:"7%"}}>{obj.category}</h5>
                         <h5 style={{transform:"translateY(-20px)"}}><strong>{obj.name}</strong></h5>
                         <Rating size="small" style={{transform:"translateY(-43px)"}} name="read-only" value={obj.rating} readOnly />
                     </div>
                     <div style={{transform:"translateY(-30px)"}}>
-                        <AddCart style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}}fontSize="small"/>
+                        <AddCart onClick={(event)=>addToCart(event.target.dataset.id)} data-id={obj.id} style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}}fontSize="small"/>
                         <Heart style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}} fontSize="small"/>
                         <h5 style={{display:"inline",marginLeft:"24%"}}><strong>RS:{obj.price}</strong></h5>
                     </div>

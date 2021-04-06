@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Arrow from '@material-ui/icons/ArrowBack';
+import {fireApp} from './fireapp.js'
 
 const useStyles = makeStyles((theme) => ({
     list: {
@@ -29,24 +30,49 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-function ShoppingCart({router,navHighLight}){
+function ShoppingCart({router,navHighLight,removeFromCart,addToCart,items}){
     const route = ()=>{
         router(["homescreen","null"]);
         navHighLight("null");
     }
     const classes = useStyles();
-    const product = {
-        url:"https://i.gadgets360cdn.com/products/laptops/large/1525206065_635_inspiron-5559.jpg?downsize=*:180&output-quality=80&output-format=webp",
-        category:"Electronics",
-        name:"Dell Latitude-5880",
-        rating:1,
-        description: "Lorem OPsum tosum askdasknasfnafss asjdksajkd",
-        price:2000,
-    }
+    console.log(items)
 
-    let productList = [product,product,product,product];
+    let [productList,setList] = React.useState(undefined)
+
+    React.useEffect(()=>{
+        let db = fireApp.database();
+        db.ref("products").once('value').then((snap)=>{
+        let obj = snap.val();
+        let data = Object.keys(obj).map((key)=>{
+            obj[key].id = key;
+            return obj[key]
+        })
+        let cartlist = data.filter((ele)=>{
+            for(let x of items){
+                if(ele.id === x){
+                    return true
+                }
+            }
+            return false
+        })
+        let finallist = cartlist.map(ele=>{
+            let temp = items.filter(x=>x==ele.id)
+            ele.count = temp.length
+            return ele;
+        })
+        if(finallist.length > 0){
+            setList(finallist)
+        }
+        if(items.length==0){
+            setList(undefined)
+        }
+     })
+    },[items])
+
     return (
-        <Grid item container xs={12}>
+        <>
+        {productList ? <Grid item container xs={12}>
             <Grid item xs={12}>
                 <h2 style={{marginLeft:"8%",marginTop:"2.5%",color:"#355093"}}>Shopping Cart</h2>
             </Grid>
@@ -81,19 +107,20 @@ function ShoppingCart({router,navHighLight}){
                         </div>
                         <div style={{marginLeft:"10%",display:"inline-block"}}>
                             <h4 style={{transform:"translateY(6px)",fontWeight:"500"}}>{obj.name}</h4>
-                            <h4 style={{fontWeight:"normal",marginTop:"-5%"}}>Quantity: 1<span style={{marginLeft:"25px"}}><button style={{backgroundColor:"#84CEEB"}}>+</button><button style={{marginLeft:"5px",backgroundColor:"#84CEEB"}}>--</button></span></h4>
-                            <h4 style={{color:"#355093",fontWeight:"normal",transform:"translateY(-20px)"}}>RS: {obj.price}</h4>
+                            <h4 style={{fontWeight:"normal",marginTop:"-5%"}}>Quantity: {obj.count}<span style={{marginLeft:"25px"}}><button onClick={()=>addToCart(obj.id)} style={{backgroundColor:"#84CEEB"}}>+</button><button onClick={()=>removeFromCart(obj.id)} style={{marginLeft:"5px",backgroundColor:"#84CEEB"}}>--</button></span></h4>
+                            <h4 style={{color:"#355093",fontWeight:"normal",transform:"translateY(-20px)"}}>RS: {obj.price * obj.count}</h4>
                         </div>
                         </div>
                 ))}
                 </div>
                 <div style={{padding:"20px",marginLeft:"12%",marginRight:"12%",transform:"translateY(50px)",borderTop:"1px solid black",borderBottom:"1px solid black"}}>
                     <h3 style={{display:"inline"}}>Total</h3>
-                    <h3 style={{marginLeft:"52%",display:"inline"}}>Rs:6000</h3>
+                    <h3 style={{marginLeft:"52%",display:"inline"}}>Rs:{productList.reduce((total,obj)=>total+obj.price*obj.count,0)}</h3>
                 </div>        
             </Grid>
         
-        </Grid>
+        </Grid> : <h3>No Items in cart</h3>}
+        </>
     )
 }
 

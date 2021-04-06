@@ -11,6 +11,7 @@ import ShoppingCart from './cart.js';
 import ProductPage from './productPage.js';
 import Login from './LoginPage.js'
 import Settings from './accountsettings.js'
+import {fireApp} from './fireapp.js'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,22 +37,37 @@ function Homepage() {
     const [focus,Setfocus] = React.useState(["homescreen","Null"])
     const [navcolor,setColor] = React.useState("null")
 
+    const [cartItems,setItems] = React.useState([])
+
     const changeFocus = (newFocus) => {
         Setfocus(newFocus);
     }
-
+    const addItems = (id) => {
+        setItems([...cartItems,id])
+    }
+    const removeItems = (id) =>{
+        if(cartItems.length==1){
+            setItems([])
+        }else
+        {
+            let temp = [...cartItems];
+            let indx = temp.indexOf(id)
+            temp.splice(indx,1)
+            setItems(temp)
+        }
+    }
     const choose = () => {
         if(focus[0] === "homescreen"){
-            return <Content/>
+            return <Content addToCart={addItems} router={changeFocus}/>
         }
         else if(focus[0] === "category"){
-            return <DisplayCategory label={focus[1]} router={changeFocus} navHighLight={setColor}/>
+            return <DisplayCategory addToCart={addItems} label={focus[1]} router={changeFocus} navHighLight={setColor}/>
         }
         else if(focus[0] === "cart"){
-            return <ShoppingCart router={changeFocus} navHighLight={setColor}/>
+            return <ShoppingCart router={changeFocus} removeFromCart={removeItems} addToCart={addItems} items={cartItems} navHighLight={setColor}/>
         }
         else if(focus[0] === "productpage"){
-            return <ProductPage />
+            return <ProductPage addToCart={addItems} id={focus[1]}/>
         }
         else if(focus[0] === "login"){
             return <Login />
@@ -129,8 +145,18 @@ function Header({router,navHighLight}){
 
 function Navbar({router,navHighLight,currentHighLight}){
     
-    const classes = useStyles(); 
-    const [categories, setCategories] = React.useState(["Groceries","Electronics","Sports","Toys","Men","Women","Furniture"]);
+    const classes = useStyles();
+    const [categories, setCategories] = React.useState(undefined);
+    
+    React.useEffect(()=>{
+        let db = fireApp.database();
+        db.ref("Categories").once('value').then((snap)=>{
+        let obj = snap.val();
+        let data = Object.keys(obj).map((key)=>obj[key]) 
+        setCategories(data[0])
+     })
+    },[])
+    
     
     const handleClick = (event)=>{
         if(event.target.innerText == "Login"){
@@ -155,7 +181,7 @@ function Navbar({router,navHighLight,currentHighLight}){
         
         <div>
             <h4>Categories</h4>
-            {categories.map((val,index)=>(<h5 onClick={handleClick} style={{cursor:"pointer",paddingLeft:"8px",marginTop:"-10px",color: (currentHighLight==val ? "orange" :"white")}} key={index}>{val}</h5>))}
+            {categories ? categories.map((val,index)=>(<h5 onClick={handleClick} style={{cursor:"pointer",paddingLeft:"8px",marginTop:"-10px",color: (currentHighLight==val ? "orange" :"white")}} key={index}>{val}</h5>)) : <h5></h5>}
         </div>
         
         <div>
