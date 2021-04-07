@@ -27,10 +27,7 @@ function Navbars(){
     <Nav className="mr-auto">
       
     </Nav>
-    <Form inline>
-      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-      
-    </Form>
+    
   </Navbar>
         </div>
     )

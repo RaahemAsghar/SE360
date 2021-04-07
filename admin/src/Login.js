@@ -6,11 +6,11 @@ function Login(){
         <Grid container item xs={12}>
             <Grid item xs={12}>
                 <div>
-                    <img src="https://preview.colorlib.com/theme/bootstrap/login-form-07/images/undraw_remotely_2j6y.svg" style={{verticalAlign:"left",marginTop:"-0%",width:"60%",}}/>
+                    <img src="https://preview.colorlib.com/theme/bootstrap/login-form-07/images/undraw_remotely_2j6y.svg" style={{verticalAlign:"left",marginTop:"5%",width:"60%",height:"780px"}}/>
                 </div>
             </Grid>
             <Grid item xs={12}></Grid>
-            <Grid style={{marginLeft:"70%", marginTop:"-45%",marginBottom:"5%",textAlign:"center"}} item xs={5}>
+            <Grid style={{marginLeft:"70%", marginTop:"-40%",marginBottom:"5%",textAlign:"center"}} item xs={5}>
                 <form style={{transform:"translateY(10px)"}}>
                     <h1 style={{color:"#000000", fontFamily:"Sans-Serif", fontSize:"48px", lineHeight:"66px",alignItems:"flex-start", display:"flex"}}>Sign in - Admin</h1>
                     <h2 style={{color:"#C8BABA",  fontFamily:"Sans-Serif", fontSize:"24px", lineHeight:"33px", textAlign:"left", transform:"translateY(10px)"}}>Welcome back!</h2>
@@ -27,7 +27,7 @@ function Login(){
                     <div>
                         <p style={{color:"#000000", fontSize:"14px", fontFamily:"Sans-Serif", lineHeight:"16px", textAlign:"left", transform:"translateY(20px)", alignItems:"flex-start", display:"flex"}}>Note: Fields marked with * are necessary, cannot be left empty.</p>
                     </div>
-                    <button style={{transform:"translateX(-35px) translateY(30px)",border:"none",backgroundColor:"#5AB9EA",cursor:"pointer",width:"416px",height:"61px",borderRadius:"20px", textAlign:"center"}}><strong>Login</strong></button>
+                    <button style={{transform:"translateX(-35px) translateY(30px)",border:"none",backgroundColor:"#5AB9EA",cursor:"pointer",width:"120px",height:"40px",borderRadius:"20px", textAlign:"center"}}><strong>Login</strong></button>
                 </form>
             </Grid>
             
