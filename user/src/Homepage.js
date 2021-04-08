@@ -7,6 +7,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Box from '@material-ui/core/Box';
 import Heart from '@material-ui/icons/FavoriteBorder';
 import Cart from '@material-ui/icons/ShoppingCartOutlined';
+import Circle from '@material-ui/icons/CheckCircleOutline';
 import ShoppingCart from './cart.js';
 import ProductPage from './productPage.js';
 import Login from './LoginPage.js'
@@ -37,11 +38,18 @@ function Homepage() {
     const [focus,Setfocus] = React.useState(["homescreen","Null"])
     const [navcolor,setColor] = React.useState("null")
 
+    const [logged, setLog] = React.useState([false,"id"])
+
     const [cartItems,setItems] = React.useState([])
 
     const changeFocus = (newFocus) => {
         Setfocus(newFocus);
     }
+
+    const changeLog = (arg) => {
+        setLog(arg)
+    }
+
     const addItems = (id) => {
         setItems([...cartItems,id])
     }
@@ -70,10 +78,10 @@ function Homepage() {
             return <ProductPage addToCart={addItems} id={focus[1]}/>
         }
         else if(focus[0] === "login"){
-            return <Login />
+            return <Login router={changeFocus} set={changeLog}/>
         }
         else if(focus[0] === "settings"){
-            return <Settings/>
+            return <Settings set={changeLog}/>
         }
     }
 
@@ -90,7 +98,7 @@ function Homepage() {
                 <Box mt={-2.8} height="100%" width="100%">
                     <Grid item xs={12} container>
                         <Grid item xs={2} md={1} >
-                            <Navbar router={changeFocus} navHighLight={setColor} currentHighLight={navcolor}/>
+                            <Navbar checklog={logged[0]} router={changeFocus} navHighLight={setColor} currentHighLight={navcolor}/>
                         </Grid>
 
                         <Grid container item xs={10} md={11}>
@@ -143,7 +151,7 @@ function Header({router,navHighLight}){
     )
 }
 
-function Navbar({router,navHighLight,currentHighLight}){
+function Navbar({router,navHighLight,currentHighLight,checklog}){
     
     const classes = useStyles();
     const [categories, setCategories] = React.useState(undefined);
@@ -177,8 +185,9 @@ function Navbar({router,navHighLight,currentHighLight}){
     <div className={classes.navbar} style={{height:"600px"}} >
         <div>
             <h4>Accounts</h4>
-            <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="Login" ? "orange" :"white")}}>Login</h5>
-            <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="Settings" ? "orange" :"white")}}>Settings</h5>
+            {!checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="Login" ? "orange" :"white")}}>Login</h5>}
+            {checklog && <h5 onClick={handleClick} style={{color:"#28ff03",paddingLeft:"8px",marginTop:"-10px"}}><Circle style={{fontSize:"15px",transform:"translateY(2px) translateX(-3px)"}}/>Signed In</h5>}
+            {checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="Settings" ? "orange" :"white")}}>Settings</h5>}
         </div>
         
         <div>
