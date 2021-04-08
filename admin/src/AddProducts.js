@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import {fireApp} from './fireapp.js';
 
-function AddProducts () {
+function AddProducts ({router}) {
     let [product, updateProduct] = React.useState(['','','','','','']);
     let [prodName, updateProdName] = React.useState('');
     let [brand, updateBrand] = React.useState('');
@@ -124,8 +124,8 @@ function AddProducts () {
             </Grid>
             </Grid>
             </div>
-            <div style = {{marginTop:"30px", marginLeft: "30px"}}>
-            <input type = "submit"></input>
+            <div style = {{marginTop:"40px", marginLeft: "30px"}}>
+            <input type = "submit" value = "Add Product" style = {{width: "120px", height:"38px", backgroundColor: "#5AB9EA", border: "none", borderRadius: "15px"}}></input>
             </div>
             </form>
         </div>
