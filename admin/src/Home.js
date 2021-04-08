@@ -4,6 +4,20 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import AddProducts from './AddProducts.js';
 import {fireApp} from './fireapp.js';
+import { Icon, InlineIcon } from '@iconify/react';
+import bxsDashboard from '@iconify/icons-bx/bxs-dashboard';
+import outlineInventory2 from '@iconify/icons-ic/outline-inventory-2';
+import updateIcon from '@iconify/icons-dashicons/update';
+import addAlt from '@iconify/icons-carbon/add-alt';
+import discount2 from '@iconify/icons-tabler/discount-2';
+import categoryIcon from '@iconify/icons-carbon/category';
+import trashIcon from '@iconify/icons-bi/trash';
+import orderBoolDescendingVariant from '@iconify/icons-mdi/order-bool-descending-variant';
+import emailNewsletter from '@iconify/icons-mdi/email-newsletter';
+import analyticsIcon from '@iconify/icons-carbon/analytics';
+import googleAnalytics from '@iconify/icons-mdi/google-analytics';
+import dialogIcon from '@iconify/icons-il/dialog';
+import sparklesIcon from '@iconify/icons-emojione-monotone/sparkles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -100,7 +114,65 @@ const useStyles = makeStyles((theme) => ({
     let classes = useStyles();
     let [textColor, changeTextColor] = React.useState("Dashboard");
     // let [options,setOptions] = React.useState([]);
-    let options = ["Dashboard","View Inventory","Stock Update","Add Products","Discounts","Add Category","Delete Products","Orders","Newsletter","Sales Analytics","Website Analytics","Complaints","Suggestions"]
+    let menu=[{
+        text:'Dashboard',
+        icon:bxsDashboard
+    },
+    {
+        text:'View Inventory',
+        icon:outlineInventory2
+    },
+    {
+        text:'Stock Update',
+        icon:updateIcon
+    },
+    {
+        text:'Add Products',
+        icon:addAlt
+    },
+    {
+        text:'Discounts',
+        icon:discount2
+    },
+    {
+        text:'Add Category',
+        icon:categoryIcon
+    },
+    {
+        text:'Delete Products',
+        icon:trashIcon
+    },
+    {
+        text:'Orders',
+        icon:orderBoolDescendingVariant
+    },
+    {
+        text:'Newsletter',
+        icon: emailNewsletter
+    },
+    {
+        text:'Sales Analytics',
+        icon:analyticsIcon
+    },
+    {
+        text:'Website Analytics',
+        icon:googleAnalytics
+    },
+    {
+        text:'Complaints',
+        icon:dialogIcon
+    },
+    {
+        text:'Suggestions',
+        icon:sparklesIcon
+    },
+    ]
+
+    //menu.map( item=> console.log(item))
+
+   
+    //let options = ["Dashboard","View Inventory","Stock Update","Add Products","Discounts","Add Category","Delete Products","Orders","Newsletter","Sales Analytics","Website Analytics","Complaints","Suggestions"]
+    //let icons =[bxsDashboard, outlineInventory2, updateIcon, addAlt, discount2, categoryIcon, trashIcon, orderBoolDescendingVariant, emailNewsletter, analyticsIcon, googleAnalytics, dialogIcon, sparklesIcon]
     const handleClick = (event) => {
         router([event.target.innerText]);
         changeTextColor(event.target.innerText);
@@ -109,7 +181,9 @@ const useStyles = makeStyles((theme) => ({
         <div className={classes.navbar} style={{height:"650px", width: "170px"}} >
             <div>
                 <p style = {{fontFamily: "Arial",fontSize:"1.0em",fontWeight: "Bold",paddingLeft:"3px",marginBottom:"24px"}}>Admin Panel</p>
-                {options ? options.map((val,index)=>(<p onClick = {handleClick} className = {classes.text} style={{fontSize: "0.9em", cursor:"pointer", paddingLeft:"28px",marginBottom: "18px", color: (textColor==val ? "orange" :"white")}} key={index}>{val}</p>)) : <h5></h5>}
+                {menu.map( item => <Box display='flex'> <div><Icon icon={item.icon} style={{color: (textColor==item.text ? "orange" :"#C1C8E4"), fontSize: '20px', flexDirection:"row", marginBottom: "18px"}}/> </div> <div><p onClick = {handleClick} className = {classes.text} style={{fontSize: "0.9em", cursor:"pointer", paddingLeft:"13px",marginBottom: "18px", flexDirection:"row", color: (textColor==item.text ? "orange" :"white")}}>{item.text}</p></div></Box>)}
+                {/* {icons ? icons.map((val,index)=>(<div><Icon icon={val} style={{color: '#C1C8E4', fontSize: '20px', flexDirection:"row", marginBottom: "18px"}} /></div>)) : <h5></h5>}
+                {options ? options.map((val,index)=>(<p onClick = {handleClick} className = {classes.text} style={{fontSize: "0.9em", cursor:"pointer", paddingLeft:"28px",marginBottom: "18px", flexDirection:"row",transform:"translateX(0px)", color: (textColor==val ? "orange" :"white")}} key={index}>{val}</p>)) : <h5></h5>} */}
             </div>
         </div>
     )
