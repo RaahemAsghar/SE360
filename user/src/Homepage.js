@@ -152,7 +152,9 @@ function Navbar({router,navHighLight,currentHighLight}){
         let db = fireApp.database();
         db.ref("Categories").once('value').then((snap)=>{
         let obj = snap.val();
+        // console.log(obj);
         let data = Object.keys(obj).map((key)=>obj[key]) 
+        // console.log(data);
         setCategories(data[0])
      })
     },[])
@@ -181,7 +183,7 @@ function Navbar({router,navHighLight,currentHighLight}){
         
         <div>
             <h4>Categories</h4>
-            {categories ? categories.map((val,index)=>(<h5 onClick={handleClick} style={{cursor:"pointer",paddingLeft:"8px",marginTop:"-10px",color: (currentHighLight==val ? "orange" :"white")}} key={index}>{val}</h5>)) : <h5></h5>}
+            {categories ? categories.map((val,index)=>(<h5 onClick={handleClick} style={{cursor:"pointer", paddingLeft:"8px",marginTop:"-10px",color: (currentHighLight==val ? "orange" :"white")}} key={index}>{val}</h5>)) : <h5></h5>}
         </div>
         
         <div>
