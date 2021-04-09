@@ -53,6 +53,7 @@ function Login({set,router}){
             let newdata = data.filter(ele=>(ele.email==login.email && ele.password==login.password))
             if(newdata.length > 0){
                 set([true,newdata[0].id])
+                sessionStorage.setItem("userid",newdata[0].id)
                 router(["homescreen","null"])
                 
             }
@@ -60,6 +61,7 @@ function Login({set,router}){
                 setMsg2("Incorrect email or password")
             }
          })
+         event.target.reset()
     }
     return(
         <Grid container item xs={12}>

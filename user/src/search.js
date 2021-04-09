@@ -4,11 +4,10 @@ import Rating from '@material-ui/lab/Rating';
 import Heart from '@material-ui/icons/FavoriteBorder';
 import AddCart from '@material-ui/icons/AddShoppingCart';
 import Arrow from '@material-ui/icons/ArrowForward';
-import Load from '@material-ui/core/CircularProgress';
 import {fireApp} from './fireapp.js'
+import Load from '@material-ui/core/CircularProgress';
 
-
-function DisplayCategory({addToCart,label, router,navHighLight}){
+function Search({addToCart,router,navHighLight,query}){
     const route = (event)=>{
         router(["homescreen","null"]);
         navHighLight("null");
@@ -28,10 +27,11 @@ function DisplayCategory({addToCart,label, router,navHighLight}){
             obj[key].id = key;
             return obj[key]
         })
-        let list = data.filter(ele=>ele.category==label)
-        setList(list)
+        let qry = query.toLowerCase()
+        let fltr = data.filter(ele=>(ele.brand_name.toLowerCase().includes(qry) || ele.category.toLowerCase().includes(qry) || ele.description.toLowerCase().includes(qry) || ele.name.toLowerCase().includes(qry)));
+        setList(fltr)
      })
-    },[label])
+    },[query])
 
     const [startindex,setIndex] = React.useState(0);
 
@@ -93,4 +93,4 @@ function DisplayCategory({addToCart,label, router,navHighLight}){
     )
 }
 
-export default DisplayCategory;
+export default Search;

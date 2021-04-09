@@ -12,6 +12,7 @@ import ShoppingCart from './cart.js';
 import ProductPage from './productPage.js';
 import Login from './LoginPage.js'
 import Settings from './accountsettings.js'
+import Search from './search.js'
 import {fireApp} from './fireapp.js'
 
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +42,13 @@ function Homepage() {
     const [logged, setLog] = React.useState([false,"id"])
 
     const [cartItems,setItems] = React.useState([])
+
+    React.useEffect(()=>{
+        let id = sessionStorage.getItem("userid")
+        if(id){
+            setLog([true,id])
+        }
+    },[])
 
     const changeFocus = (newFocus) => {
         Setfocus(newFocus);
@@ -83,6 +91,9 @@ function Homepage() {
         else if(focus[0] === "settings"){
             return <Settings set={changeLog}/>
         }
+        else if(focus[0] === "search"){
+            return <Search query={focus[1]} addToCart={addItems} router={changeFocus} navHighLight={setColor}/>
+        }
     }
 
     return(
@@ -122,6 +133,7 @@ function Homepage() {
 
 function Header({router,navHighLight}){
     const classes = useStyles();
+    const [inval,setval] = React.useState('')
     const route = (label)=>{
         router([label,"null"]);
         navHighLight("null");
@@ -134,8 +146,8 @@ function Header({router,navHighLight}){
 
         <Grid item xs={4}>
             <div style={{textAlign:"center",transform:"translateY(10px)"}}>
-                <input style={{display:"inline-block",border:"1px solid black",borderRadius:"5px",height:"30px",width:"70%",transform:"translateY(-4px)",backgroundColor:"#C1C8E4"}} placeholder=" Search for a product"></input>
-                <SearchIcon fontSize="large" style={{transform:"rotate(10deg) translateY(8px)",marginLeft:"5px",color:"#355093",cursor:"pointer"}}/>
+                <input onChange={event=>{setval(event.target.value)}} value={inval} style={{display:"inline-block",border:"1px solid black",borderRadius:"5px",height:"30px",width:"70%",transform:"translateY(-4px)",backgroundColor:"#C1C8E4"}} placeholder=" Search for a product"></input>
+                <SearchIcon onClick={()=>{router(["search",inval]); navHighLight("null");setval('')}} fontSize="large" style={{transform:"rotate(10deg) translateY(8px)",marginLeft:"5px",color:"#355093",cursor:"pointer"}}/>
             </div>
         </Grid>
 

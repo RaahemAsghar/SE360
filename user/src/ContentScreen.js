@@ -60,7 +60,7 @@ function Content({router,addToCart}){
                     <h4>Slide show</h4>
                 </div>
             </Grid> */}
-
+        {(TopSellingList && SaleList) ?<>
         <Grid container spacing={4} item xs={12}>
 
         <Grid item xs={1}></Grid>
@@ -131,6 +131,7 @@ function Content({router,addToCart}){
             </Grid>
 
         </Grid>
+        </> : <Load size={60} style={{top:"50%",left:"50%",position:"absolute"}} /> }
 
     </>
 );}

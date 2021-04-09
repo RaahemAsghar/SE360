@@ -119,7 +119,7 @@ function ShoppingCart({router,navHighLight,removeFromCart,addToCart,items}){
                 </div>        
             </Grid>
         
-        </Grid> : <h3>No Items in cart</h3>}
+        </Grid> : <h3 style={{top:"45%",left:"45%",position:"absolute"}}>No Items in cart</h3>}
         </>
     )
 }

@@ -4,6 +4,7 @@ import Heart from '@material-ui/icons/FavoriteBorder';
 import Arrow from '@material-ui/icons/ArrowBack';
 import { Grid } from '@material-ui/core';
 import {fireApp} from './fireapp.js'
+import Load from '@material-ui/core/CircularProgress';
 
 function ProductPage({id,addToCart}){
     const [product,setProduct] = React.useState(undefined)
@@ -39,7 +40,7 @@ function ProductPage({id,addToCart}){
                     <h5 style={{transform:"translateY(-60%)",fontWeight:"normal"}}>{product.description}</h5>
                 </div>
             </Grid>
-        </Grid> : <h3>Loading</h3>}
+        </Grid> : <Load size={60} style={{top:"50%",left:"50%",position:"absolute"}} />}
         </>
     )
 }
