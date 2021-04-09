@@ -12,6 +12,8 @@ function AddProducts ({router}) {
     let [myCategories, updateMyCategories] = React.useState([''])
     let [category, updateCategory] = React.useState('');
     let [check,setCheck] = React.useState(false);
+    let [productId, updateProductId] = React.useState(0);
+    let [productList, updateProductList] = React.useState({});
     // let [prods, updateProds] = React.useState({0:'',1:'',2:'',3:'',4:'',5:''});
 
     const nameClick = (event) => {
@@ -36,21 +38,25 @@ function AddProducts ({router}) {
     const submit = (event) => {
         event.preventDefault();
         let db = fireApp.database();
+        // updateProductId((len+1));
         let product = {
-            name: prodName,
             brand_name: brand,
             category: category,
+            description: description,
+            discount: 0,
+            name: prodName,
             price: price,
+            rating: (Math.floor(Math.random() * 5)+1),
             stock_left: 100,
             total_sold: 0,
-            discount: 0,
-            rating: (Math.floor(Math.random() * 5)+1),
             url: url,
-            description: description,
         }
+            db.ref("products").child(productId).set(product);
+            // db.ref("products").push(product);
+            let myDict = productList;
+            myDict[productId] = product;
+            updateProductList(myDict); updateProductId((productId)+1); updateProdName(''); updateBrand(''); updateCategory(myCategories[0]); updatePrice(''); updateUrl(''); updateDescription('');
         // console.log(product);
-        db.ref("products").push(product);
-        updateProdName(''); updateBrand(''); updateCategory(myCategories[0]); updatePrice(''); updateUrl(''); updateDescription('');
     }
     React.useEffect(()=>{
         let db = fireApp.database();
@@ -66,6 +72,18 @@ function AddProducts ({router}) {
             } setCheck(true);
         }
      })
+
+        db.ref("products").once('value').then((snap) => {
+            let obj = snap.val()
+            let myDict = {}
+            for(let i = 0; i<Object.keys(obj).length; i++){
+                myDict[Object.keys(obj)[i]] = Object.values(obj)[i];
+            }
+            // console.log(myDict);
+            updateProductId((Object.keys(obj).length)+1); updateProductList(myDict);
+            // console.log(Object.values(obj)[0]);
+        })
+
     },[])
     return (
         <div>

@@ -55,7 +55,8 @@ function AddProducts (){
             url: data.urls[i],
             description: data.descriptions[i],
         }
-        db.ref("products").push(product);
+        // db.ref("products").push(product);
+        db.ref("products").child((i+1)).set(product);
     }
 }
 
@@ -63,6 +64,6 @@ function AddCategories() {
     let categories = ["Groceries","Electronics","Sports","Toys","Men","Women","Furniture"]
     db.ref("Categories").child("Categories123").set(categories);
 }
-AddCategories();
+AddProducts();
 
 app.listen(port,()=>{console.log(`listening at localhost:${port}`)})
