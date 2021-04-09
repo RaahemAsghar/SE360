@@ -6,6 +6,8 @@ import AddProducts from './AddProducts.js';
 import {fireApp} from './fireapp.js';
 import AddCategory from './AddCategory.js';
 import Popup from './Popup.js';
+import Delete from './Delete.js';
+import Temp from './temp.js';
 
 // ---------------------------------------- ICONS -------------------------------------------------------
 import { Icon, InlineIcon } from '@iconify/react';
@@ -64,6 +66,10 @@ const useStyles = makeStyles((theme) => ({
             return <AddCategory/>
         } else if (page[0] === "Suggestions") {
             return <Popup router = {setPage}/>
+        } else if(page[0]==="Delete Products") {
+            return <Delete/>
+        } else if(page[0] === "Complaints") {
+            return <Temp/>
         }
         else{
             return <Display content={page[0]}/>

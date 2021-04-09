@@ -44,6 +44,7 @@ modalContent: {
 function Popup ({router}) {
     const classes = useStyles(); 
     return (
+    <div style = {{backgroundColor: 'rgba(0,0,0,0.4)', width:"100%", height:"100%"}}>
         <div className={classes.modalContent}>
   <div className={classes.modalHeader}>
     <h2 style={{fontSize:"24px", textAlign:"center", marginTop:"2.5px"}}>Success</h2>
@@ -56,6 +57,7 @@ function Popup ({router}) {
   <input type = "submit" value = "Return" style = {{width: "80px", height:"38px", backgroundColor: "#5AB9EA", border: "none", borderRadius: "15px",marginLeft:"145px", marginTop:"60px", fontWeight:"bold",borderRadius:"10px"}}></input>
   </div>
   
+</div>
 </div>
     )
 }
