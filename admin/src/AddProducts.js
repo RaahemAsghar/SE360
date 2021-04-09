@@ -56,14 +56,15 @@ function AddProducts ({router}) {
         let db = fireApp.database();
         db.ref("Categories").once('value').then((snap)=>{
         let obj = snap.val();
+        // console.log(Object.values(obj)[0]);
         let data = Object.keys(obj).map((key)=>obj[key]) 
+        // console.log(data[0]);
         updateMyCategories(data[0]);
         if (!check){
             if(data[0].length){
                 updateCategory(data[0][0]);
             } setCheck(true);
         }
-        // if(category===''){updateCategory(myCategories[0]);} // I am assuming that the admin will never delete all of the cateories
      })
     },[])
     return (
