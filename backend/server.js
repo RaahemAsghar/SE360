@@ -2,7 +2,8 @@ let express = require('express')
 let firebase = require('firebase')
 //let bodyParser = require('body-parser');
 let cors = require('cors')
-let path  = require('path')
+let path  = require('path');
+// const { default: AddCategory } = require('../admin/src/AddCategory');
 const port = 8000;
 
 let app = express()
@@ -40,20 +41,29 @@ let data = {
     descriptions : ["Fun Tricycle for kids","Body Spray for Men","Superb Cricket Bat for the best players","14 inch Business Laptop","Glasses for fashion-crazy men","Wooden Study Table for students","Luxury Handbag for Ladies","Portable Kettle","Makeup Kit for Ladies","Sneakers for athletes","Table Lamp for your side Table","Cute and Soft Stuffed Teddy bear","Plain Bread for daily use"],
 }
     
-for (let i = 0; i<data.urls.length; i++){
-    let product = {
-        name: data.names[i],
-        brand_name: data.brand_names[i],
-        category: data.categories[i],
-        price: data.prices[i],
-        stock_left: data.leftOvers[i],
-        total_sold: data.totalSold[i],
-        discount: data.discount[i],
-        rating: data.rating[i],
-        url: data.urls[i],
-        description: data.descriptions[i],
+function AddProducts (){
+    for (let i = 0; i<data.urls.length; i++){
+        let product = {
+            name: data.names[i],
+            brand_name: data.brand_names[i],
+            category: data.categories[i],
+            price: data.prices[i],
+            stock_left: data.leftOvers[i],
+            total_sold: data.totalSold[i],
+            discount: data.discount[i],
+            rating: data.rating[i],
+            url: data.urls[i],
+            description: data.descriptions[i],
+        }
+        // db.ref("products").push(product);
+        db.ref("products").child((i+1)).set(product);
     }
-    db.ref("products").push(product);
 }
+
+function AddCategories() {
+    let categories = ["Groceries","Electronics","Sports","Toys","Men","Women","Furniture"]
+    db.ref("Categories").child("Categories123").set(categories);
+}
+AddProducts();
 
 app.listen(port,()=>{console.log(`listening at localhost:${port}`)})

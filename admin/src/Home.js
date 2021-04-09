@@ -4,6 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import AddProducts from './AddProducts.js';
 import {fireApp} from './fireapp.js';
+import AddCategory from './AddCategory.js';
+import Popup from './Popup.js';
+
+// ---------------------------------------- ICONS -------------------------------------------------------
 import { Icon, InlineIcon } from '@iconify/react';
 import bxsDashboard from '@iconify/icons-bx/bxs-dashboard';
 import outlineInventory2 from '@iconify/icons-ic/outline-inventory-2';
@@ -18,6 +22,7 @@ import analyticsIcon from '@iconify/icons-carbon/analytics';
 import googleAnalytics from '@iconify/icons-mdi/google-analytics';
 import dialogIcon from '@iconify/icons-il/dialog';
 import sparklesIcon from '@iconify/icons-emojione-monotone/sparkles';
+// ----------------------------------------------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -54,7 +59,11 @@ const useStyles = makeStyles((theme) => ({
 
     const choose = () => {
         if(page[0]=="Add Products"){
-            return <AddProducts/>
+            return <AddProducts router = {setPage}/>
+        } else if (page[0] === "Add Category") {
+            return <AddCategory/>
+        } else if (page[0] === "Suggestions") {
+            return <Popup router = {setPage}/>
         }
         else{
             return <Display content={page[0]}/>
@@ -180,7 +189,7 @@ const useStyles = makeStyles((theme) => ({
     return (
         <div className={classes.navbar} style={{height:"650px", width: "170px"}} >
             <div>
-                <p style = {{fontFamily: "Arial",fontSize:"1.0em",fontWeight: "Bold",paddingLeft:"3px",marginBottom:"24px"}}>Admin Panel</p>
+                <p style = {{fontFamily: "Arial",fontSize:"1.0em",fontWeight: "Bold",paddingLeft:"20px",marginBottom:"24px"}}>Admin Panel</p>
                 {menu.map( item => <Box display='flex'> <div><Icon icon={item.icon} style={{color: (textColor==item.text ? "orange" :"#C1C8E4"), fontSize: '20px', flexDirection:"row", marginBottom: "18px"}}/> </div> <div><p onClick = {handleClick} className = {classes.text} style={{fontSize: "0.9em", cursor:"pointer", paddingLeft:"13px",marginBottom: "18px", flexDirection:"row", color: (textColor==item.text ? "orange" :"white")}}>{item.text}</p></div></Box>)}
                 {/* {icons ? icons.map((val,index)=>(<div><Icon icon={val} style={{color: '#C1C8E4', fontSize: '20px', flexDirection:"row", marginBottom: "18px"}} /></div>)) : <h5></h5>}
                 {options ? options.map((val,index)=>(<p onClick = {handleClick} className = {classes.text} style={{fontSize: "0.9em", cursor:"pointer", paddingLeft:"28px",marginBottom: "18px", flexDirection:"row",transform:"translateX(0px)", color: (textColor==val ? "orange" :"white")}} key={index}>{val}</p>)) : <h5></h5>} */}
