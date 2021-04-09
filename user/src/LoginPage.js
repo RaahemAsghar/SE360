@@ -22,6 +22,7 @@ function Login({set,router}){
 
     let repass = ""
     const handleSignIn = (event)=>{
+        event.preventDefault()
         if(temp["password"] != repass){
             setMsg("Passwords did not match")
         }else{
@@ -42,18 +43,17 @@ function Login({set,router}){
         event.target.reset()
     }
     const handleLogin = (event) => {
+        event.preventDefault()
         db.ref("user").once('value').then((snap)=>{
             let obj = snap.val();
             let data = Object.keys(obj).map(key=>{
                 obj[key].id = key
                 return obj[key]
             })
-            data = data.filter(ele=>ele.email==login.email && ele.password==login.password)
-            if(data.length > 0){
-                setMsg2("You are logged in")
-                set([true,data[0].id])
+            let newdata = data.filter(ele=>(ele.email==login.email && ele.password==login.password))
+            if(newdata.length > 0){
+                set([true,newdata[0].id])
                 router(["homescreen","null"])
-
                 
             }
             else{
@@ -71,7 +71,7 @@ function Login({set,router}){
             </Grid>
             <Grid item xs={12}></Grid>
             <Grid style={{marginLeft:"9%", marginTop:"-26%",borderRight:"1px solid #355093",marginBottom:"5%",textAlign:"center"}} item xs={5}>
-                <form onSubmit={handleLogin} style={{transform:"translateY(50px)"}}>
+                <form action="#" onSubmit={handleLogin} style={{transform:"translateY(50px)"}}>
                     <h5>{msg2}</h5>
                     <h4 style={{color:"#355093"}}>Login</h4>
                     <input onChange={event=>{login["email"] = event.target.value}} style={{width:"60%",borderRadius:"15px",height:"26px",border:"1px solid black"}} type="email" placeholder="  Email" required></input><br></br>
@@ -80,7 +80,7 @@ function Login({set,router}){
                 </form>
             </Grid>
             <Grid style={{marginTop:"-26%",textAlign:"center"}} item xs={5}>
-                <form onSubmit={handleSignIn}>
+                <form action="#" onSubmit={handleSignIn}>
                     <h5>{msg}</h5>
                     <h4 style={{color:"#355093"}}>Sign Up</h4>
                     <input onChange={event=>{temp["name"] = event.target.value}} style={{width:"60%",borderRadius:"15px",height:"26px",border:"1px solid black"}}type="text" placeholder="  Name" required ></input><br></br>
