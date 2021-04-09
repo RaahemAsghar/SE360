@@ -30,18 +30,17 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-function ShoppingCart({router,navHighLight,removeFromCart,addToCart,items}){
+function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,items}){
     const route = ()=>{
         router(["homescreen","null"]);
         navHighLight("null");
     }
     const classes = useStyles();
-    console.log(items)
+    let db = fireApp.database();
 
     let [productList,setList] = React.useState(undefined)
 
     React.useEffect(()=>{
-        let db = fireApp.database();
         db.ref("products").once('value').then((snap)=>{
         let obj = snap.val();
         let data = Object.keys(obj).map((key)=>{
@@ -70,6 +69,43 @@ function ShoppingCart({router,navHighLight,removeFromCart,addToCart,items}){
      })
     },[items])
 
+    let trans = {
+        products: [],
+        bookers_email: "",
+        recepient_name: "",
+        address: "",
+        city: "",
+        phone:"",
+        user_id:""
+
+    }
+    const [msg,setmsg] = React.useState("")
+    const checkout = (event)=>{
+        event.preventDefault()
+        if(log[0]){
+            db.ref("user").once('value').then(snap=>{
+                let obj = snap.val()
+                obj = obj[log[1]]
+                trans["bookers_email"] = obj["email"]
+                let temp_obj = {}
+                items.forEach(x=>{
+                    let temp2 = items.filter(y=>x==y)
+                    temp_obj[x] = temp2.length
+                })
+                trans["products"] = temp_obj
+                trans["user_id"] = log[1]
+                db.ref("pendingOrder").push(trans)
+                setmsg("Your orders have been placed successfully!")
+                setTimeout(reset,2000)
+            })
+        }else{
+            setmsg("Please go the accounts and log in first")
+            setTimeout(()=>setmsg(""),5000)
+        }
+        event.target.reset()
+
+    }
+
     return (
         <>
         {productList ? <Grid item container xs={12}>
@@ -81,14 +117,13 @@ function ShoppingCart({router,navHighLight,removeFromCart,addToCart,items}){
                 <div style={{marginTop:"-4%",textAlign:"center",backgroundColor:"#355093",color:"white",height:"40px"}}>
                     <h4 style={{transform:"translateY(33%)"}}> Fill out your checkout details here</h4>
                 </div>
-                <form>
-                    <h4 style={{marginLeft:"10%"}}>Contact Information</h4>
-                    <input className={classes.in} type="text" placeholder=" Email"></input>
+                <form onSubmit={checkout}>
+                    <h4 style={{marginLeft:"10%"}}>{msg}</h4>
                     <h4 style={{marginLeft:"10%"}}>Shipping Information</h4>
-                    <input className={classes.in} type="text" placeholder=" Full Name"></input>
-                    <input style={{marginTop:"5%"}} className={classes.in} type="text" placeholder=" shipping Address"></input>
-                    <input style={{marginTop:"5%"}} className={classes.in} type="text" placeholder=" City"></input>
-                    <input style={{marginTop:"5%"}} className={classes.in} type="text" placeholder=" Phone"></input><br/>
+                    <input onChange={(event)=>{trans["recepient_name"]=event.target.value}} className={classes.in} type="text" placeholder=" Full Name" required></input>
+                    <input onChange={(event)=>{trans["address"]=event.target.value}} style={{marginTop:"5%"}} className={classes.in} type="text" placeholder=" shipping Address" required></input>
+                    <input onChange={(event)=>{trans["city"]=event.target.value}} style={{marginTop:"5%"}} className={classes.in} type="text" placeholder=" City" required></input>
+                    <input onChange={(event)=>{trans["phone"]=event.target.value}} style={{marginTop:"5%"}} className={classes.in} type="text" placeholder=" Phone" required></input><br/>
                     <button onClick={route} style={{cursor:"pointer",border:"none",backgroundColor:"#84CEEB",padding:"4px",transform:"translateY(30px) translateX(70%)"}}>Homepage</button>
                     <button style={{cursor:"pointer",border:"none",backgroundColor:"#84CEEB",padding:"4px",transform:"translateY(30px)translateX(280%)"}}>Ship Products</button>
                 </form>

@@ -14,15 +14,12 @@ import Login from './LoginPage.js'
 import Settings from './accountsettings.js'
 import Search from './search.js'
 import {fireApp} from './fireapp.js'
+import Salespage from './sale.js'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
       },
-    footer:{
-        backgroundColor: '#C3EAFA',
-        textAlign: "center",
-    },
     navbar:{
         backgroundColor: "#355093",
         color: "white",
@@ -74,16 +71,16 @@ function Homepage() {
     }
     const choose = () => {
         if(focus[0] === "homescreen"){
-            return <Content addToCart={addItems} router={changeFocus}/>
+            return <Content  addToCart={addItems} router={changeFocus}/>
         }
         else if(focus[0] === "category"){
-            return <DisplayCategory addToCart={addItems} label={focus[1]} router={changeFocus} navHighLight={setColor}/>
+            return <DisplayCategory  addToCart={addItems} label={focus[1]} router={changeFocus} navHighLight={setColor}/>
         }
         else if(focus[0] === "cart"){
-            return <ShoppingCart router={changeFocus} removeFromCart={removeItems} addToCart={addItems} items={cartItems} navHighLight={setColor}/>
+            return <ShoppingCart reset={()=>setItems([])} log={logged} router={changeFocus} removeFromCart={removeItems} addToCart={addItems} items={cartItems} navHighLight={setColor}/>
         }
         else if(focus[0] === "productpage"){
-            return <ProductPage addToCart={addItems} id={focus[1]}/>
+            return <ProductPage router={changeFocus} current={focus[2]} addToCart={addItems} id={focus[1]}/>
         }
         else if(focus[0] === "login"){
             return <Login router={changeFocus} set={changeLog}/>
@@ -119,15 +116,52 @@ function Homepage() {
                 </Box>
                 
                 <Box mt={-4}>
-                    <Grid item xs={12}>
-                        <div className={classes.footer} style={{height:"200px"}}>
-                            <h1>FOOTER</h1>
-                        </div>
+                    <Grid container style={{marginTop:"3%",backgroundColor: '#C3EAFA',height:"200px"}} item xs={12}>
+                        <Footer router={changeFocus}/>
                     </Grid>
                 </Box>
 
             </Grid>
         </div>
+    )
+}
+
+function Footer({router}){
+    return(
+        <>
+        <Grid item xs={3}>
+            <h1 style={{marginTop:"2%",marginLeft:"15%",color:"#355093"}}>StoreX</h1>
+            <div style={{marginLeft:"15%",lineHeight:"0",color:"#355093"}}>
+                <h5>Address:</h5>
+                <h5>DHA Phase 5, Khayaban-e-Jinnah Road،</h5>
+                <h5>Opposite Sector U Lahore, Punjab 54792</h5>
+                <h5>Contact Number: 090078601</h5>
+                <h5>Email: info@storeX.pk</h5>
+                <h5>Copyright © StoreX 2021</h5>
+            </div>
+        </Grid>
+        <Grid item xs={3}>
+        <h4 style={{marginLeft:"15%",color:"#355093"}}>Help and Information</h4>
+            <div style={{marginLeft:"15%",lineHeight:"0.1",color:"#355093"}}>
+                <h5>Address:</h5>
+                <h5>DHA Phase 5, Khayaban-e-Jinnah Road،</h5>
+            </div>
+        </Grid>
+        <Grid item xs={3}>
+        <h4 style={{marginLeft:"25%",color:"#355093"}}>Quick Links</h4>
+            <div style={{marginLeft:"25%",lineHeight:"0.1",color:"#355093"}}>
+                <h5 onClick={()=>{router(["homescreen","null"])}} style={{cursor:"pointer"}}>Home</h5>
+                <h5 onClick={()=>{router(["cart","null"])}} style={{cursor:"pointer"}}>Cart</h5>
+            </div>
+        </Grid>
+        <Grid item xs={3}>
+        <h4 style={{marginLeft:"5%",color:"#355093"}}>Follows us on</h4>
+            <div style={{marginLeft:"5%",lineHeight:"0.1",color:"#355093"}}>
+                <h5>Facebook</h5>
+                <h5>Instagram</h5>
+            </div>
+        </Grid>
+        </>
     )
 }
 
@@ -154,8 +188,8 @@ function Header({router,navHighLight}){
         <Grid item xs={4}>
             <div style={{textAlign:"end",transform:"translateY(10px)"}}>
                 <h3 onClick={()=>route("homescreen")} style={{display:"inline-block",color:"#355093",transform:"translateY(-5px)",cursor:"pointer"}}>Home</h3>
-                <h3 style={{display:"inline-block",marginLeft:"5%",color:"#EE1313",fontStyle:"italic",transform:"translateY(-5px)",cursor:"pointer"}}>Sale</h3>
-                <Heart fontSize="large" style={{transform:"translateY(8px)",marginLeft:"5%",cursor:"pointer"}}/>  
+                <h3 style={{display:"inline-block",marginLeft:"5%",color:"#EE1313",fontStyle:"italic",transform:"translateY(-5px)",cursor:"not-allowed"}}>Sale</h3>
+                <Heart fontSize="large" style={{transform:"translateY(8px)",marginLeft:"5%",cursor:"not-allowed"}}/>  
                 <Cart onClick={()=>route("cart")} fontSize="large" style={{transform:"translateY(8px)",marginLeft:"5%",marginRight:"5%",cursor:"pointer"}}/>
             </div>
         </Grid>
@@ -209,8 +243,8 @@ function Navbar({router,navHighLight,currentHighLight,checklog}){
         
         <div>
             <h4>Contact Us</h4>
-            <h5 style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer"}}>Complaints</h5>
-            <h5 style={{paddingLeft:"8px",cursor:"pointer",marginTop:"-10px"}}>Suggestions</h5>
+            <h5 style={{paddingLeft:"8px",marginTop:"-10px",cursor:"not-allowed"}}>Complaints</h5>
+            <h5 style={{paddingLeft:"8px",cursor:"not-allowed",marginTop:"-10px"}}>Suggestions</h5>
         </div>
     </div>
     )

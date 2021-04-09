@@ -16,7 +16,7 @@ function Settings(){
             <input style={{width:"60%",borderRadius:"15px",height:"26px",border:"1px solid black"}} type="text" placeholder="  123 Example Street"></input>
             <h4 style={{color:"#355093"}}>Password</h4>
             <input style={{width:"60%",borderRadius:"15px",height:"26px",border:"1px solid black"}} type="text"></input><br></br>
-            <button style={{transform:"translateY(30px)",border:"none",backgroundColor:"#84CEEB",cursor:"pointer",width:"80px",height:"25px",borderRadius:"10px"}}><strong>Update</strong></button>
+            <button style={{transform:"translateY(30px)",border:"none",backgroundColor:"#84CEEB",cursor:"not-allowed",width:"80px",height:"25px",borderRadius:"10px"}}><strong>Update</strong></button>
         </Grid>
 
         <Grid item style={{marginTop:"-20%"}} xs={5}>
@@ -32,7 +32,7 @@ function Settings(){
             information from our database. That means that you will no longer be able
             to receive any discount offers from us or purchase any items online from our
             website till you make a new account again</h4>
-            <button style={{border:"none",backgroundColor:"#84CEEB",cursor:"pointer",width:"130px",height:"25px",borderRadius:"10px"}}><strong>Delete Account</strong></button>
+            <button style={{border:"none",backgroundColor:"#84CEEB",cursor:"not-allowed",width:"130px",height:"25px",borderRadius:"10px"}}><strong>Delete Account</strong></button>
         </div>
     </Grid>
     )

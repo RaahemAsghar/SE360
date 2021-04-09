@@ -7,12 +7,13 @@ import AddCart from '@material-ui/icons/AddShoppingCart';
 import Arrow from '@material-ui/icons/ArrowForward';
 import {fireApp} from './fireapp.js'
 import Load from '@material-ui/core/CircularProgress';
+import Back from '@material-ui/icons/ArrowBack';
 
 function Content({router,addToCart}){
 
     const route2 = (event)=>{
         let id = event.target.dataset.id;
-        router(["productpage",id]);
+        router(["productpage",id,["homescreen"]]);
     }
 
     const [TopSellingList,setTop] = React.useState(undefined) //plug into database
@@ -69,7 +70,9 @@ function Content({router,addToCart}){
             <h4 style={{marginTop:"3%"}}>Top Selling Products</h4>
         </Grid>
 
-        <Grid item xs={1}></Grid>
+        {startindexTop!=0 ? <Grid item xs={1}>
+            <Back onClick={()=>{if(startindexTop!=0){setIndexTop(startindexTop-1)}}} style={{cursor:"pointer",fontSize:"60px",color:"#355093"}}/>
+        </Grid> :  <Grid item xs={1}></Grid>}
 
         {
         topFour.map((obj,index)=>(
@@ -105,7 +108,9 @@ function Content({router,addToCart}){
                 <h4 style={{transform:"translateY(-20px)"}}>Products on Sale</h4>
             </Grid>
 
-            <Grid item xs={1}></Grid>
+            {startindexSale!=0 ? <Grid item xs={1}>
+                <Back onClick={()=>{if(startindexSale!=0){setIndexSale(startindexSale-1)}}} style={{cursor:"pointer",fontSize:"60px",color:"#355093"}}/>
+            </Grid> : <Grid item xs={1}></Grid>}
 
             {
             SaleFour.map((obj,index)=>(<Slide key={index} direction="left" timeout={600} in><Grid item xs={2}>
@@ -118,9 +123,10 @@ function Content({router,addToCart}){
                         <Rating size="small" style={{transform:"translateY(-43px)"}} name="read-only" value={obj.rating} readOnly />
                     </div>
                     <div style={{transform:"translateY(-30px)"}}>
-                        <AddCart onClick={(event)=>addToCart(event.target.dataset.id)} data-id={obj.id} style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}}fontSize="small"/>
+                        <AddCart onClick={()=>addToCart(obj.id)} data-id={obj.id} style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}}fontSize="small"/>
                         <Heart style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}} fontSize="small"/>
-                        <h5 style={{display:"inline",marginLeft:"24%"}}><strong>RS:{obj.price}</strong></h5>
+                        <h5 style={{display:"inline",marginLeft:"24%"}}><strong>RS:{Math.round(obj.price*(1-obj.discount/100))}</strong></h5>
+                        <h6 style={{textDecoration:"line-through",color:"red",transform:"translateX(57.5%) translateY(-200%)"}}><strong>RS:{obj.price}</strong></h6>
                     </div>
                 </div>
             </Grid></Slide>))

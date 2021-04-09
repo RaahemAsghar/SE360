@@ -6,7 +6,7 @@ import { Grid } from '@material-ui/core';
 import {fireApp} from './fireapp.js'
 import Load from '@material-ui/core/CircularProgress';
 
-function ProductPage({id,addToCart}){
+function ProductPage({id,addToCart,current,router}){
     const [product,setProduct] = React.useState(undefined)
     
     React.useEffect(()=>{
@@ -24,7 +24,7 @@ function ProductPage({id,addToCart}){
         {product ? <Grid container style={{marginTop:"5%"}} item xs={12}>
             <Grid item style={{marginLeft:"20%",marginTop:"5%",height:"70%"}} xs={3}>
                 <img src={product.url} width="90%" height="70%"></img>
-                {/* <Arrow style={{cursor:"pointer",color:"#355093",fontSize:"50px",position:"absolute",top:"68%",left:"33%"}}></Arrow> */}
+                <Arrow onClick={()=>router(current)} style={{cursor:"pointer",color:"#355093",fontSize:"50px",position:"absolute",top:"18%",left:"25%"}}></Arrow>
             </Grid>
             <Grid item style={{backgroundColor:"#C1C8E4",height:"70%"}} xs={3}>
                 <div style={{marginLeft:"5%"}}>

@@ -8,14 +8,14 @@ import Load from '@material-ui/core/CircularProgress';
 import {fireApp} from './fireapp.js'
 
 
-function DisplayCategory({addToCart,label, router,navHighLight}){
+function DisplayCategory({addToCart,router,label,navHighLight}){
     const route = (event)=>{
         router(["homescreen","null"]);
         navHighLight("null");
     }
     const route2 = (event)=>{
         let id = event.target.dataset.id;
-        router(["productpage",id]);
+        router(["productpage",id,["category",label]]);
     }
 
     const [ProductList,setList] = React.useState(undefined)

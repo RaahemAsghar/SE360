@@ -7,6 +7,7 @@ import Arrow from '@material-ui/icons/ArrowForward';
 import {fireApp} from './fireapp.js'
 import Load from '@material-ui/core/CircularProgress';
 
+
 function Search({addToCart,router,navHighLight,query}){
     const route = (event)=>{
         router(["homescreen","null"]);
@@ -14,7 +15,7 @@ function Search({addToCart,router,navHighLight,query}){
     }
     const route2 = (event)=>{
         let id = event.target.dataset.id;
-        router(["productpage",id]);
+        router(["productpage",id,["search",query]]);
     }
 
     const [ProductList,setList] = React.useState(undefined)
