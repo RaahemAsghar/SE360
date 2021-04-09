@@ -80,9 +80,16 @@ function AddProducts ({router}) {
                 myDict[Object.keys(obj)[i]] = Object.values(obj)[i];
             }
             // console.log(myDict);
-            updateProductId((Object.keys(obj).length)+1); updateProductList(myDict);
+            let tempId = (Object.keys(myDict))[Object.keys(myDict).length-1]
+            tempId++;
+            // console.log(tempId);
+            updateProductId(tempId); updateProductList(myDict);
+            // updateProductId((Object.keys(obj).length)+1); updateProductList(myDict);
             // console.log(Object.values(obj)[0]);
         })
+
+        // let tempProd = db.ref("products/1");
+        // console.log(tempProd);
 
     },[])
     return (
