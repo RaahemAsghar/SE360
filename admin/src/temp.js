@@ -23,26 +23,31 @@ function Temp () {
             let obj = snap.val();
             console.log(obj);
             if(obj!= null){
-                let majList = []; let minList = [];
-                let headerNames = ["Product ID","Product Name","Stock","Price"];
-                let dataNames = [product,obj["name"],obj["stock_left"],obj["price"]];
-                let headerCells = []; let header = [];
-                let dataCells = []; let data = [];
-                for(let i = 0; i<headerNames.length; i++){
-                    headerCells.push(<th style = {{border: "1px solid #828282"}}>{headerNames[i]}</th>);
+                if(obj["name"].toLowerCase()===productName.toLowerCase()){
+                    let majList = []; let minList = [];
+                    let headerNames = ["Product ID","Product Name","Stock","Price"];
+                    let dataNames = [product,obj["name"],obj["stock_left"],obj["price"]];
+                    let headerCells = []; let header = [];
+                    let dataCells = []; let data = [];
+                    for(let i = 0; i<headerNames.length; i++){
+                        headerCells.push(<th style = {{border: "1px solid #828282"}}>{headerNames[i]}</th>);
+                    }
+                    header.push(<tr style = {{backgroundColor: "#c1c8e4", border: "1px solid #828282", height:"40px"}}>{headerCells}</tr>);
+                    for(let i = 0; i<dataNames.length; i++){
+                        dataCells.push(<td style = {{border: "1px solid #828282"}}>{dataNames[i]}</td>)
+                    }
+                    data.push(<tr style = {{border: "1px solid #828282", height:"40px"}}>{dataCells}</tr>);
+                    let tempList = []; tempList.push(header); tempList.push(data);
+                    minList.push(<table style = {{border: "1px solid #828282", marginLeft: "90px", marginTop: "20px", width:"820px", textAlign: "center"}}>{tempList}</table>);
+                    let tempList2 = []; tempList2.push(<h4 style = {{marginTop: "35px", fontFamily: "Arial", fontWeight: "Bold", marginLeft: "90px"}}>Product Information</h4>);
+                    majList.push(tempList2); majList.push(minList);
+                    setTable(majList);
+                } else {
+                    setTable([])
                 }
-                header.push(<tr style = {{backgroundColor: "#c1c8e4", border: "1px solid #828282", height:"40px"}}>{headerCells}</tr>);
-                for(let i = 0; i<dataNames.length; i++){
-                    dataCells.push(<td style = {{border: "1px solid #828282"}}>{dataNames[i]}</td>)
-                }
-                data.push(<tr style = {{border: "1px solid #828282", height:"40px"}}>{dataCells}</tr>);
-                let tempList = []; tempList.push(header); tempList.push(data);
-                minList.push(<table style = {{border: "1px solid #828282", marginLeft: "90px", marginTop: "20px", width:"820px", textAlign: "center"}}>{tempList}</table>);
-                let tempList2 = []; tempList2.push(<h4 style = {{marginTop: "35px", fontFamily: "Arial", fontWeight: "Bold", marginLeft: "90px"}}>Product Information</h4>);
-                majList.push(tempList2); majList.push(minList);
-                setTable(majList);
-                console.log(majList);
-                // majList.push();
+            }
+            else {
+                setTable([])
             }
         });
     }
@@ -76,7 +81,7 @@ function Temp () {
             </div>
             </form>
             <div>
-                {/* <h4 style = {{marginTop: "35px", fontFamily: "Arial", fontWeight: "Bold", marginLeft: "90px"}}>Product Information</h4>
+                <h4 style = {{marginTop: "35px", fontFamily: "Arial", fontWeight: "Bold", marginLeft: "90px"}}>Product Information</h4>
                 <table style = {{border: "1px solid #828282", marginLeft: "90px", marginTop: "20px", width:"820px", textAlign: "center"}}>
                     <tr style = {{backgroundColor: "#c1c8e4", border: "1px solid #828282", height:"40px"}}>
                         <th style = {{border: "1px solid #828282"}}>Product ID</th>
@@ -90,8 +95,9 @@ function Temp () {
                         <td style = {{border: "1px solid #828282"}}>24</td>
                         <td style = {{border: "1px solid #828282"}}>890</td>
                     </tr>
-                </table> */}
-                {myTable()}
+                </table>
+                <input type = "submit" value = "Delete Product" style = {{width: "120px", height:"38px", backgroundColor: "#5AB9EA", border: "none", borderRadius: "15px", marginLeft: "90px", marginTop: "40px"}}></input>
+                {/* {myTable()} */}
             </div>
         </div>
     )

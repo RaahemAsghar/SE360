@@ -64,7 +64,7 @@ function AddCategories() {
     let categories = ["Groceries","Electronics","Sports","Toys","Men","Women","Furniture"]
     db.ref("Categories").child("Categories123").set(categories);
 }
-AddProducts();
+// AddProducts();
 // db.ref("products/16").remove();
 
 app.listen(port,()=>{console.log(`listening at localhost:${port}`)})

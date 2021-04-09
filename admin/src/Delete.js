@@ -2,10 +2,11 @@ import React from 'react';
 import { Box, Grid } from '@material-ui/core';
 import {fireApp} from './fireapp.js';
 
-function Delete () {
+function Delete ({router}) {
     let [productId, updateProductId] = React.useState('');
     let [productName, updateProductName] = React.useState('');
     let [table,setTable] = React.useState([]);
+    // let [deleted,setDeleted] = React.useState(false);
     
     const myTable = () => {
         return table;
@@ -16,15 +17,47 @@ function Delete () {
     const nameClick = (event) => {
         updateProductName(event.target.value);
     }
+    const deleteProduct = (dir) => {
+        let db = fireApp.database();
+        db.ref(dir).remove();
+        // setDeleted(true);
+    }
     const findProduct = (product) => {
         let db = fireApp.database();
         let dir = 'products/' + product;
         db.ref(dir).once('value').then((snap) => {
             let obj = snap.val();
+            console.log(obj);
             if(obj!= null){
-                let myList = [];
-                myList.push(<h1>Hello World</h1>);
-                setTable(myList);
+                if(obj["name"].toLowerCase()===productName.toLowerCase()){
+                    let majList = []; let minList = [];
+                    let headerNames = ["Product ID","Product Name","Stock","Price"];
+                    let dataNames = [product,obj["name"],obj["stock_left"],obj["price"]];
+                    let headerCells = []; let header = [];
+                    let dataCells = []; let data = [];
+                    for(let i = 0; i<headerNames.length; i++){
+                        headerCells.push(<th style = {{border: "1px solid #828282"}}>{headerNames[i]}</th>);
+                    }
+                    header.push(<tr style = {{backgroundColor: "#c1c8e4", border: "1px solid #828282", height:"40px"}}>{headerCells}</tr>);
+                    for(let i = 0; i<dataNames.length; i++){
+                        dataCells.push(<td style = {{border: "1px solid #828282"}}>{dataNames[i]}</td>)
+                    }
+                    data.push(<tr style = {{border: "1px solid #828282", height:"40px"}}>{dataCells}</tr>);
+                    let tempList = []; tempList.push(header); tempList.push(data);
+                    minList.push(<table style = {{border: "1px solid #828282", marginLeft: "90px", marginTop: "20px", width:"820px", textAlign: "center"}}>{tempList}</table>);
+                    let tempList2 = []; tempList2.push(<h4 style = {{marginTop: "35px", fontFamily: "Arial", fontWeight: "Bold", marginLeft: "90px"}}>Product Information</h4>);
+                    let tempList3 = [<input type = "submit" value = "Delete Product" onClick = {deleteProduct(dir)} style = {{width: "120px", height:"38px", backgroundColor: "#5AB9EA", border: "none", borderRadius: "15px", marginLeft: "90px", marginTop: "40px"}}></input>]
+                    majList.push(tempList2); majList.push(minList); majList.push(tempList3);
+                    setTable(majList);
+                } else {
+                    setTable([])
+                }
+            } 
+            // else if(deleted) {
+            //     setTable([]); setDeleted(false);
+            // }
+            else {
+                setTable([])
             }
         });
     }
