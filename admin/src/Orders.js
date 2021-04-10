@@ -29,7 +29,7 @@ function Orders ({router,allOrders}) {
             // console.log(length);
             let table = MakeTable(majList);
             // console.log(table);
-            router(["Single Order", orderNo, emailId, table,length]);
+            router(["Single Order", orderNo, emailId, table,length,allOrders]);
         })
     }
 
@@ -55,7 +55,11 @@ function Orders ({router,allOrders}) {
     )
 }
 
-function SingleOrder ({details}) {
+function SingleOrder ({router,details}) {
+    const handleGoBack = () => {
+        router(details[5]);
+    }
+    
     React.useEffect(() => {
         let greyHeight = details[4];
         greyHeight = greyHeight + "px";
@@ -71,6 +75,15 @@ function SingleOrder ({details}) {
                 </div>
                 {details[3]}
             </div>
+            <Grid container xs = {12}>
+                <Grid item xs = {4}>
+                    <input type = "submit" value = "Go Back to Previous page" onClick = {handleGoBack} style = {{marginTop: "30px", width: "200px", height:"38px", backgroundColor: "#5AB9EA", border: "none", borderRadius: "15px"}}></input>
+                </Grid>
+                <Grid item xs = {4}></Grid>
+                <Grid item xs = {4}>
+                <input type = "submit" value = "Mark as Delivered" style = {{marginTop: "30px", marginLeft:"35px", width: "200px", height:"38px", backgroundColor: "#5AB9EA", border: "none", borderRadius: "15px", cursor: "not-allowed"}}></input>
+                </Grid>
+            </Grid>
         </div>
     )
 }

@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
         } else if(page[0]==="Orders"){
             return <Orders router = {setPage} allOrders = {page}/>
         } else if(page[0] === "Single Order") {
-            return <SingleOrder details = {page}/>
+            return <SingleOrder router = {setPage} details = {page}/>
         }
         else{
             return <Display content={page[0]}/>
