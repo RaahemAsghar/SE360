@@ -7,7 +7,7 @@ import {fireApp} from './fireapp.js';
 import AddCategory from './AddCategory.js';
 import Popup from './Popup.js';
 import Delete from './Delete.js';
-// import Temp from './temp.js';
+import Temp from './temp.js';
 
 // ---------------------------------------- ICONS -------------------------------------------------------
 import { Icon, InlineIcon } from '@iconify/react';
@@ -204,9 +204,9 @@ const useStyles = makeStyles((theme) => ({
 
   function Display ({content}) {
     // content = JSON.stringify(content)
-    let str = "This is the "+ content + " page";  
+    let str = "Error 404: "+ content + " page is under construction";  
     return (
-          <h1>{str}</h1>
+          <h3 style = {{fontFamily: "Arial", marginLeft: "90px", marginTop: "25px", fontWeight: "bold"}}>{str}</h3>
       )
   }
 

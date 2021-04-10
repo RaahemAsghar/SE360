@@ -17,9 +17,11 @@ function Delete ({router}) {
     const nameClick = (event) => {
         updateProductName(event.target.value);
     }
-    const deleteProduct = (dir) => {
+    const deleteProduct = () => {
         let db = fireApp.database();
-        db.ref(dir).remove();
+        db.ref("products/"+productId).remove();
+        setTable([]);
+        // router(["Delete Products"])
         // setDeleted(true);
     }
     const findProduct = (product) => {
@@ -46,7 +48,7 @@ function Delete ({router}) {
                     let tempList = []; tempList.push(header); tempList.push(data);
                     minList.push(<table style = {{border: "1px solid #828282", marginLeft: "90px", marginTop: "20px", width:"820px", textAlign: "center"}}>{tempList}</table>);
                     let tempList2 = []; tempList2.push(<h4 style = {{marginTop: "35px", fontFamily: "Arial", fontWeight: "Bold", marginLeft: "90px"}}>Product Information</h4>);
-                    let tempList3 = [<input type = "submit" value = "Delete Product" onClick = {deleteProduct(dir)} style = {{width: "120px", height:"38px", backgroundColor: "#5AB9EA", border: "none", borderRadius: "15px", marginLeft: "90px", marginTop: "40px"}}></input>]
+                    let tempList3 = [<input type = "submit" value = "Delete Product" onClick = {deleteProduct} style = {{width: "120px", height:"38px", backgroundColor: "#5AB9EA", border: "none", borderRadius: "15px", marginLeft: "90px", marginTop: "40px"}}></input>]
                     majList.push(tempList2); majList.push(minList); majList.push(tempList3);
                     setTable(majList);
                 } else {
