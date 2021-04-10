@@ -3,12 +3,11 @@ import { Box, Grid } from '@material-ui/core';
 import {fireApp} from './fireapp.js';
 
 function Orders ({router,allOrders}) {
-    let products = {4:2,5:1,6:5,7:1,10:2,12:1,13:2}; let orderNo = 435; let emailId = "22100027@lums.edu.pk";
-    let [details, updateDetails] = React.useState([]);
+    // let products = {4:2,5:1,6:5,7:1,10:2,12:1,13:2}; let orderNo = 435; let emailId = "22100027@lums.edu.pk";
+    // let [details, updateDetails] = React.useState([]);
     // let products = {4:2}
     const handleClick = (event) => {
-        let text = event.target.innerText
-        console.log(text);
+        let orderNo = event.target.innerText; let emailId = allOrders[1][orderNo]["bookers_email"]; let products = allOrders[1][orderNo]["products"];
         let db = fireApp.database();
         db.ref("products").once('value').then((snap) => {
             let obj = snap.val();
@@ -67,7 +66,7 @@ function SingleOrder ({details}) {
             <div style = {{marginTop: "40px"}}></div>
             <div id = "greyArea" style = {{backgroundColor: "#DBDFF0", borderRadius: "15px", width: "860px"}}>
                 <div style = {{fontFamily: "Arial", textIndent: "15px"}}>
-                    <p style = {{position: "relative", fontWeight: "bold", top: "20px"}}>Order number: {details[1]}</p>
+                    <p style = {{position: "relative", fontWeight: "bold", top: "20px"}}>Order ID: {details[1]}</p>
                     <p style = {{marginTop: "25px"}}>Email Id: {details[2]}</p>
                 </div>
                 {details[3]}
