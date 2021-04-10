@@ -53,9 +53,8 @@ function Search({addToCart,router,navHighLight,query}){
 
     return(
         <>
-
-            {ProductList ? <Grid container alignItems="center" style={{marginLeft:"10%",marginRight:"15%",marginTop:"5%",marginBottom:"5%"}} item xs={12} spacing={3}>
-
+            <h3 style={{position:"absolute",top:"10%",left:"18.5%",color:"#355093"}}>Search results for "{query}"</h3>
+            {ProductList ? <Grid container style={{marginLeft:"10%",marginRight:"15%",marginTop:"5%",marginBottom:"5%"}} item xs={12} spacing={3}>
             {
             display.map((obj,index)=>(
                 

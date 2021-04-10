@@ -99,7 +99,7 @@ function Homepage() {
 
                 <Box mt={-2.5} height="100%" width="100%">
                      <Grid className={classes.header} alignItems="center" container>
-                         <Header router={changeFocus} navHighLight={setColor}/>
+                         <Header itms={cartItems} router={changeFocus} navHighLight={setColor}/>
                     </Grid>
                 </Box>
 
@@ -117,7 +117,7 @@ function Homepage() {
                 
                 <Box mt={-4}>
                     <Grid container style={{marginTop:"3%",backgroundColor: '#C3EAFA',height:"200px"}} item xs={12}>
-                        <Footer navHighLight={setColor} router={changeFocus}/>
+                        <Footer  navHighLight={setColor} router={changeFocus}/>
                     </Grid>
                 </Box>
 
@@ -165,7 +165,7 @@ function Footer({router,navHighLight}){
     )
 }
 
-function Header({router,navHighLight}){
+function Header({router,itms,navHighLight}){
     const classes = useStyles();
     const [inval,setval] = React.useState('')
     const route = (label)=>{
@@ -191,6 +191,10 @@ function Header({router,navHighLight}){
                 <h3 style={{display:"inline-block",marginLeft:"5%",color:"#EE1313",fontStyle:"italic",transform:"translateY(-5px)",cursor:"not-allowed"}}>Sale</h3>
                 <Heart fontSize="large" style={{transform:"translateY(8px)",marginLeft:"5%",cursor:"not-allowed"}}/>  
                 <Cart onClick={()=>route("cart")} fontSize="large" style={{transform:"translateY(8px)",marginLeft:"5%",marginRight:"5%",cursor:"pointer"}}/>
+                <div style={{backgroundColor:"#355093",top:"5%",left:"93%",position:"absolute",color:"white",height:"22%",width:"18px", borderRadius:"8px",textAlign:"center"}}>
+                    <h6 style={{marginTop:"-7%"}}>{itms.length}</h6>
+                </div>
+                
             </div>
         </Grid>
     </>

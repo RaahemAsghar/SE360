@@ -78,7 +78,7 @@ function Content({router,addToCart}){
         topFour.map((obj,index)=>(
         <Slide key={index} direction="left" timeout={600} in>
         <Grid item xs={2}>
-            <div style={{borderRadius:"15px",backgroundColor:"#84CEEB",marginTop:"-20%",height:"220px"}}>
+            <div style={{borderRadius:"15px",backgroundColor:"#84CEEB",marginTop:"-31%",height:"220px"}}>
                 <div style={{textAlign:"center",marginBottom:"-12%"}}>
                     <img data-id={obj.id} onClick={route2} style={{borderRadius:"12px",transform:"translateY(10px)",marginBottom:"-10px"}} src={obj.url} width="90%" height="120px"></img>
                     <h5>{obj.category}</h5>
@@ -105,7 +105,7 @@ function Content({router,addToCart}){
             <Grid item xs={1}></Grid>
 
             <Grid item xs={11}>
-                <h4 style={{transform:"translateY(-20px)"}}>Products on Sale</h4>
+                <h4 style={{transform:"translateY(-3px)"}}>Products on Sale</h4>
             </Grid>
 
             {startindexSale!=0 ? <Grid item xs={1}>
