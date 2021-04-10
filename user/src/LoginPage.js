@@ -29,8 +29,11 @@ function Login({set,router}){
     
             db.ref("user").once('value').then((snap)=>{
                 let obj = snap.val();
-                let data = Object.keys(obj).map(key=>obj[key])
-                data = data.filter(ele=>ele.email==temp["email"])
+                let data = ""
+                if(obj){
+                    let data = Object.keys(obj).map(key=>obj[key])
+                    data = data.filter(ele=>ele.email==temp["email"])
+                }
                 if(data.length == 0){
                     db.ref("user").push(temp)
                     setMsg("Account created!")

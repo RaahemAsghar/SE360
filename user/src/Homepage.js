@@ -86,7 +86,7 @@ function Homepage() {
             return <Login router={changeFocus} set={changeLog}/>
         }
         else if(focus[0] === "settings"){
-            return <Settings set={changeLog}/>
+            return <Settings router={changeFocus} id={logged[1]} set={changeLog}/>
         }
         else if(focus[0] === "search"){
             return <Search query={focus[1]} addToCart={addItems} router={changeFocus} navHighLight={setColor}/>
@@ -117,7 +117,7 @@ function Homepage() {
                 
                 <Box mt={-4}>
                     <Grid container style={{marginTop:"3%",backgroundColor: '#C3EAFA',height:"200px"}} item xs={12}>
-                        <Footer router={changeFocus}/>
+                        <Footer navHighLight={setColor} router={changeFocus}/>
                     </Grid>
                 </Box>
 
@@ -126,7 +126,7 @@ function Homepage() {
     )
 }
 
-function Footer({router}){
+function Footer({router,navHighLight}){
     return(
         <>
         <Grid item xs={3}>
@@ -143,15 +143,15 @@ function Footer({router}){
         <Grid item xs={3}>
         <h4 style={{marginLeft:"15%",color:"#355093"}}>Help and Information</h4>
             <div style={{marginLeft:"15%",lineHeight:"0.1",color:"#355093"}}>
-                <h5>Address:</h5>
-                <h5>DHA Phase 5, Khayaban-e-Jinnah Road،</h5>
+                <h5>About us</h5>
+                <h5>Terms and conditions</h5>
             </div>
         </Grid>
         <Grid item xs={3}>
         <h4 style={{marginLeft:"25%",color:"#355093"}}>Quick Links</h4>
             <div style={{marginLeft:"25%",lineHeight:"0.1",color:"#355093"}}>
-                <h5 onClick={()=>{router(["homescreen","null"])}} style={{cursor:"pointer"}}>Home</h5>
-                <h5 onClick={()=>{router(["cart","null"])}} style={{cursor:"pointer"}}>Cart</h5>
+                <h5 onClick={()=>{router(["homescreen","null"]);navHighLight("null")}} style={{cursor:"pointer"}}>Home</h5>
+                <h5 onClick={()=>{router(["cart","null"]);navHighLight("null")}} style={{cursor:"pointer"}}>Cart</h5>
             </div>
         </Grid>
         <Grid item xs={3}>
