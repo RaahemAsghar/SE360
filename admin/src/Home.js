@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
         } else if(page[0]==="Delete Products") {
             return <Delete router = {setPage}/>
         } else if(page[0]==="Orders"){
-            return <Orders router = {setPage} updateOrder = {updateMyOrder}/>
+            return <Orders router = {setPage} allOrders = {page}/>
         } else if(page[0] === "Single Order") {
             return <SingleOrder details = {page}/>
         }
@@ -194,9 +194,28 @@ const useStyles = makeStyles((theme) => ({
     //let options = ["Dashboard","View Inventory","Stock Update","Add Products","Discounts","Add Category","Delete Products","Orders","Newsletter","Sales Analytics","Website Analytics","Complaints","Suggestions"]
     //let icons =[bxsDashboard, outlineInventory2, updateIcon, addAlt, discount2, categoryIcon, trashIcon, orderBoolDescendingVariant, emailNewsletter, analyticsIcon, googleAnalytics, dialogIcon, sparklesIcon]
     const handleClick = (event) => {
-        router([event.target.innerText]);
-        changeTextColor(event.target.innerText);
+        if(event.target.innerText === "Orders"){
+            handleOrders();
+        }
+        else{
+            router([event.target.innerText]);
+            changeTextColor(event.target.innerText);
+        }
     }
+    const handleOrders = () => {
+        let db = fireApp.database();
+        db.ref("pendingOrder").once('value').then((snap) => {
+            let obj = snap.val();
+            let myDict = {};
+            let keys = Object.keys(obj); let values = Object.values(obj);
+            for(let i = 0; i<keys.length; i++){
+                myDict[keys[i]] = values[i];
+            }
+            router(["Orders",myDict]);
+            changeTextColor("Orders");
+        })
+    }
+
     return (
         <div className={classes.navbar} style={{height:"650px", width: "170px"}} >
             <div>

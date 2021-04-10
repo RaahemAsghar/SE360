@@ -2,11 +2,10 @@ import React from 'react';
 import { Box, Grid } from '@material-ui/core';
 import {fireApp} from './fireapp.js';
 
-function Orders ({router,updateOrder}) {
+function Orders ({router,allOrders}) {
     let products = {4:2,5:1,6:5,7:1,10:2,12:1,13:2}; let orderNo = 435; let emailId = "22100027@lums.edu.pk";
     let [details, updateDetails] = React.useState([]);
     // let products = {4:2}
-
     const handleClick = (event) => {
         let text = event.target.innerText
         console.log(text);
@@ -34,38 +33,30 @@ function Orders ({router,updateOrder}) {
             router(["Single Order", orderNo, emailId, table,length]);
         })
     }
+
+    const printAllOrders = () => {
+        const orderIds = Object.keys(allOrders[1]);
+        const emailIds = Object.keys(allOrders[1]).map((key)=>allOrders[1][key]["bookers_email"]);
+        let majList = [];
+        for(let i = 0; i<orderIds.length; i++){
+            majList.push(<button style = {{marginTop: "30px", backgroundColor:"#DBDFF0", width:"820px", height:"80px",border:"none", textAlign: "left", textIndent: "10px", fontFamily: "Arial", borderRadius: "15px", cursor:"context-menu"}}><p style = {{marginTop: "15px", fontWeight: "bold"}}>Order ID: <span onClick = {handleClick} style = {{cursor: "pointer", color: "#0000EE", textDecoration: "underline"}}>{orderIds[i]}</span></p><p style = {{marginTop: "-10px",cursor: "context-menu"}}>Email ID: {emailIds[i]}</p>
+            </button>)
+        }
+        return majList;
+    }
     return (
         <div style = {{marginLeft: "90px"}}>
             <h3 style = {{marginTop: "25px", fontFamily: "Arial", fontWeight: "Bold"}}>Pending Orders</h3>
-            
-            <button style = {{marginTop: "30px", backgroundColor:"#DBDFF0", width:"820px", height:"80px",border:"none", textAlign: "left", textIndent: "10px", fontFamily: "Arial", borderRadius: "15px", cursor:"context-menu"}}><p style = {{marginTop: "15px", fontWeight: "bold"}}>Order Number: <span onClick = {handleClick} style = {{cursor: "pointer", color: "#0000EE", textDecoration: "underline"}}>435</span></p><p style = {{marginTop: "-10px",cursor: "context-menu"}}>Email ID: 22100027@lums.edu.pk</p>
+            {printAllOrders()}
+            {/* <button style = {{marginTop: "30px", backgroundColor:"#DBDFF0", width:"820px", height:"80px",border:"none", textAlign: "left", textIndent: "10px", fontFamily: "Arial", borderRadius: "15px", cursor:"context-menu"}}><p style = {{marginTop: "15px", fontWeight: "bold"}}>Order Number: <span onClick = {handleClick} style = {{cursor: "pointer", color: "#0000EE", textDecoration: "underline"}}>435</span></p><p style = {{marginTop: "-10px",cursor: "context-menu"}}>Email ID: 22100027@lums.edu.pk</p>
             </button>
 
-            <button style = {{marginTop: "20px", backgroundColor:"#DBDFF0", width:"820px", height:"80px",border:"none", textAlign: "left", textIndent: "10px", fontFamily: "Arial", borderRadius: "15px"}}><p style = {{marginTop: "15px", fontWeight: "bold"}}>Order Number: 435</p><p style = {{marginTop: "-10px", cursor: "context-menu"}}>Email ID: 22100027@lums.edu.pk</p></button>
+            <button style = {{marginTop: "20px", backgroundColor:"#DBDFF0", width:"820px", height:"80px",border:"none", textAlign: "left", textIndent: "10px", fontFamily: "Arial", borderRadius: "15px"}}><p style = {{marginTop: "15px", fontWeight: "bold"}}>Order Number: 435</p><p style = {{marginTop: "-10px", cursor: "context-menu"}}>Email ID: 22100027@lums.edu.pk</p></button> */}
         </div>
     )
 }
 
 function SingleOrder ({details}) {
-    // console.log(greyHeight);
-    let [productList, updateProductList] = React.useState({});
-    let [orderList, updateOrderList] = React.useState([]);
-    let [table, setTable] = React.useState([]);
-    const createTable = () => {
-        let majList = []
-        for(let i = 0; i< orderList.length; i++){
-            let minList = [];
-            for(let j = 0; j<orderList[i].length; i++){
-                minList.push(<td style = {{border: "1px solid #828282"}}>{orderList[i][j]}</td>)
-            }
-            majList.push(minList);
-        }
-        setTable(majList);
-    }
-
-    const printTable = () => {
-        return table;
-    }
     React.useEffect(() => {
         let greyHeight = details[4];
         greyHeight = greyHeight + "px";
@@ -80,22 +71,6 @@ function SingleOrder ({details}) {
                     <p style = {{marginTop: "25px"}}>Email Id: {details[2]}</p>
                 </div>
                 {details[3]}
-                {/* <table style = {{textIndent: "15px", width: "720px", marginLeft: "15px", marginTop: "30px"}}>
-                    <tr style = {{height: "40px"}}>
-                        <th style = {{border: "1px solid #828282"}}>Item Name</th>
-                        <th style = {{border: "1px solid #828282"}}>Product ID</th>
-                        <th style = {{border: "1px solid #828282"}}>Quantity</th>
-                        <th style = {{border: "1px solid #828282"}}>Price</th>
-                    </tr> */}
-                    {/* {details[3]} */}
-                    {/* {orderList.map( item => <tr style = {{height: "40px"}}> <td style = {{border: "1px solid #828282"}}>{item[0]}</td><td style = {{border: "1px solid #828282"}}>{item[1]}</td><td style = {{border: "1px solid #828282"}}>{item[2]}</td><td style = {{border: "1px solid #828282"}}>{item[3]}</td></tr>)} */}
-                    {/* <tr style = {{height: "40px"}}>
-                        <td style = {{border: "1px solid #828282"}}>Item Name</td>
-                        <td style = {{border: "1px solid #828282"}}>Product ID</td>
-                        <td style = {{border: "1px solid #828282"}}>Quantity</td>
-                        <td style = {{border: "1px solid #828282"}}>Price</td>
-                    </tr> */}
-                {/* </table> */}
             </div>
         </div>
     )
