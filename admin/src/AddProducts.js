@@ -45,12 +45,13 @@ function AddProducts ({router}) {
             description: description,
             discount: 0,
             name: prodName,
-            price: price,
+            price: Number(price),
             rating: (Math.floor(Math.random() * 5)+1),
             stock_left: 100,
             total_sold: 0,
             url: url,
         }
+        // console.log(typeof(productId));
             db.ref("products").child(productId).set(product);
             // db.ref("products").push(product);
             let myDict = productList;
@@ -124,7 +125,7 @@ function AddProducts ({router}) {
             <Grid item xs = {1}></Grid>
             <Grid item xs = {5}>
                 <label for = "name" style = {{marginTop: "15px"}}>Price</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
-                <input type = "text" value = {price} id = "name" onChange = {priceClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
+                <input type = "number" value = {price} id = "name" onChange = {priceClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
             </Grid>
             </Grid>
             </div>

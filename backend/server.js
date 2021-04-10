@@ -36,7 +36,7 @@ let data = {
     prices : [10500,550,1220,175000,10300,25000,12000,3500,32000,10500,7500,4500,100],
     leftOvers : [5,10,3,7,2,3,6,2,2,4,3,2,7],
     totalSold : [2,6,7,3,10,2,12,6,3,10,2,11,18],
-    discount : [0,0,50,0,80,0,100,0,0,150,0,100,0],
+    discount : [0,0,3,0,10,0,10,0,0,15,0,5,0],
     rating : [4.5,4.7,4.8,4.3,4.4,3.9,4.2,3.8,4.1,4.6,3.5,4.2,4.5],
     descriptions : ["Fun Tricycle for kids","Body Spray for Men","Superb Cricket Bat for the best players","14 inch Business Laptop","Glasses for fashion-crazy men","Wooden Study Table for students","Luxury Handbag for Ladies","Portable Kettle","Makeup Kit for Ladies","Sneakers for athletes","Table Lamp for your side Table","Cute and Soft Stuffed Teddy bear","Plain Bread for daily use"],
 }
@@ -65,5 +65,6 @@ function AddCategories() {
     db.ref("Categories").child("Categories123").set(categories);
 }
 AddProducts();
+// db.ref("products/16").remove();
 
 app.listen(port,()=>{console.log(`listening at localhost:${port}`)})
