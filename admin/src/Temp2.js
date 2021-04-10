@@ -5,6 +5,7 @@ import {fireApp} from './fireapp.js';
 function Temp2 ({router,updateOrder}) {
     let products = {4:2,5:1,6:5,7:1,10:2,12:1,13:2}; let orderNo = 435; let emailId = "22100027@lums.edu.pk";
     let [details, updateDetails] = React.useState([]);
+    // let products = {4:2}
 
     const handleClick = () => {
         let db = fireApp.database();
