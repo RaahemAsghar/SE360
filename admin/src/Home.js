@@ -9,6 +9,7 @@ import Popup from './Popup.js';
 import Delete from './Delete.js';
 import Temp from './temp.js';
 import {Orders,SingleOrder} from './Orders.js';
+import {Temp2,Temp3} from './Temp2.js';
 
 // ---------------------------------------- ICONS -------------------------------------------------------
 import { Icon, InlineIcon } from '@iconify/react';
@@ -73,7 +74,9 @@ const useStyles = makeStyles((theme) => ({
         } else if(page[0]==="Orders"){
             return <Orders router = {setPage} updateOrder = {updateMyOrder}/>
         } else if(page[0] === "Single Order") {
-            return <SingleOrder details = {page}/>
+            return <Temp3 details = {page}/>
+        } else if (page[0]==="Complaints"){
+            return <Temp2 router = {setPage} updateOrder = {updateMyOrder}/>
         }
         else{
             return <Display content={page[0]}/>
