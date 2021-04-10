@@ -8,6 +8,7 @@ import AddCategory from './AddCategory.js';
 import Popup from './Popup.js';
 import Delete from './Delete.js';
 import Temp from './temp.js';
+import {Orders,SingleOrder} from './Orders.js';
 
 // ---------------------------------------- ICONS -------------------------------------------------------
 import { Icon, InlineIcon } from '@iconify/react';
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
   function Home () {
     const classes = useStyles(); 
     let [page, setPage] = React.useState(["Dashboard"]);
+    let [myOrder, updateMyOrder] = React.useState([]);
 
     const choose = () => {
         if(page[0]=="Add Products"){
@@ -68,6 +70,10 @@ const useStyles = makeStyles((theme) => ({
             return <Popup router = {setPage}/>
         } else if(page[0]==="Delete Products") {
             return <Delete router = {setPage}/>
+        } else if(page[0]==="Orders"){
+            return <Orders router = {setPage} updateOrder = {updateMyOrder}/>
+        } else if(page[0] === "Single Order") {
+            return <SingleOrder details = {page}/>
         }
         else{
             return <Display content={page[0]}/>
