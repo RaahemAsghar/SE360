@@ -233,7 +233,7 @@ const useStyles = makeStyles((theme) => ({
     }
 
     return (
-        <div className={classes.navbar} style={{height:"650px", width: "170px"}} >
+        <div className={classes.navbar} style={{height:"688px", width: "170px"}} >
             <div>
                 <p style = {{fontFamily: "Arial",fontSize:"1.0em",fontWeight: "Bold",paddingLeft:"20px",marginBottom:"24px"}}>Admin Panel</p>
                 {menu.map( item => <Box display='flex'> <div><Icon icon={item.icon} style={{color: (textColor==item.text ? "orange" :"#C1C8E4"), fontSize: '20px', flexDirection:"row", marginBottom: "18px"}}/> </div> <div><p onClick = {handleClick} className = {classes.text} style={{fontSize: "0.9em", cursor:"pointer", paddingLeft:"13px",marginBottom: "18px", flexDirection:"row", color: (textColor==item.text ? "orange" :"white")}}>{item.text}</p></div></Box>)}
