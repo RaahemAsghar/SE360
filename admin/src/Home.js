@@ -10,6 +10,7 @@ import Delete from './Delete.js';
 import Temp from './temp.js';
 import {Orders,SingleOrder} from './Orders.js';
 import {Temp2,Temp3} from './Temp2.js';
+import Inventory from './Inventory.js';
 
 // ---------------------------------------- ICONS -------------------------------------------------------
 import { Icon, InlineIcon } from '@iconify/react';
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
   function Home () {
     const classes = useStyles(); 
-    let [page, setPage] = React.useState(["Dashboard"]);
+    let [page, setPage] = React.useState(["Add Products"]);
     let [myOrder, updateMyOrder] = React.useState([]);
 
     const choose = () => {
@@ -67,14 +68,14 @@ const useStyles = makeStyles((theme) => ({
             return <AddProducts router = {setPage}/>
         } else if (page[0] === "Add Category") {
             return <AddCategory/>
-        } else if (page[0] === "Suggestions") {
-            return <Popup router = {setPage}/>
         } else if(page[0]==="Delete Products") {
             return <Delete router = {setPage}/>
         } else if(page[0]==="Orders"){
             return <Orders router = {setPage} allOrders = {page}/>
         } else if(page[0] === "Single Order") {
             return <SingleOrder router = {setPage} details = {page}/>
+        } else if(page[0] === "View Inventory"){
+            return <Inventory details = {page}/>
         }
         else{
             return <Display content={page[0]}/>
@@ -132,7 +133,7 @@ const useStyles = makeStyles((theme) => ({
 
   function Navbar ({router}) {
     let classes = useStyles();
-    let [textColor, changeTextColor] = React.useState("Dashboard");
+    let [textColor, changeTextColor] = React.useState("Add Products");
     // let [options,setOptions] = React.useState([]);
     let menu=[{
         text:'Dashboard',
@@ -196,6 +197,8 @@ const useStyles = makeStyles((theme) => ({
     const handleClick = (event) => {
         if(event.target.innerText === "Orders"){
             handleOrders();
+        } else if(event.target.innerText === "View Inventory"){
+            handleInventory();
         }
         else{
             router([event.target.innerText]);
@@ -213,6 +216,19 @@ const useStyles = makeStyles((theme) => ({
             }
             router(["Orders",myDict]);
             changeTextColor("Orders");
+        })
+    }
+    const handleInventory = () => {
+        let db = fireApp.database();
+        db.ref("products").once('value').then((snap) => {
+            let obj = snap.val();
+            let myDict = {};
+            let keys = Object.keys(obj); let values = Object.values(obj);
+            for(let i = 0; i<keys.length; i++){
+                myDict[keys[i]] = values[i];
+            }
+            router(["View Inventory",myDict]);
+            changeTextColor("View Inventory");
         })
     }
 
