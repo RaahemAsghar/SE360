@@ -94,7 +94,7 @@ function AddProducts ({router}) {
 
     },[])
     return (
-        <div>
+        <div style = {{height: "680px", overflowY: "scroll"}}>
             <h3 style = {{marginTop: "25px", fontFamily: "Arial", fontWeight: "Bold", marginLeft: "90px"}}>Add Products</h3>
             <form onSubmit = {submit} style = {{marginLeft: "60px"}}>
             <Grid container xs = {12}>

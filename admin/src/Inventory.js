@@ -38,7 +38,7 @@ function Inventory({details}) {
     }
     // createTable();
     return(
-        <div style = {{marginLeft: "90px"}}>
+        <div style = {{marginLeft: "90px", overflowY: "scroll", height: "680px"}}>
             <Grid container xs = {12} style = {{marginTop: "25px"}}>
                 <Grid item xs = {4}>
                     <h3 style = {{fontWeight: "bold", fontFamily: "Arial"}}>View Inventory</h3>

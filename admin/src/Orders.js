@@ -37,14 +37,14 @@ function Orders ({router,allOrders}) {
         const orderIds = Object.keys(allOrders[1]);
         const emailIds = Object.keys(allOrders[1]).map((key)=>allOrders[1][key]["bookers_email"]);
         let majList = [];
-        for(let i = 0; i<orderIds.length; i++){
+        for(let i = (orderIds.length-1); i>=0; i--){
             majList.push(<button style = {{marginTop: "30px", backgroundColor:"#DBDFF0", width:"820px", height:"80px",border:"none", textAlign: "left", textIndent: "10px", fontFamily: "Arial", borderRadius: "15px", cursor:"context-menu"}}><p style = {{marginTop: "15px", fontWeight: "bold"}}>Order ID: <span onClick = {handleClick} style = {{cursor: "pointer", color: "#0000EE", textDecoration: "underline"}}>{orderIds[i]}</span></p><p style = {{marginTop: "-10px",cursor: "context-menu"}}>Email ID: {emailIds[i]}</p>
             </button>)
         }
         return majList;
     }
     return (
-        <div style = {{marginLeft: "90px"}}>
+        <div style = {{marginLeft: "90px", overflowY: "scroll", height: "680px"}}>
             <h3 style = {{marginTop: "25px", fontFamily: "Arial", fontWeight: "Bold"}}>Pending Orders</h3>
             {printAllOrders()}
             {/* <button style = {{marginTop: "30px", backgroundColor:"#DBDFF0", width:"820px", height:"80px",border:"none", textAlign: "left", textIndent: "10px", fontFamily: "Arial", borderRadius: "15px", cursor:"context-menu"}}><p style = {{marginTop: "15px", fontWeight: "bold"}}>Order Number: <span onClick = {handleClick} style = {{cursor: "pointer", color: "#0000EE", textDecoration: "underline"}}>435</span></p><p style = {{marginTop: "-10px",cursor: "context-menu"}}>Email ID: 22100027@lums.edu.pk</p>
