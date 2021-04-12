@@ -1,4 +1,5 @@
-let firebase = require('firebase')
+let firebase = require('firebase');
+// const { default: AddCategory } = require('../admin/src/AddCategory');
 
 let firebaseConfig = {
     apiKey: "AIzaSyB0tpxxFNyI3ktDvOxqKpkiY9gxkrbSeVI",
@@ -51,4 +52,5 @@ function AddCategories() {
     let categories = ["Groceries","Electronics","Sports","Toys","Men","Women","Furniture"]
     db.ref("Categories").child("Categories123").set(categories);
 }
+// AddCategories();
  //AddProducts();

@@ -210,12 +210,18 @@ const useStyles = makeStyles((theme) => ({
         db.ref("pendingOrder").once('value').then((snap) => {
             let obj = snap.val();
             let myDict = {};
+            if(obj==null){
+                router(["Orders",myDict]);
+                changeTextColor("Orders");
+            }
+            else {
             let keys = Object.keys(obj); let values = Object.values(obj);
             for(let i = 0; i<keys.length; i++){
                 myDict[keys[i]] = values[i];
             }
             router(["Orders",myDict]);
             changeTextColor("Orders");
+            }
         })
     }
     const handleInventory = () => {

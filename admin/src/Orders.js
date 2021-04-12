@@ -18,7 +18,8 @@ function Orders ({router,allOrders}) {
             let prodKeys = Object.keys(products);
             let majList = [];
             for(let i = 0; i<prodKeys.length; i++){
-                let minList = []; let price = myDict[prodKeys[i]]["price"];
+                let minList = []; let coeff = (100 - myDict[prodKeys[i]]["discount"])/100;
+                let price = Math.floor(coeff*myDict[prodKeys[i]]["price"]); console.log(price);
                 minList.push(myDict[prodKeys[i]]["name"]);
                 minList.push(prodKeys[i]);
                 minList.push(products[prodKeys[i]]);
@@ -40,6 +41,9 @@ function Orders ({router,allOrders}) {
         for(let i = (orderIds.length-1); i>=0; i--){
             majList.push(<button style = {{marginTop: "30px", backgroundColor:"#DBDFF0", width:"820px", height:"80px",border:"none", textAlign: "left", textIndent: "10px", fontFamily: "Arial", borderRadius: "15px", cursor:"context-menu"}}><p style = {{marginTop: "15px", fontWeight: "bold"}}>Order ID: <span onClick = {handleClick} style = {{cursor: "pointer", color: "#0000EE", textDecoration: "underline"}}>{orderIds[i]}</span></p><p style = {{marginTop: "-10px",cursor: "context-menu"}}>Email ID: {emailIds[i]}</p>
             </button>)
+        }
+        if(!majList.length){
+            majList.push(<h6 style = {{marginTop: "20px"}}>There are no pending orders yet</h6>)
         }
         return majList;
     }
