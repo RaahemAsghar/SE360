@@ -5,8 +5,8 @@
   "targets": {
     "software-engineering-123": {
       "hosting": {
-        "users": [
-          "storex-users"
+        "admin": [
+          "storex-admin"
         ]
       }
     }
