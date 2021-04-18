@@ -22,18 +22,23 @@ function Inventory({details}) {
         }
         console.log(requiredList);
         let majList = []; let minList = []; let finalList = []
-        for(let i = 0; i< headingNames.length; i++){
-            minList.push(<th style = {{border: "1px solid #828282"}}>{headingNames[i]}</th>)
-        }
-        majList.push(<tr style = {{backgroundColor: "#c1c8e4", border: "1px solid #828282", height:"30px"}}>{minList}</tr>)
-        for(let i = 0; i<requiredList.length; i++){
-            let tempList = [];
-            for(let j = 0; j<requiredList[i].length; j++){
-                tempList.push(<td style = {{border: "1px solid #828282"}}>{requiredList[i][j]}</td>)
+        if(requiredList.length){
+            for(let i = 0; i< headingNames.length; i++){
+                minList.push(<th style = {{border: "1px solid #828282"}}>{headingNames[i]}</th>)
             }
-            majList.push(<tr style = {{border: "1px solid #828282", height:"30px"}}>{tempList}</tr>);
+            majList.push(<tr style = {{backgroundColor: "#c1c8e4", border: "1px solid #828282", height:"30px"}}>{minList}</tr>)
+            for(let i = 0; i<requiredList.length; i++){
+                let tempList = [];
+                for(let j = 0; j<requiredList[i].length; j++){
+                    tempList.push(<td style = {{border: "1px solid #828282"}}>{requiredList[i][j]}</td>)
+                }
+                majList.push(<tr style = {{border: "1px solid #828282", height:"30px"}}>{tempList}</tr>);
+            }
+            finalList.push(<table style = {{border: "1px solid #828282", marginTop: "40px", width:"900px", textAlign: "center"}}>{majList}</table>)
         }
-        finalList.push(<table style = {{border: "1px solid #828282", marginTop: "40px", width:"900px", textAlign: "center"}}>{majList}</table>)
+        else{
+            finalList.push(<h6 style = {{marginTop: "20px"}}>There are no products in inventory yet</h6>)
+        }
         return finalList;
     }
     // createTable();

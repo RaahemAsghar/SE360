@@ -16,7 +16,6 @@ function AddProducts ({router}) {
     let [check,setCheck] = React.useState(false);
     let [productId, updateProductId] = React.useState(0);
     let [productList, updateProductList] = React.useState({});
-    // let [prods, updateProds] = React.useState({0:'',1:'',2:'',3:'',4:'',5:''});
 
     const nameClick = (event) => {
         updateProdName(event.target.value);
@@ -25,7 +24,6 @@ function AddProducts ({router}) {
         updateBrand(event.target.value);
     }
     const categoryClick = (event) => {
-        // console.log(category);
         updateCategory(event.target.value);
     } 
     const priceClick = (event) => {
@@ -127,7 +125,6 @@ function AddProducts ({router}) {
                 <select onChange = {categoryClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required>
                 {myCategories ? myCategories.map((val,index)=>(<option key={index}>{val}</option>)) : <h5></h5>} 
                 </select>
-                {/* <input type = "text" value = {category} id = "name" onChange = {categoryClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input> */}
                 </div>
             </Grid>
             <Grid item xs = {1}></Grid>

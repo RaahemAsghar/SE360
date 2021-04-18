@@ -11,6 +11,7 @@ import Temp from './temp.js';
 import {Orders,SingleOrder} from './Orders.js';
 import {Temp2,Temp3} from './Temp2.js';
 import Inventory from './Inventory.js';
+import {ProductUpdate} from './productUpdate.js';
 
 // ---------------------------------------- ICONS -------------------------------------------------------
 import { Icon, InlineIcon } from '@iconify/react';
@@ -76,6 +77,8 @@ const useStyles = makeStyles((theme) => ({
             return <SingleOrder router = {setPage} details = {page}/>
         } else if(page[0] === "View Inventory"){
             return <Inventory details = {page}/>
+        } else if (page[0] === "Update Products"){
+            return <ProductUpdate allProducts = {page[1]}/>
         }
         else{
             return <Display content={page[0]}/>
@@ -144,7 +147,7 @@ const useStyles = makeStyles((theme) => ({
         icon:outlineInventory2
     },
     {
-        text:'Stock Update',
+        text:'Update Products',
         icon:updateIcon
     },
     {
@@ -197,8 +200,8 @@ const useStyles = makeStyles((theme) => ({
     const handleClick = (event) => {
         if(event.target.innerText === "Orders"){
             handleOrders();
-        } else if(event.target.innerText === "View Inventory"){
-            handleInventory();
+        } else if(event.target.innerText === "View Inventory" || event.target.innerText === "Update Products"){
+            handleInventory(event.target.innerText);
         }
         else{
             router([event.target.innerText]);
@@ -224,17 +227,23 @@ const useStyles = makeStyles((theme) => ({
             }
         })
     }
-    const handleInventory = () => {
+    const handleInventory = (pageName) => {
         let db = fireApp.database();
         db.ref("products").once('value').then((snap) => {
             let obj = snap.val();
             let myDict = {};
-            let keys = Object.keys(obj); let values = Object.values(obj);
-            for(let i = 0; i<keys.length; i++){
-                myDict[keys[i]] = values[i];
+            if(obj==null){
+                router([pageName,myDict]);
+                changeTextColor(pageName);
             }
-            router(["View Inventory",myDict]);
-            changeTextColor("View Inventory");
+            else{
+                let keys = Object.keys(obj); let values = Object.values(obj);
+                for(let i = 0; i<keys.length; i++){
+                    myDict[keys[i]] = values[i];
+                }
+                router([pageName,myDict]);
+                changeTextColor(pageName);
+            }
         })
     }
 
