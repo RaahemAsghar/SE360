@@ -7,6 +7,8 @@ function AddProducts ({router}) {
     let [prodName, updateProdName] = React.useState('');
     let [brand, updateBrand] = React.useState('');
     let [price, updatePrice] = React.useState('');
+    let [quantity, updateQuantity] = React.useState('');
+    let [discount, updateDiscount] = React.useState('');
     let [url, updateUrl] = React.useState('');
     let [description, updateDescription] = React.useState('');
     let [myCategories, updateMyCategories] = React.useState([''])
@@ -28,7 +30,13 @@ function AddProducts ({router}) {
     } 
     const priceClick = (event) => {
         updatePrice(event.target.value);
-    } 
+    }
+    const quantityClick = (event) => {
+        updateQuantity(event.target.value);
+    }
+    const discountClick = (event) => {
+        updateDiscount(event.target.value);
+    }  
     const urlClick = (event) => {
         updateUrl(event.target.value);
     } 
@@ -43,11 +51,11 @@ function AddProducts ({router}) {
             brand_name: brand,
             category: category,
             description: description,
-            discount: 0,
+            discount: Number(discount),
             name: prodName,
             price: Number(price),
             rating: (Math.floor(Math.random() * 5)+1),
-            stock_left: 100,
+            stock_left: Number(quantity),
             total_sold: 0,
             url: url,
         }
@@ -56,7 +64,7 @@ function AddProducts ({router}) {
             // db.ref("products").push(product);
             let myDict = productList;
             myDict[productId] = product;
-            updateProductList(myDict); updateProductId((productId)+1); updateProdName(''); updateBrand(''); updateCategory(myCategories[0]); updatePrice(''); updateUrl(''); updateDescription('');
+            updateProductList(myDict); updateProductId((productId)+1); updateProdName(''); updateBrand(''); updateCategory(myCategories[0]); updatePrice(''); updateUrl(''); updateDescription(''); updateQuantity(''); updateDiscount('');
         // console.log(product);
     }
     React.useEffect(()=>{
@@ -126,6 +134,22 @@ function AddProducts ({router}) {
             <Grid item xs = {5}>
                 <label for = "name" style = {{marginTop: "15px"}}>Price</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
                 <input type = "number" value = {price} id = "name" onChange = {priceClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
+            </Grid>
+            </Grid>
+            </div>
+
+            <div style = {{marginTop:"30px"}}>
+            <Grid container xs = {12}>
+            <Grid item xs = {5}>
+                <div style = {{marginLeft: "30px"}}>
+                <label for = "name" style = {{marginTop: "15px"}}>Quantity</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
+                <input type = "number" value = {quantity} id = "name" onChange = {quantityClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
+                </div>
+            </Grid>
+            <Grid item xs = {1}></Grid>
+            <Grid item xs = {5}>
+                <label for = "name" style = {{marginTop: "15px"}}>Discount</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
+                <input type = "number" value = {discount} id = "name" onChange = {discountClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
             </Grid>
             </Grid>
             </div>
