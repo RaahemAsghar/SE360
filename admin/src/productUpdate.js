@@ -5,6 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 function ProductUpdate ({allProducts}) {
     let [form, updateForm] = React.useState([]);
+    let [firstFilled, updateFirstFilled] = React.useState(false);
     let [productId, updateProductId] = React.useState('');
     let [productName, updateProductName] = React.useState('');
     let [prodName, updateProdName] = React.useState('');
@@ -41,31 +42,161 @@ function ProductUpdate ({allProducts}) {
     const descriptionClick = (event) => {
         updateDescription(event.target.value);
     }
+    const formMaker = () => {
+        return form;
+    }
 
     const idClick = (event) => {
-        updateProductId(event.target.value);
+        if(!firstFilled){updateProductId(event.target.value);}
     }
     const nameClick = (event) => {
-        updateProductName(event.target.value);
+        if(!firstFilled){updateProductName(event.target.value);}
+    }
+    const submitForm2 = (event) => {
+        event.preventDefault();
+        let db = fireApp.database();
+        let product = {
+            brand_name: brand,
+            category: category,
+            description: description,
+            discount: Number(discount),
+            name: prodName,
+            price: Number(price),
+            rating: allProducts[productId]['rating'],
+            stock_left: Number(quantity),
+            total_sold: allProducts[productId]['total_sold'],
+            url: url,
+        }
+        db.ref('products').child(productId).update(product);
+        allProducts[productId] = product;
+        // if(firstFilled){updateFirstFilled(false);}
+        updateFirstFilled(false); updateProductId(''); updateProductName(''); updateProdName(''); updateBrand(''); updateCategory(''); updatePrice(''); updateQuantity(''); updateDiscount(''); updateUrl(''); updateDescription('');
+    }
+    const formPrinter = () => {
+        let majList = []
+        if(firstFilled){
+            majList = findProduct();
+        }
+        return majList;
     }
     const findProduct = () => {
         let myProduct = allProducts[productId];
         if(myProduct === undefined){
-            updateForm([]);
+            // updateForm([]);
+            return []
         }
         else{
-            updateProdName(myProduct['name']); updateBrand(myProduct['brand_name']); updatePrice(myProduct['price']); updateQuantity(myProduct['stock_left']); updateDiscount(myProduct['discount']); updateUrl(myProduct['url']); updateDescription(myProduct['description']);
-            let myForm = []
+            // updateProdName(myProduct['name']); updateBrand(myProduct['brand_name']); updatePrice(myProduct['price']); updateQuantity(myProduct['stock_left']); updateDiscount(myProduct['discount']); updateUrl(myProduct['url']); updateDescription(myProduct['description']);
+            
+            let myForm = [<h3 style = {{marginTop: "50px", fontFamily: "Arial", fontWeight: "Bold", marginLeft: "0px"}}>Product Details</h3>,
+            <form onSubmit = {submitForm2} style = {{marginLeft: "0px"}}>
+            <Grid container xs = {12}>
+            <Grid item xs = {5}>
+                <div style = {{marginLeft: "0px"}}>
+                <label for = "name" style = {{marginTop: "15px"}}>Product Name</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
+                <input type = "text" value = {prodName} id = "name" onChange = {prodNameClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
+                </div>
+            </Grid>
+            <Grid item xs = {1}></Grid>
+            <Grid item xs = {5}>
+                <label for = "name" style = {{marginTop: "15px"}}>Brand Name</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
+                <input type = "text" value = {brand} id = "name" onChange = {brandClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
+            </Grid>
+            </Grid>
+
+            <div style = {{marginTop:"30px"}}>
+            <Grid container xs = {12}>
+            <Grid item xs = {5}>
+                <div style = {{marginLeft: "0px"}}>
+                <label for = "name" style = {{marginTop: "15px"}}>Category Name</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
+                <select onChange = {categoryClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required>
+                {myCategories ? myCategories.map((val,index)=>(<option key={index}>{val}</option>)) : <h5></h5>} 
+                </select>
+                </div>
+            </Grid>
+            <Grid item xs = {1}></Grid>
+            <Grid item xs = {5}>
+                <label for = "name" style = {{marginTop: "15px"}}>Price</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
+                <input type = "number" value = {price} id = "name" onChange = {priceClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
+            </Grid>
+            </Grid>
+            </div>
+
+            <div style = {{marginTop:"30px"}}>
+            <Grid container xs = {12}>
+            <Grid item xs = {5}>
+                <div style = {{marginLeft: "0px"}}>
+                <label for = "name" style = {{marginTop: "15px"}}>Quantity</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
+                <input type = "number" value = {quantity} id = "name" onChange = {quantityClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
+                </div>
+            </Grid>
+            <Grid item xs = {1}></Grid>
+            <Grid item xs = {5}>
+                <label for = "name" style = {{marginTop: "15px"}}>Discount</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
+                <input type = "number" value = {discount} id = "name" onChange = {discountClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
+            </Grid>
+            </Grid>
+            </div>
+
+            <div style = {{marginTop:"30px"}}>
+            <Grid container xs = {12}>
+            <Grid item xs = {11}>
+                <div style = {{marginLeft: "0px"}}>
+                <label for = "name" style = {{marginTop: "15px"}}>Image URL</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
+                <input type = "text" value = {url} id = "name" onChange = {urlClick} style = {{width: "820px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
+                </div>
+            </Grid>
+            </Grid>
+            </div>
+
+            <div style = {{marginTop:"30px"}}>
+            <Grid container xs = {12}>
+            <Grid item xs = {11}>
+                <div style = {{marginLeft: "0px"}}>
+                <label for = "name" style = {{marginTop: "15px"}}>Description</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
+                <input type = "text" value = {description} id = "name" onChange = {descriptionClick} style = {{width: "820px", height:"100px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
+                </div>
+            </Grid>
+            </Grid>
+            </div>
+            <div style = {{marginTop:"40px", marginLeft: "0px"}}>
+            <input type = "submit" value = "Update Product" style = {{width: "150px", height:"38px", backgroundColor: "#5AB9EA", border: "none", borderRadius: "15px"}}></input>
+            </div>
+            </form>]
+            // updateForm(myForm);
+            return myForm;
         }
     }
     const submit = (event) => {
         event.preventDefault();
-        findProduct();
-        updateProductId(''); updateProductName('');
+        let myProduct = allProducts[productId];
+        if(myProduct != undefined){
+            if(productName.toLowerCase() == myProduct['name'].toLowerCase()){
+                updateProdName(myProduct['name']); updateBrand(myProduct['brand_name']); updatePrice(myProduct['price']); updateQuantity(myProduct['stock_left']); updateDiscount(myProduct['discount']); updateUrl(myProduct['url']); updateDescription(myProduct['description']); updateCategory(myProduct['category'])
+                let tempCategories = myCategories;
+                for(let i = 0; i< tempCategories.length; i++){
+                    if(tempCategories[i]=== myProduct['category']){
+                        let temp = tempCategories[i];
+                        tempCategories[i] = tempCategories[0];
+                        tempCategories[0] = temp; break;
+                    }
+                }
+                updateMyCategories(tempCategories); updateFirstFilled(true);
+            }
+            else{
+                updateProductName(''); updateProductId('');
+            }
+        }
+        else{
+            updateProductName(''); updateProductId('');
+        }
+        // if(!firstFilled){updateFirstFilled(true);}
+        // findProduct();
+        // updateProductId(''); updateProductName('');
     }
     function initialDisplay(){
         if(!Object.keys(allProducts).length){return [<h6 style = {{marginTop: "20px"}}>There are no products in your store yet</h6>];}
-        let myDisplay = [<form style = {{marginLeft: "0px"}}>
+        let myDisplay = [<form onSubmit = {submit} style = {{marginLeft: "0px"}}>
         <Grid container xs = {12}>
         <Grid item xs = {5}>
             <div style = {{marginLeft: "0px"}}>
@@ -87,8 +218,8 @@ function ProductUpdate ({allProducts}) {
     }    
     
     React.useEffect(()=>{
-        console.log(Object.keys(allProducts).length);
-        console.log(allProducts[1]);
+        // console.log(Object.keys(allProducts).length);
+        // console.log(allProducts[1]);
         let db = fireApp.database();
         db.ref("Categories").once('value').then((snap)=>{
             let obj = snap.val();
@@ -97,14 +228,16 @@ function ProductUpdate ({allProducts}) {
             if (!check){
                 if(data[0].length){
                     updateCategory(data[0][0]);
+                    // updateCategory('hello');
                 } setCheck(true);
             }
          })
     },[])
     return(
-        <div style = {{marginLeft: "90px"}}>
+        <div style = {{marginLeft: "90px", height: "680px", overflowY: "scroll"}}>
             <h3 style = {{marginTop: "25px", fontFamily: "Arial", fontWeight: "Bold"}}>Update Products</h3>
             {initialDisplay()}
+            {formPrinter()}
         </div>
     )
 }
