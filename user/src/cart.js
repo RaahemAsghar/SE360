@@ -94,6 +94,13 @@ function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,it
                 })
                 trans["products"] = temp_obj
                 trans["user_id"] = log[1]
+                trans["delivered"] = false
+                let date = new Date() 
+                let time = date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()  
+                let now = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()
+                trans["date"] = now
+                trans["time"] = time
+                trans["bill"] = productList.reduce((total,obj)=>total+obj.price*obj.count,0)
                 db.ref("pendingOrder").push(trans)
                 setmsg("Your orders have been placed successfully!")
                 setTimeout(reset,2000)

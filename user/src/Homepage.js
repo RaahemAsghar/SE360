@@ -14,6 +14,7 @@ import Login from './LoginPage.js'
 import Settings from './accountsettings.js'
 import Search from './search.js'
 import {fireApp} from './fireapp.js'
+import History from './orders.js'
 import Salespage from './sale.js'
 
 const useStyles = makeStyles((theme) => ({
@@ -90,6 +91,9 @@ function Homepage() {
         }
         else if(focus[0] === "search"){
             return <Search query={focus[1]} addToCart={addItems} router={changeFocus} navHighLight={setColor}/>
+        }
+        else if(focus[0] === "My Orders"){
+            return <History/>
         }
     }
 
@@ -224,6 +228,8 @@ function Navbar({router,navHighLight,currentHighLight,checklog}){
         }
         else if(event.target.innerText == "Settings"){
             router(["settings"]);
+        }else if(event.target.innerText == "My Orders"){
+            router(["My Orders"])
         }
         else{
             router(["category",event.target.innerText]);
@@ -238,6 +244,7 @@ function Navbar({router,navHighLight,currentHighLight,checklog}){
             {!checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="Login" ? "orange" :"white")}}>Login</h5>}
             {checklog && <h5 onClick={handleClick} style={{color:"#28ff03",paddingLeft:"8px",marginTop:"-10px"}}><Circle style={{fontSize:"15px",transform:"translateY(2px) translateX(-3px)"}}/>Signed In</h5>}
             {checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="Settings" ? "orange" :"white")}}>Settings</h5>}
+            {checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="My Orders" ? "orange" :"white")}}>My Orders</h5>}
         </div>
         
         <div>
