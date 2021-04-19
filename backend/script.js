@@ -52,5 +52,21 @@ function AddCategories() {
     let categories = ["Groceries","Electronics","Sports","Toys","Men","Women","Furniture"]
     db.ref("Categories").child("Categories123").set(categories);
 }
+function AddAdmins (){
+    let data = {
+        names: ["Mati Ur Rehman", "Muhammad Hamza Shahzad", "Muhammad Hamza Sajjad", "Muhammad Haris", "Muhammad Raahem Asghar"],
+        emails: ["22100173@lums.edu.pk", "22100027@lums.edu.pk","22100025@lums.edu.pk","22100013@lums.edu.pk","22100061@lums.edu.pk"],
+        passwords: ["hellohi","hellohi","hellohi","hellohi","hellohi"],
+    }
+    for(let i = 0; i<data.names.length; i++){
+        let admin = {
+            name: data.names[i],
+            email: data.emails[i],
+            password: data.passwords[i],
+        }
+        db.ref("adminDetail").push(admin)
+    }
+}
+AddAdmins();
 // AddCategories();
  //AddProducts();
