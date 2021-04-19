@@ -69,7 +69,7 @@ function AddProducts ({router}) {
         let db = fireApp.database();
         db.ref("Categories").once('value').then((snap)=>{
         let obj = snap.val();
-        // console.log(Object.values(obj)[0]);
+        // console.log(Object.values(obj));
         let data = Object.keys(obj).map((key)=>obj[key]) 
         // console.log(data[0]);
         updateMyCategories(data[0]);
@@ -83,6 +83,7 @@ function AddProducts ({router}) {
         db.ref("products").once('value').then((snap) => {
             let obj = snap.val()
             let myDict = {}
+            // console.log(Object.values(obj).slice(1,3)[0])
             for(let i = 0; i<Object.keys(obj).length; i++){
                 myDict[Object.keys(obj)[i]] = Object.values(obj)[i];
             }

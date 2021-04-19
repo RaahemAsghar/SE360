@@ -4,13 +4,16 @@ import Homepage from './Homepage.js'
 import Sidebar from './Sidebar.js'
 import Login from './Login.js'
 import Navbars from './Navbars'
+import Main from './main.js';
 
+let temp = [];
 function App() {
   return(
     <div>
-      <Home/>
+      {/* <Home/> */}
+      <Main tempList = {temp}/>
       {/* <Sidebar/> */}
-
+      {/* <Login/> */}
     </div>
   );
 }

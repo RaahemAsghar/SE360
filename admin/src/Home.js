@@ -12,7 +12,6 @@ import {Orders,SingleOrder} from './Orders.js';
 import {Temp2,Temp3} from './Temp2.js';
 import Inventory from './Inventory.js';
 import {ProductUpdate} from './productUpdate.js';
-
 // ---------------------------------------- ICONS -------------------------------------------------------
 import { Icon, InlineIcon } from '@iconify/react';
 import bxsDashboard from '@iconify/icons-bx/bxs-dashboard';
@@ -59,11 +58,10 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-  function Home () {
+  function Home ({details}) {
     const classes = useStyles(); 
     let [page, setPage] = React.useState(["Add Products"]);
     let [myOrder, updateMyOrder] = React.useState([]);
-
     const choose = () => {
         if(page[0]=="Add Products"){
             return <AddProducts router = {setPage}/>
