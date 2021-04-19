@@ -15,16 +15,19 @@ function Login({details}){
     return(
         <Grid container item xs={12}>
             <Grid item xs={12}>
+                <div style={{background: '#355093', width: "100%", height:"80px", position:"absolute"}}>
+                    <h1 style={{cursor:"pointer",color:"#FFFFFF",display:"inline-block",transform:"translateY(20px)",marginLeft:"8px",fontSize: "2.0em",textAlign:"Center"}}>StoreX</h1>
+                </div>
                 <div>
-                    <img src="https://preview.colorlib.com/theme/bootstrap/login-form-07/images/undraw_remotely_2j6y.svg" style={{verticalAlign:"left",marginTop:"5%",width:"60%",height:"780px"}}/>
+                    <img src="https://preview.colorlib.com/theme/bootstrap/login-form-07/images/undraw_remotely_2j6y.svg" style={{verticalAlign:"left",marginTop:"7%",width:"60%",height:"620px"}}/>
                 </div>
             </Grid>
             <Grid item xs={12}></Grid>
-            <Grid style={{marginLeft:"70%", marginTop:"-40%",marginBottom:"5%",textAlign:"center"}} item xs={5}>
+            <Grid style={{marginLeft:"65%", marginTop:"-39%",marginBottom:"5%",textAlign:"center"}} item xs={5}>
                 <form onSubmit = {buttonClick} style={{transform:"translateY(10px)"}}>
-                    <h1 style={{color:"#000000", fontFamily:"Sans-Serif", fontSize:"48px", lineHeight:"66px",alignItems:"flex-start", display:"flex"}}>Sign in - Admin</h1>
-                    <h2 style={{color:"#C8BABA",  fontFamily:"Sans-Serif", fontSize:"24px", lineHeight:"33px", textAlign:"left", transform:"translateY(10px)"}}>Welcome back!</h2>
-                    <h2 style={{color:"#C8BABA", fontFamily:"Sans-Serif", fontSize:"24px", lineHeight:"33px", textAlign:"left"}}>Enter the details to login</h2>
+                    <h1 style={{color:"#000000", fontFamily:"Sans-Serif", fontSize:"36px", lineHeight:"66px",alignItems:"flex-start", display:"flex"}}>Sign in - Admin</h1>
+                    <h2 style={{color:"#C8BABA",  fontFamily:"Sans-Serif", fontSize:"20px", lineHeight:"33px", textAlign:"left", transform:"translateY(10px)"}}>Welcome back!</h2>
+                    <h2 style={{color:"#C8BABA", fontFamily:"Sans-Serif", fontSize:"20px", lineHeight:"33px", textAlign:"left"}}>Enter the details to login</h2>
                     <div>
                         <label for="name" style={{color:"#000000", fontSize:"16px", lineHeight:"33px", textAlign:"left", transform:"translateY(20px)", alignItems:"flex-start", display:"flex"}}>Email Address*</label>
                         <input value = {details[0]} onChange = {emailClick} style={{width:"428px",borderRadius:"30px",height:"48px", border:"0.5px solid black", transform:"translateY(15px)", backgroundColor:"#C1C8E4", alignItems:"flex-start", display:"flex"}} type="text" placeholder="  1234@gmail.com"></input><br></br>
