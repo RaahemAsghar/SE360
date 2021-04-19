@@ -42,7 +42,7 @@ function Main ({tempList}){
             // return <Login details = {requirements}/>
         }
         else {
-            let requirements = [emailId, updateEmailId, password, updatePassword, name, updateName, updateSubmitted];
+            let requirements = [emailId, updateEmailId, password, updatePassword, name, updateName, updateSubmitted, setCheck];
             tempList = [<Home details = {requirements}/>];
         }
         // console.log(tempList.length)

@@ -31,7 +31,7 @@ function Login({details}){
                     </div>
                     <div>
                         <label for="name" style={{color:"#000000", fontSize:"16px", lineHeight:"33px", textAlign:"left", transform:"translateY(20px)", alignItems:"flex-start", display:"flex"}}>Password*</label>
-                        <input value = {details[2]} onChange = {passClick} style={{width:"428px",borderRadius:"30px",height:"48px",border:"0.5px solid black", transform:"translateY(15px)",backgroundColor:"#C1C8E4", alignItems:"flex-start", display:"flex"}} type="text" placeholder="  *************"></input><br></br>
+                        <input type = "password" value = {details[2]} onChange = {passClick} style={{width:"428px",borderRadius:"30px",height:"48px",border:"0.5px solid black", transform:"translateY(15px)",backgroundColor:"#C1C8E4", alignItems:"flex-start", display:"flex"}} placeholder="  *************"></input><br></br>
 
                     </div>
                     <div>

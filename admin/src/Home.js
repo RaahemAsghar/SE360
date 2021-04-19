@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
 
                 <Box mt={-2.5} height="100%" width="100%">
                      <Grid className={classes.header} alignItems="center" container>
-                         <Header/>
+                         <Header details = {details}/>
                     </Grid>
                 </Box>
 
@@ -123,12 +123,23 @@ const useStyles = makeStyles((theme) => ({
     )
   }
 
-  function Header () {
+  function Header ({details}) {
 
+    let options = [details[4],"Logout"];
+    const optionsClick = (event) => {
+        if(event.target.value === "Logout"){
+            details[1](''); details[3](''); details[5](''); details[6](false); details[7](true);
+        }
+    }
     return(
-        <Grid item xs={4}>
-            <h1 style={{cursor:"pointer",color:"#FFFFFF",display:"inline-block",transform:"translateY(8px)",marginLeft:"8px",fontSize: "2.0em",textAlign:"Center"}}>StoreX</h1>
-        </Grid>
+        // <Grid item xs={4}>
+        <div>
+        <h1 style={{cursor:"pointer",color:"#FFFFFF",display:"inline-block",transform:"translateY(8px)",marginLeft:"8px",fontSize: "2.0em",textAlign:"Center"}}>StoreX</h1>
+        <select onChange = {optionsClick} style = {{marginLeft: "820px", width: "200px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required>
+        {options ? options.map((val,index)=>(<option key={index}>{val}</option>)) : <h5></h5>} 
+        </select>
+        </div>
+        // </Grid>
     )
   }
 
