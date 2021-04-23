@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid } from '@material-ui/core';
 import {fireApp} from './fireapp.js'
+import Load from '@material-ui/core/CircularProgress';
 
 function Details({id,route}){
 
@@ -49,7 +50,7 @@ function Details({id,route}){
                     <h4 style={{display:"inline-block",fontWeight:"400"}}>{obj.name}</h4>
                     <h4 style={{display:"inline-block",float:"right",marginRight:"20px",fontWeight:"400"}}>{obj.count}</h4><hr/>
                     </>
-                )) : <h3>Loading</h3>
+                )) : <Load size={60} style={{marginLeft:"40%"}}/>
             }
             <h3 style={{display:"inline-block"}}>Total:</h3>
             <h3 style={{display:"inline-block",float:"right"}}>{trans.bill}</h3>

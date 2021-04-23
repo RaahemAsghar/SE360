@@ -17,8 +17,7 @@ function History({user}){
             record[key].key = key;
             return record[key]
         })
-        console.log(record)
-        setorders(record)
+        setorders(record.reverse())
         })
     },[])
     let pending = undefined

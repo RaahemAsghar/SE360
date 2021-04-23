@@ -5,10 +5,20 @@ import Heart from '@material-ui/icons/FavoriteBorder';
 import AddCart from '@material-ui/icons/AddShoppingCart';
 import Arrow from '@material-ui/icons/ArrowForward';
 import {fireApp} from './fireapp.js'
+import { makeStyles } from '@material-ui/core/styles';
 import Load from '@material-ui/core/CircularProgress';
+
+const useStyles = makeStyles((theme) => ({
+    effect: {
+        '&:hover': {
+            boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+        }
+      }
+  }));
 
 
 function Search({addToCart,router,navHighLight,query}){
+    const classes = useStyles()
     const route = (event)=>{
         router(["homescreen","null"]);
         navHighLight("null");
@@ -59,7 +69,7 @@ function Search({addToCart,router,navHighLight,query}){
             display.map((obj,index)=>(
                 
                 <Grid item xs={3}>
-                    <div style={{borderRadius:"15px",backgroundColor:"#84CEEB",width:"85%",height:"220px"}}>
+                    <div className={classes.effect} style={{borderRadius:"15px",backgroundColor:"#84CEEB",width:"85%",height:"220px"}}>
                         <div style={{textAlign:"center",marginBottom:"-12%"}}>
                             <img data-id={obj.id} onClick={route2} style={{borderRadius:"12px",transform:"translateY(10px)",marginBottom:"-10px"}} src={obj.url} width="90%" height="120px"></img>
                             <h5>{obj.category}</h5>

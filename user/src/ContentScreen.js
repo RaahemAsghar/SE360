@@ -6,11 +6,21 @@ import Heart from '@material-ui/icons/FavoriteBorder';
 import AddCart from '@material-ui/icons/AddShoppingCart';
 import Arrow from '@material-ui/icons/ArrowForward';
 import {fireApp} from './fireapp.js'
+import { makeStyles } from '@material-ui/core/styles';
 import Load from '@material-ui/core/CircularProgress';
 import Back from '@material-ui/icons/ArrowBack';
 
-function Content({router,addToCart}){
+const useStyles = makeStyles((theme) => ({
+    effect: {
+        '&:hover': {
+            boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+        }
+      }
+  }));
 
+
+function Content({router,addToCart}){
+    const classes = useStyles()
     const route2 = (event)=>{
         let id = event.target.dataset.id;
         router(["productpage",id,["homescreen"]]);
@@ -78,7 +88,7 @@ function Content({router,addToCart}){
         topFour.map((obj,index)=>(
         <Slide key={index} direction="left" timeout={600} in>
         <Grid item xs={2}>
-            <div style={{borderRadius:"15px",backgroundColor:"#84CEEB",marginTop:"-31%",height:"220px"}}>
+            <div className={classes.effect} style={{borderRadius:"15px",backgroundColor:"#84CEEB",marginTop:"-31%",height:"220px"}}>
                 <div style={{textAlign:"center",marginBottom:"-12%"}}>
                     <img data-id={obj.id} onClick={route2} style={{borderRadius:"12px",transform:"translateY(10px)",marginBottom:"-10px"}} src={obj.url} width="90%" height="120px"></img>
                     <h5>{obj.category}</h5>
@@ -114,7 +124,7 @@ function Content({router,addToCart}){
 
             {
             SaleFour.map((obj,index)=>(<Slide key={index} direction="left" timeout={600} in><Grid item xs={2}>
-                <div style={{transform:"translateY(-20px)",borderRadius:"15px",backgroundColor:"#84CEEB",marginTop:"-20%",height:"220px"}}>
+                <div className={classes.effect} style={{transform:"translateY(-20px)",borderRadius:"15px",backgroundColor:"#84CEEB",marginTop:"-20%",height:"220px"}}>
                     <div style={{position:"relative",textAlign:"center",marginBottom:"-12%"}}>
                         <span style={{float:"right",backgroundColor:"red",color:"white",width:"20%",paddingLeft:"3%",paddingRight:"3%",marginTop:"-10px"}}>Sale</span>
                         <img data-id={obj.id} onClick={route2} style={{borderRadius:"12px",transform:"translateY(10px)",marginTop:"-11px"}} src={obj.url} width="90%" height="120px"></img>
