@@ -9,6 +9,7 @@ import {fireApp} from './fireapp.js'
 import { makeStyles } from '@material-ui/core/styles';
 import Load from '@material-ui/core/CircularProgress';
 import Back from '@material-ui/icons/ArrowBack';
+import Carousel from 'react-material-ui-carousel'
 
 const useStyles = makeStyles((theme) => ({
     effect: {
@@ -66,11 +67,30 @@ function Content({router,addToCart}){
 
     return(
     <>
-         {/* <Grid item xs={12}>
+        <Grid item xs={12}>
                 <div style={{marginLeft:"5%",marginTop:"3%"}}>
-                    <h4>Slide show</h4>
+                    <Carousel interval={3000}>
+                        <div>
+                            <img src="/slide4.jpg" width="95%" height="250px"/>
+                        </div>
+                        <div>
+                            <img src="/slide3.jpg" width="95%" height="250px"/>
+                        </div>
+                        <div>
+                            <img src="/slide5.jpg" width="95%" height="250px"/>
+                        </div>
+                        <div>
+                            <img src="/slide6.jpg" width="95%" height="250px"/>
+                        </div>
+                        <div>
+                            <img src="/slide7.jpg" width="95%" height="250px"/>
+                        </div>
+                        <div>
+                            <img src="/slide8.png" width="95%" height="250px"/>
+                        </div>
+                    </Carousel>
                 </div>
-            </Grid> */}
+        </Grid> 
         {(TopSellingList && SaleList) ?<>
         <Grid container spacing={4} item xs={12}>
 

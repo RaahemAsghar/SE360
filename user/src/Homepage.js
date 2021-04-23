@@ -109,8 +109,8 @@ function Homepage() {
 
                 <Box mt={-2.8} height="100%" width="100%">
                     <Grid item xs={12} container>
-                        <Grid item xs={2} md={1} >
-                            <Navbar checklog={logged[0]} router={changeFocus} navHighLight={setColor} currentHighLight={navcolor}/>
+                        <Grid item  xs={2} md={1} >
+                            <Navbar fo={focus[0]} checklog={logged[0]} router={changeFocus} navHighLight={setColor} currentHighLight={navcolor}/>
                         </Grid>
 
                         <Grid container item xs={10} md={11}>
@@ -120,7 +120,7 @@ function Homepage() {
                 </Box>
                 
                 <Box mt={-4}>
-                    <Grid container style={{marginTop:"3%",backgroundColor: '#C3EAFA',height:"200px"}} item xs={12}>
+                    <Grid container style={{marginTop:"2.5%",backgroundColor: '#C3EAFA',height:"200px"}} item xs={12}>
                         <Footer  navHighLight={setColor} router={changeFocus}/>
                     </Grid>
                 </Box>
@@ -205,7 +205,7 @@ function Header({router,itms,navHighLight}){
     )
 }
 
-function Navbar({router,navHighLight,currentHighLight,checklog}){
+function Navbar({router,navHighLight,currentHighLight,checklog,fo}){
     
     const classes = useStyles();
     const [categories, setCategories] = React.useState(undefined);
@@ -238,24 +238,24 @@ function Navbar({router,navHighLight,currentHighLight,checklog}){
     }
 
     return(
-    <div className={classes.navbar} style={{height:"600px"}} >
+    <div className={classes.navbar} style={{height: (fo=="homescreen" ? "900px": "650px")}} >
         <div>
             <h4>Accounts</h4>
             {!checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="Login" ? "orange" :"white")}}>Login</h5>}
-            {checklog && <h5 onClick={handleClick} style={{color:"#28ff03",paddingLeft:"8px",marginTop:"-10px"}}><Circle style={{fontSize:"15px",transform:"translateY(2px) translateX(-3px)"}}/>Signed In</h5>}
-            {checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="Settings" ? "orange" :"white")}}>Settings</h5>}
-            {checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="My Orders" ? "orange" :"white")}}>My Orders</h5>}
+            {checklog && <h5 onClick={handleClick} style={{color:"#28ff03",paddingLeft:"8px"}}><Circle style={{fontSize:"15px",transform:"translateY(2px) translateX(-3px)"}}/>Signed In</h5>}
+            {checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",cursor:"pointer",color: (currentHighLight=="Settings" ? "orange" :"white")}}>Settings</h5>}
+            {checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",cursor:"pointer",color: (currentHighLight=="My Orders" ? "orange" :"white")}}>My Orders</h5>}
         </div>
         
         <div>
             <h4>Categories</h4>
-            {categories ? categories.map((val,index)=>(<h5 onClick={handleClick} style={{cursor:"pointer", paddingLeft:"8px",marginTop:"-10px",color: (currentHighLight==val ? "orange" :"white")}} key={index}>{val}</h5>)) : <h5></h5>}
+            {categories ? categories.map((val,index)=>(<h5 onClick={handleClick} style={{cursor:"pointer", paddingLeft:"8px",color: (currentHighLight==val ? "orange" :"white")}} key={index}>{val}</h5>)) : <h5></h5>}
         </div>
         
         <div>
             <h4>Contact Us</h4>
-            <h5 style={{paddingLeft:"8px",marginTop:"-10px",cursor:"not-allowed"}}>Complaints</h5>
-            <h5 style={{paddingLeft:"8px",cursor:"not-allowed",marginTop:"-10px"}}>Suggestions</h5>
+            <h5 style={{paddingLeft:"8px",cursor:"not-allowed"}}>Complaints</h5>
+            <h5 style={{paddingLeft:"8px",cursor:"not-allowed"}}>Suggestions</h5>
         </div>
     </div>
     )
