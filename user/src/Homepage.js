@@ -192,8 +192,8 @@ function Header({router,itms,navHighLight}){
         <Grid item xs={4}>
             <div style={{textAlign:"end",transform:"translateY(10px)"}}>
                 <h3 onClick={()=>route("homescreen")} style={{display:"inline-block",color:"#355093",transform:"translateY(-5px)",cursor:"pointer"}}>Home</h3>
-                <h3 style={{display:"inline-block",marginLeft:"5%",color:"#EE1313",fontStyle:"italic",transform:"translateY(-5px)",cursor:"not-allowed"}}>Sale</h3>
-                <Heart fontSize="large" style={{transform:"translateY(8px)",marginLeft:"5%",cursor:"not-allowed"}}/>  
+                <h3 onClick={()=>router(["category","sale"])} style={{display:"inline-block",marginLeft:"5%",color:"#EE1313",fontStyle:"italic",transform:"translateY(-5px)",cursor:"pointer"}}>Sale</h3>
+                <Heart fontSize="large" style={{transform:"translateY(8px)",marginLeft:"5%",cursor:"pointer"}}/>  
                 <Cart onClick={()=>route("cart")} fontSize="large" style={{transform:"translateY(8px)",marginLeft:"5%",marginRight:"5%",cursor:"pointer"}}/>
                 <div style={{backgroundColor:"#355093",top:"5%",left:"93%",position:"absolute",color:"white",height:"22%",width:"18px", borderRadius:"8px",textAlign:"center"}}>
                     <h6 style={{marginTop:"-7%"}}>{itms.length}</h6>

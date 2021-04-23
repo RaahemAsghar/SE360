@@ -38,7 +38,12 @@ function DisplayCategory({addToCart,router,label,navHighLight}){
             obj[key].id = key;
             return obj[key]
         })
-        let list = data.filter(ele=>ele.category==label)
+        let list = []
+        if(label=="sale"){
+            list = data.filter(ele=>ele.discount>0)
+        }else{
+            list = data.filter(ele=>ele.category==label)
+        }
         setList(list)
      })
     },[label])
@@ -69,7 +74,7 @@ function DisplayCategory({addToCart,router,label,navHighLight}){
             display.map((obj,index)=>(
                 
                 <Grid item xs={3}>
-                    <div className={classes.effect} style={{borderRadius:"15px",backgroundColor:"#84CEEB",width:"85%",height:"220px"}}>
+                    {label!="sale" ? <div className={classes.effect} style={{borderRadius:"15px",backgroundColor:"#84CEEB",width:"85%",height:"220px"}}>
                         <div style={{textAlign:"center",marginBottom:"-12%"}}>
                             <img data-id={obj.id} onClick={route2} style={{borderRadius:"12px",transform:"translateY(10px)",marginBottom:"-10px"}} src={obj.url} width="90%" height="120px"></img>
                             <h5>{obj.category}</h5>
@@ -81,7 +86,22 @@ function DisplayCategory({addToCart,router,label,navHighLight}){
                             <Heart style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}} fontSize="small"/>
                             <h5 style={{display:"inline",marginLeft:"24%"}}><strong>RS:{obj.price}</strong></h5>
                         </div>
+                    </div> : 
+                    <div className={classes.effect} style={{transform:"translateY(-20px)",borderRadius:"15px",backgroundColor:"#84CEEB",marginTop:"-20%",height:"220px"}}>
+                    <div style={{position:"relative",textAlign:"center",marginBottom:"-12%"}}>
+                        <span style={{float:"right",backgroundColor:"red",color:"white",width:"20%",paddingLeft:"3%",paddingRight:"3%",marginTop:"-10px"}}>Sale</span>
+                        <img data-id={obj.id} onClick={route2} style={{borderRadius:"12px",transform:"translateY(10px)",marginTop:"-11px"}} src={obj.url} width="90%" height="120px"></img>
+                        <h5 style={{marginTop:"7%"}}>{obj.category}</h5>
+                        <h5 style={{transform:"translateY(-20px)"}}><strong>{obj.name}</strong></h5>
+                        <Rating size="small" style={{transform:"translateY(-43px)"}} name="read-only" value={obj.rating} readOnly />
                     </div>
+                    <div style={{transform:"translateY(-30px)"}}>
+                        <AddCart onClick={()=>addToCart(obj.id)} data-id={obj.id} style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}}fontSize="small"/>
+                        <Heart style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}} fontSize="small"/>
+                        <h5 style={{display:"inline",marginLeft:"24%"}}><strong>RS:{Math.round(obj.price*(1-obj.discount/100))}</strong></h5>
+                        <h6 style={{textDecoration:"line-through",color:"red",transform:"translateX(57.5%) translateY(-200%)"}}><strong>RS:{obj.price}</strong></h6>
+                    </div>
+                </div>}
                 </Grid>))
                 }
                 {(()=>{
