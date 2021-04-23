@@ -45,6 +45,7 @@ function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,it
         let obj = snap.val();
         let data = Object.keys(obj).map((key)=>{
             obj[key].id = key;
+            obj[key].price = obj[key].price * (1-(obj[key].discount)/100)
             return obj[key]
         })
         let cartlist = data.filter((ele)=>{

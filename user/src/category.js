@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     effect: {
         '&:hover': {
-            boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+            boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 1), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
         }
       }
   }));
@@ -36,6 +36,7 @@ function DisplayCategory({addToCart,router,label,navHighLight}){
         let obj = snap.val();
         let data = Object.keys(obj).map((key)=>{
             obj[key].id = key;
+            obj[key].newprice = Math.round(obj[key].price * (1-(obj[key].discount)/100))
             return obj[key]
         })
         let list = []
@@ -67,7 +68,7 @@ function DisplayCategory({addToCart,router,label,navHighLight}){
 
     return(
         <>
-            <h3 style={{position:"absolute",top:"10%",left:"18.5%",color:"#355093"}}>{label}</h3>
+            <h3 style={{position:"absolute",top:"10%",left:"18.5%",color:"#355093"}}>{label.toUpperCase()}</h3>
             {ProductList ? <Grid container style={{marginLeft:"10%",marginRight:"15%",marginTop:"5%",marginBottom:"5%"}} item xs={12} spacing={3}>
 
             {
@@ -84,10 +85,10 @@ function DisplayCategory({addToCart,router,label,navHighLight}){
                         <div style={{transform:"translateY(-30px)"}}>
                             <AddCart onClick={()=>addToCart(obj.id)} style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}}fontSize="small"/>
                             <Heart style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}} fontSize="small"/>
-                            <h5 style={{display:"inline",marginLeft:"24%"}}><strong>RS:{obj.price}</strong></h5>
+                            <h5 style={{display:"inline",marginLeft:"24%"}}><strong>RS:{obj.newprice}</strong></h5>
                         </div>
                     </div> : 
-                    <div className={classes.effect} style={{transform:"translateY(-20px)",borderRadius:"15px",backgroundColor:"#84CEEB",marginTop:"-20%",height:"220px"}}>
+                    <div  className={classes.effect} style={{borderRadius:"15px",backgroundColor:"#84CEEB",width:"85%",height:"220px"}}>
                     <div style={{position:"relative",textAlign:"center",marginBottom:"-12%"}}>
                         <span style={{float:"right",backgroundColor:"red",color:"white",width:"20%",paddingLeft:"3%",paddingRight:"3%",marginTop:"-10px"}}>Sale</span>
                         <img data-id={obj.id} onClick={route2} style={{borderRadius:"12px",transform:"translateY(10px)",marginTop:"-11px"}} src={obj.url} width="90%" height="120px"></img>

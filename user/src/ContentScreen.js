@@ -13,7 +13,7 @@ import Back from '@material-ui/icons/ArrowBack';
 const useStyles = makeStyles((theme) => ({
     effect: {
         '&:hover': {
-            boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+            boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 1), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
         }
       }
   }));

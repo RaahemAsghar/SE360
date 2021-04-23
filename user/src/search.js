@@ -11,7 +11,7 @@ import Load from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
     effect: {
         '&:hover': {
-            boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+            boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 1), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
         }
       }
   }));
@@ -36,6 +36,7 @@ function Search({addToCart,router,navHighLight,query}){
         let obj = snap.val();
         let data = Object.keys(obj).map((key)=>{
             obj[key].id = key;
+            obj[key].price = Math.round(obj[key].price * (1-(obj[key].discount)/100))
             return obj[key]
         })
         let qry = query.toLowerCase()
