@@ -93,7 +93,7 @@ function Homepage() {
             return <Search query={focus[1]} addToCart={addItems} router={changeFocus} navHighLight={setColor}/>
         }
         else if(focus[0] === "My Orders"){
-            return <History/>
+            return <History user={logged[1]}/>
         }
     }
 
