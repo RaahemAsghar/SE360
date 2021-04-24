@@ -142,7 +142,7 @@ function Settings({router,id,set}){
             <input value={obj.city} onChange={(event)=>setobj({...obj,city:event.target.value})} style={{width:"60%",borderRadius:"15px",height:"26px",border:"1px solid black"}} type="text"></input>
         </Grid>
 
-        <div style={{position:"absolute",top:"80%",left:"12.8%"}}>
+        <div style={{position:"absolute",top:"520px",left:"12.8%"}}>
             <h2 style={{color:"#355093"}}>Delete Account</h2>
             <h4 style={{color:"#355093"}}>By deleting your account, you are asking us to remove all records of your
             information from our database. That means that you will no longer be able
