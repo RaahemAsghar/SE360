@@ -70,7 +70,8 @@ function SingleOrder ({router,details}) {
         document.getElementById("greyArea").style.height = greyHeight;
     },[])
     return(
-        <div style = {{marginLeft: "90px"}}>
+        // <div style = {{overflowY: "scroll"}}>
+        <div style = {{marginLeft: "90px", overflowY: "scroll", height: "680px"}}>
             <div style = {{marginTop: "40px"}}></div>
             <div id = "greyArea" style = {{backgroundColor: "#DBDFF0", borderRadius: "15px", width: "860px"}}>
                 <div style = {{fontFamily: "Arial", textIndent: "15px"}}>
@@ -89,6 +90,7 @@ function SingleOrder ({router,details}) {
                 </Grid>
             </Grid>
         </div>
+        // </div>
     )
 }
 

@@ -135,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
         // <Grid item xs={4}>
         <div>
         <h1 style={{cursor:"pointer",color:"#FFFFFF",display:"inline-block",transform:"translateY(8px)",marginLeft:"8px",fontSize: "2.0em",textAlign:"Center"}}>StoreX</h1>
-        <select onChange = {optionsClick} style = {{marginLeft: "770px", width: "250px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required>
+        <select onChange = {optionsClick} style = {{marginLeft: "900px", width: "250px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required>
         {options ? options.map((val,index)=>(<option key={index}>{val}</option>)) : <h5></h5>} 
         </select>
         </div>
