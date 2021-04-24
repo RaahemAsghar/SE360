@@ -241,7 +241,7 @@ function Navbar({router,navHighLight,currentHighLight,checklog,fo}){
         <div>
             <h4>Accounts</h4>
             {!checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",marginTop:"-10px",cursor:"pointer",color: (currentHighLight=="Login" ? "orange" :"white")}}>Login</h5>}
-            {checklog && <h5 onClick={handleClick} style={{color:"#28ff03",paddingLeft:"8px"}}><Circle style={{fontSize:"15px",transform:"translateY(2px) translateX(-3px)"}}/>Signed In</h5>}
+            {checklog && <h5 style={{color:"#28ff03",paddingLeft:"8px"}}><Circle style={{fontSize:"15px",transform:"translateY(2px) translateX(-3px)"}}/>Signed In</h5>}
             {checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",cursor:"pointer",color: (currentHighLight=="Settings" ? "orange" :"white")}}>Settings</h5>}
             {checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",cursor:"pointer",color: (currentHighLight=="My Orders" ? "orange" :"white")}}>My Orders</h5>}
         </div>
