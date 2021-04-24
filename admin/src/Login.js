@@ -10,6 +10,20 @@ function Login({details}){
     }
     const buttonClick = (event) => {
         event.preventDefault();
+        let adminDetails = details[8]; let correct = false;
+        let adminEmails = Object.keys(adminDetails);
+            for(let i = 0; i< adminEmails.length; i++){
+                if(adminEmails[i]===details[0] && adminDetails[adminEmails[i]][1]==details[2]){
+                    correct = true;  break;
+                }
+            }
+        if(correct){
+            let name = adminDetails[details[0]][0];
+            // let myList = [details[0],details[2],name];
+            let myList = details[0] + " " + details[2] + " " + name;
+            // console.log(myList);
+            sessionStorage.setItem("userid",myList);
+        }
         details[7](true);
     }
     return(

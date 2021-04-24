@@ -31,13 +31,13 @@ function Main ({tempList}){
             } else{
                 console.log("incorrect Id or password")
                 updateSubmitted(false); updateEmailId(''); updatePassword('');
-                let requirements = [emailId, updateEmailId, password, updatePassword, name, updateName, submitted, updateSubmitted];
+                let requirements = [emailId, updateEmailId, password, updatePassword, name, updateName, submitted, updateSubmitted,adminDetails];
                 tempList = [<Login details = {requirements}/>];  //updateTag(tempList);
                 // return <Login details = {requirements}/>
             }
         }
         else if (check){
-            let requirements = [emailId, updateEmailId, password, updatePassword, name, updateName, submitted, updateSubmitted];
+            let requirements = [emailId, updateEmailId, password, updatePassword, name, updateName, submitted, updateSubmitted,adminDetails];
             tempList = [<Login details = {requirements}/>]; //updateTag(tempList);
             // return <Login details = {requirements}/>
         }
@@ -59,6 +59,14 @@ function Main ({tempList}){
             }
             updateAdminDetails(myDict)
         })
+        let id = sessionStorage.getItem("userid")
+        if(id){
+            // let adminDetailSize = Object.keys(adminDetails).length;
+            // let myName = adminDetails[id][0]; let myPass = adminDetails[id][1];
+            id = id.split(" ");
+            let myName = id[2] + " " + id[3] + " " + id[4]; let myEmail = id[0]; let myPass = id[1];
+            updateEmailId(myEmail); updatePassword(myPass); updateName(myName); updateSubmitted(true); setCheck(false);
+        }
     },[])
     return(
         <div>
