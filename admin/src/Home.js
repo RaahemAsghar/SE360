@@ -128,6 +128,8 @@ const useStyles = makeStyles((theme) => ({
     let options = [details[4],"Logout"];
     const optionsClick = (event) => {
         if(event.target.value === "Logout"){
+            // sessionStorage.setItem("userid","logged out");
+            sessionStorage.removeItem("userid");
             details[1](''); details[3](''); details[5](''); details[6](false); details[7](true);
         }
     }
