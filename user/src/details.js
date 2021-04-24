@@ -26,7 +26,8 @@ function Details({id,route}){
                     newtemp.push(
                     {
                         "name": dict[key],
-                        "count": temp[key]
+                        "count": temp[key],
+                        "price":  Math.round(record[id].product_prices[key] * temp[key])
                     })
                 })
                 setprod(newtemp)
@@ -43,17 +44,19 @@ function Details({id,route}){
             <h4 style={{display:"inline-block",fontWeight:"600"}}>Order ID: {id}</h4>
             <h4 style={{display:"inline-block",float:"right",fontWeight:"600"}}>Date: {trans.date} </h4><hr/>
             <h3 style={{display:"inline-block"}}>Product Name</h3>
-            <h3 style={{display:"inline-block",float:"right"}}>Quantity</h3><hr/>
+            <h3 style={{display:"inline-block",float:"right"}}>Price</h3>
+            <h3 style={{display:"inline-block",float:"right",marginRight:"30px"}}>Quantity</h3><hr/>
             {
                 prod ? prod.map(obj => (
                     <>
                     <h4 style={{display:"inline-block",fontWeight:"400"}}>{obj.name}</h4>
-                    <h4 style={{display:"inline-block",float:"right",marginRight:"20px",fontWeight:"400"}}>{obj.count}</h4><hr/>
+                    <h4 style={{display:"inline-block",fontWeight:"400",float:"right"}}>{obj.price}</h4>
+                    <h4 style={{display:"inline-block",float:"right",marginRight:"70px",fontWeight:"400"}}>{obj.count}</h4><hr/>
                     </>
                 )) : <Load size={60} style={{marginLeft:"40%"}}/>
             }
             <h3 style={{display:"inline-block"}}>Total:</h3>
-            <h3 style={{display:"inline-block",float:"right"}}>{trans.bill}</h3>
+            <h3 style={{display:"inline-block",float:"right"}}>{Math.round(trans.bill)}</h3>
         </div>
         <button onClick={route} style={{backgroundColor:"#355093",color:"white",marginLeft:"5%",marginTop:"1%"}}>Go back to my orders</button>
     </Grid>
