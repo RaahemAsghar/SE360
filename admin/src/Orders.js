@@ -18,7 +18,7 @@ function Orders ({router,allOrders}) {
             let prodKeys = Object.keys(products);
             let majList = [];
             for(let i = 0; i<prodKeys.length; i++){
-                let minList = []; let coeff = (100 - myDict[prodKeys[i]]["discount"])/100;
+                let minList = []; //let coeff = (100 - myDict[prodKeys[i]]["discount"])/100;
                 // let price = Math.floor(coeff*myDict[prodKeys[i]]["price"]); console.log(price);
                 let price = productPrices[prodKeys[i]];
                 minList.push(myDict[prodKeys[i]]["name"]); //Name 

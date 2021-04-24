@@ -12,6 +12,7 @@ import {Orders,SingleOrder} from './Orders.js';
 import {Temp2,Temp3} from './Temp2.js';
 import Inventory from './Inventory.js';
 import {ProductUpdate} from './productUpdate.js';
+import {SalesAnalytics} from './SalesAnalytics.js';
 // ---------------------------------------- ICONS -------------------------------------------------------
 import { Icon, InlineIcon } from '@iconify/react';
 import bxsDashboard from '@iconify/icons-bx/bxs-dashboard';
@@ -77,6 +78,8 @@ const useStyles = makeStyles((theme) => ({
             return <Inventory details = {page}/>
         } else if (page[0] === "Update Products"){
             return <ProductUpdate allProducts = {page[1]}/>
+        } else if (page[0] === "Sales Analytics"){
+            return <SalesAnalytics totalOrders = {page[1]}/>
         }
         else{
             return <Display content={page[0]}/>
@@ -209,8 +212,8 @@ const useStyles = makeStyles((theme) => ({
     //let options = ["Dashboard","View Inventory","Stock Update","Add Products","Discounts","Add Category","Delete Products","Orders","Newsletter","Sales Analytics","Website Analytics","Complaints","Suggestions"]
     //let icons =[bxsDashboard, outlineInventory2, updateIcon, addAlt, discount2, categoryIcon, trashIcon, orderBoolDescendingVariant, emailNewsletter, analyticsIcon, googleAnalytics, dialogIcon, sparklesIcon]
     const handleClick = (event) => {
-        if(event.target.innerText === "Orders"){
-            handleOrders();
+        if(event.target.innerText === "Orders" || event.target.innerText === "Sales Analytics"){
+            handleOrders(event.target.innerText);
         } else if(event.target.innerText === "View Inventory" || event.target.innerText === "Update Products"){
             handleInventory(event.target.innerText);
         }
@@ -219,22 +222,22 @@ const useStyles = makeStyles((theme) => ({
             changeTextColor(event.target.innerText);
         }
     }
-    const handleOrders = () => {
+    const handleOrders = (pageName) => {
         let db = fireApp.database();
         db.ref("pendingOrder").once('value').then((snap) => {
             let obj = snap.val();
             let myDict = {};
             if(obj==null){
-                router(["Orders",myDict]);
-                changeTextColor("Orders");
+                router([pageName,myDict]);
+                changeTextColor(pageName);
             }
             else {
             let keys = Object.keys(obj); let values = Object.values(obj);
             for(let i = 0; i<keys.length; i++){
                 myDict[keys[i]] = values[i];
             }
-            router(["Orders",myDict]);
-            changeTextColor("Orders");
+            router([pageName,myDict]);
+            changeTextColor(pageName);
             }
         })
     }
