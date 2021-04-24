@@ -244,6 +244,7 @@ function Navbar({router,navHighLight,currentHighLight,checklog,fo}){
             {checklog && <h5 style={{color:"#28ff03",paddingLeft:"8px"}}><Circle style={{fontSize:"15px",transform:"translateY(2px) translateX(-3px)"}}/>Signed In</h5>}
             {checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",cursor:"pointer",color: (currentHighLight=="Settings" ? "orange" :"white")}}>Settings</h5>}
             {checklog && <h5 onClick={handleClick} style={{paddingLeft:"8px",cursor:"pointer",color: (currentHighLight=="My Orders" ? "orange" :"white")}}>My Orders</h5>}
+            {checklog && <h5 onClick={()=>{sessionStorage.removeItem("userid"); window.location.reload()}} style={{paddingLeft:"8px",cursor:"pointer"}}>Log Out</h5>}
         </div>
         
         <div>
@@ -254,7 +255,6 @@ function Navbar({router,navHighLight,currentHighLight,checklog,fo}){
         <div>
             <h4>Contact Us</h4>
             <h5 style={{paddingLeft:"8px",cursor:"not-allowed"}}>Complaints</h5>
-            <h5 style={{paddingLeft:"8px",cursor:"not-allowed"}}>Suggestions</h5>
         </div>
     </div>
     )
