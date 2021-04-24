@@ -78,10 +78,22 @@ function Settings({router,id,set}){
     }
 
     const handledelete = () => {
-        db.ref("user/"+id).remove()
-        sessionStorage.removeItem("userid")
-        set([false,"null"])
-        router(["homescreen","null"])
+        db.ref('pendingOrder').once('value').then(snap=>{
+            let ans = snap.val()
+            let keys = []
+            Object.keys(ans).forEach(key=>{
+                if(ans[key].user_id==id){
+                    keys.push(key)
+                }
+            })
+            for (let x of keys){
+                db.ref("pendingOrder/"+x).remove()
+            }
+            db.ref("user/"+id).remove()
+            sessionStorage.removeItem("userid")
+            set([false,"null"])
+            router(["homescreen","null"])
+        })
     }
 
     return(

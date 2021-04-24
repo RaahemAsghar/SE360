@@ -13,11 +13,13 @@ function History({user}){
     React.useEffect(()=>{
         db.ref("pendingOrder").once('value').then(snap=>{
         let record = snap.val()
-        record = Object.keys(record).map(key=>{
-            record[key].key = key;
-            return record[key]
-        })
-        setorders(record.reverse())
+        if(record){
+            record = Object.keys(record).map(key=>{
+                record[key].key = key;
+                return record[key]
+            })
+            setorders(record.reverse())
+        }
         })
     },[])
     let pending = []
