@@ -84,7 +84,7 @@ function DisplayCategory({addToCart,router,label,navHighLight}){
                         </div>
                         <div style={{transform:"translateY(-30px)"}}>
                             <AddCart onClick={()=>addToCart(obj.id)} style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}}fontSize="small"/>
-                            <Heart style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}} fontSize="small"/>
+                            <Heart style={{cursor:"pointer",visibility:"hidden",marginLeft:"5%",transform:"translateY(4px)"}} fontSize="small"/>
                             <h5 style={{display:"inline",marginLeft:"24%"}}><strong>RS:{obj.newprice}</strong></h5>
                         </div>
                     </div> : 

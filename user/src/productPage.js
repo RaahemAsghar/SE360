@@ -33,7 +33,7 @@ function ProductPage({id,addToCart,current,router}){
                     <h4 style={{display:"inline-block",transform:"translateY(-31%)"}}>Rating: </h4>
                     <Rating style={{marginLeft:"5%"}} name="half-rating" defaultValue={product.rating} precision={0.5} readOnly/><br></br>
                     <button onClick={()=>addToCart(id)} style={{cursor:"pointer",border:"none",backgroundColor:"#84CEEB",width:"40%",height:"40px"}}><strong>ADD TO CART</strong></button>
-                    <button style={{cursor:"pointer",marginLeft:"10%",transform:"translateY(27%)",border:"none",backgroundColor:"#84CEEB",width:"17%",height:"40px"}}><Heart fontSize="large"/></button>
+                    <button style={{cursor:"pointer",visibility:"hidden",marginLeft:"10%",transform:"translateY(27%)",border:"none",backgroundColor:"#84CEEB",width:"17%",height:"40px"}}><Heart fontSize="large"/></button>
                 </div>
                 <div style={{marginLeft:"5%",marginTop:"5%",marginRight:"5%", borderTop:"1px solid black",borderBottom:"1px solid black",height:"25%"}}>
                     <h4 style={{transform:"translateY(-50%)"}}><strong>Description</strong></h4>
