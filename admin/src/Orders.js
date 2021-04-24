@@ -7,7 +7,7 @@ function Orders ({router,allOrders}) {
     // let [details, updateDetails] = React.useState([]);
     // let products = {4:2}
     const handleClick = (event) => {
-        let orderNo = event.target.innerText; let emailId = allOrders[1][orderNo]["bookers_email"]; let products = allOrders[1][orderNo]["products"];
+        let orderNo = event.target.innerText; let emailId = allOrders[1][orderNo]["bookers_email"]; let products = allOrders[1][orderNo]["products"]; let productPrices = allOrders[1][orderNo]["product_prices"];
         let db = fireApp.database();
         db.ref("products").once('value').then((snap) => {
             let obj = snap.val();
@@ -19,11 +19,12 @@ function Orders ({router,allOrders}) {
             let majList = [];
             for(let i = 0; i<prodKeys.length; i++){
                 let minList = []; let coeff = (100 - myDict[prodKeys[i]]["discount"])/100;
-                let price = Math.floor(coeff*myDict[prodKeys[i]]["price"]); console.log(price);
-                minList.push(myDict[prodKeys[i]]["name"]);
-                minList.push(prodKeys[i]);
-                minList.push(products[prodKeys[i]]);
-                minList.push((minList[2]*price));
+                // let price = Math.floor(coeff*myDict[prodKeys[i]]["price"]); console.log(price);
+                let price = productPrices[prodKeys[i]];
+                minList.push(myDict[prodKeys[i]]["name"]); //Name 
+                minList.push(prodKeys[i]); // Product Id
+                minList.push(products[prodKeys[i]]); // Quantity
+                minList.push((Math.floor(minList[2]*price)));
                 majList.push(minList);
             }
             let length = (50* (majList.length))+150;
@@ -35,6 +36,15 @@ function Orders ({router,allOrders}) {
     }
 
     const printAllOrders = () => {
+        let deliveredIds = []; let myKeys = Object.keys(allOrders[1]);
+        for(let i = 0; i<myKeys.length; i++){
+            if(allOrders[1][myKeys[i]]["delivered"]){
+                deliveredIds.push(myKeys[i]);
+            }
+        }
+        for(let i = 0; i<deliveredIds.length; i++){
+            delete allOrders[1][deliveredIds[i]];
+        }
         const orderIds = Object.keys(allOrders[1]);
         const emailIds = Object.keys(allOrders[1]).map((key)=>allOrders[1][key]["bookers_email"]);
         let majList = [];
@@ -63,7 +73,13 @@ function SingleOrder ({router,details}) {
     const handleGoBack = () => {
         router(details[5]);
     }
-    
+    const handleDelivered = () => {
+        let db = fireApp.database();
+        let myCurrentOrder = details[5][1][details[1]];
+        myCurrentOrder["delivered"] = true;
+        db.ref('pendingOrder').child(details[1]).update(myCurrentOrder);
+        router(details[5]);
+    }
     React.useEffect(() => {
         let greyHeight = details[4];
         greyHeight = greyHeight + "px";
@@ -86,7 +102,7 @@ function SingleOrder ({router,details}) {
                 </Grid>
                 <Grid item xs = {4}></Grid>
                 <Grid item xs = {4}>
-                <input type = "submit" value = "Mark as Delivered" style = {{marginTop: "30px", marginLeft:"35px", width: "200px", height:"38px", backgroundColor: "#5AB9EA", border: "none", borderRadius: "15px", cursor: "not-allowed"}}></input>
+                <input type = "submit" value = "Mark as Delivered" onClick = {handleDelivered} style = {{marginTop: "30px", marginLeft:"35px", width: "200px", height:"38px", backgroundColor: "#5AB9EA", border: "none", borderRadius: "15px", cursor: "pointer"}}></input>
                 </Grid>
             </Grid>
         </div>
