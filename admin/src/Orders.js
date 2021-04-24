@@ -24,10 +24,11 @@ function Orders ({router,allOrders}) {
                 minList.push(myDict[prodKeys[i]]["name"]); //Name 
                 minList.push(prodKeys[i]); // Product Id
                 minList.push(products[prodKeys[i]]); // Quantity
-                minList.push((Math.floor(minList[2]*price)));
+                let finalPrice = Math.round(minList[2]*price); let finalPriceRs = "Rs"+ " "+ finalPrice.toString(10);
+                minList.push(finalPriceRs);
                 majList.push(minList);
             }
-            let length = (50* (majList.length))+150;
+            let length = (50* (majList.length))+200;
             // console.log(length);
             let table = MakeTable(majList);
             // console.log(table);
@@ -80,6 +81,11 @@ function SingleOrder ({router,details}) {
         db.ref('pendingOrder').child(details[1]).update(myCurrentOrder);
         router(details[5]);
     }
+    const displayBill = () => {
+        // let myBill = details[5][1][1]["bill"];
+        let myBill = Math.round(details[5][1][details[1]]["bill"]); let myBillRs = "Rs " + myBill.toString();
+        return [<h6 style = {{fontFamily: "Arial", fontWeight: "Bold", textIndent: "15px", marginTop: "30px"}}>Total Bill: {myBillRs}</h6>]
+    }
     React.useEffect(() => {
         let greyHeight = details[4];
         greyHeight = greyHeight + "px";
@@ -95,6 +101,7 @@ function SingleOrder ({router,details}) {
                     <p style = {{marginTop: "25px"}}>Email Id: {details[2]}</p>
                 </div>
                 {details[3]}
+                {displayBill()}
             </div>
             <Grid container xs = {12}>
                 <Grid item xs = {4}>
