@@ -6,6 +6,7 @@ import AddCart from '@material-ui/icons/AddShoppingCart';
 import Arrow from '@material-ui/icons/ArrowForward';
 import Load from '@material-ui/core/CircularProgress';
 import {fireApp} from './fireapp.js'
+import Back from '@material-ui/icons/ArrowBack';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -135,6 +136,15 @@ function DisplayCategory({addToCart,router,label,navHighLight}){
                         }
                     }
                 })()
+                }
+                {
+                    (()=>{
+                        if(startindex >= 8){
+                            return (<div style={{position:"absolute",top:"54%",left:"10%"}}>
+                            <Back onClick={()=>setIndex(startindex-8)} style={{cursor:"pointer",fontSize:"60px",   color:"#355093"}}/>
+                        </div>)
+                        }
+                    })()
                 }
 
             </Grid> : <Load size={60} style={{top:"50%",left:"50%",position:"absolute"}} />}
