@@ -34,7 +34,7 @@ function History({user}){
         <div style={{overflow:"auto",width:"70%",marginLeft:"1%",height:"220px"}}>
             {pending.length>0 ? pending.map(obj => (<div style={{backgroundColor:"#84CEEB",marginTop:"10px",height:"100px",marginLeft:"5%",borderRadius:"10px",paddingLeft:"1.5%"}}>
                 <h4 style={{display:"inline-block"}}>Order ID: {obj.key}</h4>
-                <h4 style={{display:"inline-block",float:"right",marginRight:"2%"}}>Total: RS {obj.bill}</h4><br/>
+                <h4 style={{display:"inline-block",float:"right",marginRight:"2%"}}>Total: RS {Math.round(obj.bill)}</h4><br/>
                 <h4 style={{display:"inline-block",transform:"translateY(-22px)"}}>Date: {obj.date}</h4>
                 <button onClick={()=>setfocus(["details",obj.key])} style={{float:"right",backgroundColor:"#355093",color:"white",marginRight:"2%"}}>View Details</button>
             </div>)) : <h4 style={{marginLeft:"6%"}}>No pending Orders</h4>}
@@ -45,7 +45,7 @@ function History({user}){
         <div style={{overflow:"auto",marginLeft:"1%",width:"70%",height:"220px"}}>
             {past.length>0 ? past.map(obj => (<div style={{backgroundColor:"#84CEEB",marginTop:"10px",height:"100px",marginLeft:"5%",borderRadius:"10px",paddingLeft:"1.5%"}}>
                 <h4 style={{display:"inline-block"}}>Order ID: {obj.key}</h4>
-                <h4 style={{display:"inline-block",float:"right",marginRight:"2%"}}>Total: RS {obj.bill}</h4><br/>
+                <h4 style={{display:"inline-block",float:"right",marginRight:"2%"}}>Total: RS {Math.round(obj.bill)}</h4><br/>
                 <h4 style={{display:"inline-block",transform:"translateY(-22px)"}}>Date: {obj.date}</h4>
                 <button onClick={()=>setfocus(["details",obj.key])} style={{float:"right",backgroundColor:"#355093",color:"white",marginRight:"2%"}}>View Details</button>
             </div>)) : <h4 style={{marginLeft:"6%"}}>No past orders</h4>}
