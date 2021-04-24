@@ -6,18 +6,69 @@ import { Grid } from '@material-ui/core';
 import {fireApp} from './fireapp.js'
 import Load from '@material-ui/core/CircularProgress';
 
-function ProductPage({id,addToCart,current,router}){
+function ProductPage({id,log,addToCart,current,router}){
     const [product,setProduct] = React.useState(undefined)
-    
+    const [value,setval] = React.useState(0)
+    const [msg,setmsg] = React.useState("")
+    let db = fireApp.database();
     React.useEffect(()=>{
-        let db = fireApp.database();
         db.ref("products").once('value').then((snap)=>{
         let obj = snap.val();
         let data = obj[id];
         data.id = id;
-        setProduct(data)
+        db.ref("ratings").once('value').then(snap=>{
+            let obje = snap.val()
+            data.rating = giverating(id,obje)
+            setProduct(data)
+        })
         })
     },[id])
+
+    const rate = (event,val) => {
+        db.ref("ratings").once('value').then(snap=>{
+            let record = snap.val()
+            let userid = log[1]
+            if(record){
+                if(record[id]){
+                    let temp = record[id]
+                    let person = temp[log[1]]
+                    if(!person){
+                        temp[log[1]] = val
+                        record[id] = temp
+                        db.ref("ratings").set(record)
+                        setval(val)
+                    }else{
+                        setmsg("You have already rated this product")
+                    }
+                }else{
+                    record[id] = {}
+                    record[id][userid] = val
+                    db.ref("ratings").set(record)
+                    setval(val)
+                }
+            }else{
+                record = {};
+                record[id] = {}
+                record[id][userid] = val
+                db.ref("ratings").set(record)
+                setval(val)
+            }
+        })
+    }
+    const giverating = (idx,record) => {
+            if(record){
+                let obj = record[idx]
+                if(obj){
+                    obj = Object.keys(obj).map(key=>obj[key])
+                    let ans = 0
+                    for(let x of obj){
+                        ans = ans + x
+                    }
+                    return ans/obj.length
+                }
+            }
+            return 2.5
+    }
 
     return(
         <>
@@ -38,6 +89,11 @@ function ProductPage({id,addToCart,current,router}){
                 <div style={{marginLeft:"5%",marginTop:"5%",marginRight:"5%", borderTop:"1px solid black",borderBottom:"1px solid black",height:"25%"}}>
                     <h4 style={{transform:"translateY(-50%)"}}><strong>Description</strong></h4>
                     <h5 style={{transform:"translateY(-60%)",fontWeight:"normal"}}>{product.description}</h5>
+                </div>
+                <div style={{marginLeft:"5%"}}>
+                    <h5>Rate the product</h5>
+                    <Rating onChange={rate} style={{transform:"translateY(-20px) translateX(-5px"}} name="half-rating" defaultValue={value} precision={0.5} />
+                    <h5 style={{color:"red",transform:"translateY(-480px)"}}>{msg}</h5>
                 </div>
             </Grid>
         </Grid> : <Load size={60} style={{top:"50%",left:"50%",position:"absolute"}} />}

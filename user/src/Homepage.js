@@ -81,7 +81,7 @@ function Homepage() {
             return <ShoppingCart reset={()=>setItems([])} log={logged} router={changeFocus} removeFromCart={removeItems} addToCart={addItems} items={cartItems} navHighLight={setColor}/>
         }
         else if(focus[0] === "productpage"){
-            return <ProductPage router={changeFocus} current={focus[2]} addToCart={addItems} id={focus[1]}/>
+            return <ProductPage log={logged} router={changeFocus} current={focus[2]} addToCart={addItems} id={focus[1]}/>
         }
         else if(focus[0] === "login"){
             return <Login router={changeFocus} set={changeLog}/>
@@ -185,7 +185,7 @@ function Header({router,itms,navHighLight}){
         <Grid item xs={4}>
             <div style={{textAlign:"center",transform:"translateY(10px)"}}>
                 <input onChange={event=>{setval(event.target.value)}} value={inval} style={{display:"inline-block",border:"1px solid black",borderRadius:"5px",height:"30px",width:"70%",transform:"translateY(-4px)",backgroundColor:"#C1C8E4"}} placeholder=" Search for a product"></input>
-                <SearchIcon onClick={()=>{router(["search",inval]); navHighLight("null");setval('')}} fontSize="large" style={{transform:"rotate(10deg) translateY(8px)",marginLeft:"5px",color:"#355093",cursor:"pointer"}}/>
+                <SearchIcon onClick={()=>{if(inval!=""){router(["search",inval])}; navHighLight("null");setval('')}} fontSize="large" style={{transform:"rotate(10deg) translateY(8px)",marginLeft:"5px",color:"#355093",cursor:"pointer"}}/>
             </div>
         </Grid>
 

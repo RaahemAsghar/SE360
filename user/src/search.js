@@ -34,18 +34,37 @@ function Search({addToCart,router,navHighLight,query}){
         let db = fireApp.database();
         db.ref("products").once('value').then((snap)=>{
         let obj = snap.val();
-        let data = Object.keys(obj).map((key)=>{
-            obj[key].id = key;
-            obj[key].price = Math.round(obj[key].price * (1-(obj[key].discount)/100))
-            return obj[key]
+        db.ref("ratings").once('value').then(snapshot=>{
+            let obje = snapshot.val()
+            let data = Object.keys(obj).map((key)=>{
+                obj[key].id = key;
+                obj[key].price = Math.round(obj[key].price * (1-(obj[key].discount)/100))
+                obj[key].rating = giverating(key,obje)
+                return obj[key]
+            })
+            let qry = query.toLowerCase()
+            let fltr = data.filter(ele=>(ele.brand_name.toLowerCase().includes(qry) || ele.category.toLowerCase().includes(qry) || ele.description.toLowerCase().includes(qry) || ele.name.toLowerCase().includes(qry)));
+            setList(fltr)
         })
-        let qry = query.toLowerCase()
-        let fltr = data.filter(ele=>(ele.brand_name.toLowerCase().includes(qry) || ele.category.toLowerCase().includes(qry) || ele.description.toLowerCase().includes(qry) || ele.name.toLowerCase().includes(qry)));
-        setList(fltr)
      })
     },[query])
 
     const [startindex,setIndex] = React.useState(0);
+
+    const giverating = (idx,record) => {
+        if(record){
+            let tempo = record[idx]
+            if(tempo){
+                tempo = Object.keys(tempo).map(key=>tempo[key])
+                let ans = 0
+                for(let x of tempo){
+                    ans = ans + x
+                }
+                return ans/tempo.length
+            }
+        }
+        return 2.5
+}
 
     let display = [];
 
@@ -75,7 +94,7 @@ function Search({addToCart,router,navHighLight,query}){
                             <img data-id={obj.id} onClick={route2} style={{borderRadius:"12px",transform:"translateY(10px)",marginBottom:"-10px"}} src={obj.url} width="90%" height="120px"></img>
                             <h5>{obj.category}</h5>
                             <h5 style={{transform:"translateY(-20px)"}}><strong>{obj.name}</strong></h5>
-                            <Rating size="small" style={{transform:"translateY(-45px)"}} name="read-only" value={obj.   rating} readOnly />
+                            <Rating size="small" style={{transform:"translateY(-45px)"}} name="read-only" value={obj.rating} precision={0.5} readOnly />
                         </div>
                         <div style={{transform:"translateY(-30px)"}}>
                             <AddCart onClick={()=>addToCart(obj.id)} style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}}fontSize="small"/>

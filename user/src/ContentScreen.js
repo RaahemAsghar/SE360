@@ -30,18 +30,39 @@ function Content({router,addToCart}){
     const [TopSellingList,setTop] = React.useState(undefined) //plug into database
     const [SaleList,setSale] = React.useState(undefined) //plug into database
 
+    const giverating = (idx,record) => {
+        if(record){
+            let obj = record[idx]
+            if(obj){
+                obj = Object.keys(obj).map(key=>obj[key])
+                let ans = 0
+                for(let x of obj){
+                    ans = ans + x
+                }
+                return ans/obj.length
+            }
+        }
+        return 2.5
+}
+
     React.useEffect(()=>{
         let db = fireApp.database();
         db.ref("products").once('value').then((snap)=>{
         let obj = snap.val();
-        let data = Object.keys(obj).map((key)=>{
-            obj[key].id = key;
-            return obj[key]
+
+        db.ref("ratings").once('value').then(snapshot=>{
+            let obje = snapshot.val()
+            let data = Object.keys(obj).map((key)=>{
+                obj[key].id = key;
+                obj[key].price = Math.round(obj[key].price * (1-(obj[key].discount)/100))
+                obj[key].rating = giverating(key,obje)
+                return obj[key]
+            })
+            let sale = data.filter(ele=>ele.discount>0)
+            let normal_data =  data.filter(ele=>ele.discount==0)
+            setTop(normal_data)
+            setSale(sale)
         })
-        let sale = data.filter(ele=>ele.discount>0)
-        let normal_data =  data.filter(ele=>ele.discount==0)
-        setTop(normal_data)
-        setSale(sale)
      })
     },[])
 
@@ -113,7 +134,7 @@ function Content({router,addToCart}){
                     <img data-id={obj.id} onClick={route2} style={{borderRadius:"12px",transform:"translateY(10px)",marginBottom:"-10px"}} src={obj.url} width="90%" height="120px"></img>
                     <h5>{obj.category}</h5>
                     <h5 style={{transform:"translateY(-20px)"}}><strong>{obj.name}</strong></h5>
-                    <Rating size="small" style={{transform:"translateY(-45px)"}} name="read-only" value={obj.rating} readOnly />
+                    <Rating size="small" style={{transform:"translateY(-45px)"}} name="read-only" value={obj.rating} precision={0.5} readOnly />
                 </div>
                 <div style={{transform:"translateY(-30px)"}}>
                     <AddCart onClick={()=>addToCart(obj.id)} style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}}fontSize="small"/>
@@ -150,7 +171,7 @@ function Content({router,addToCart}){
                         <img data-id={obj.id} onClick={route2} style={{borderRadius:"12px",transform:"translateY(10px)",marginTop:"-11px"}} src={obj.url} width="90%" height="120px"></img>
                         <h5 style={{marginTop:"7%"}}>{obj.category}</h5>
                         <h5 style={{transform:"translateY(-20px)"}}><strong>{obj.name}</strong></h5>
-                        <Rating size="small" style={{transform:"translateY(-43px)"}} name="read-only" value={obj.rating} readOnly />
+                        <Rating size="small" style={{transform:"translateY(-43px)"}} name="read-only" value={obj.rating} precision={0.5} readOnly />
                     </div>
                     <div style={{transform:"translateY(-30px)"}}>
                         <AddCart onClick={()=>addToCart(obj.id)} data-id={obj.id} style={{cursor:"pointer",marginLeft:"5%",transform:"translateY(4px)"}}fontSize="small"/>
