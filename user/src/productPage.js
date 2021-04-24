@@ -90,11 +90,11 @@ function ProductPage({id,log,addToCart,current,router}){
                     <h4 style={{transform:"translateY(-50%)"}}><strong>Description</strong></h4>
                     <h5 style={{transform:"translateY(-60%)",fontWeight:"normal"}}>{product.description}</h5>
                 </div>
-                <div style={{marginLeft:"5%"}}>
+                {log[0] && <div style={{marginLeft:"5%"}}>
                     <h5>Rate the product</h5>
                     <Rating onChange={rate} style={{transform:"translateY(-20px) translateX(-5px"}} name="half-rating" defaultValue={value} precision={0.5} />
                     <h5 style={{color:"red",transform:"translateY(-480px)"}}>{msg}</h5>
-                </div>
+                </div>}
             </Grid>
         </Grid> : <Load size={60} style={{top:"50%",left:"50%",position:"absolute"}} />}
         </>
