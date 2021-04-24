@@ -31,7 +31,7 @@ function Login({set,router}){
                 let obj = snap.val();
                 let data = ""
                 if(obj){
-                    let data = Object.keys(obj).map(key=>obj[key])
+                    data = Object.keys(obj).map(key=>obj[key])
                     data = data.filter(ele=>ele.email==temp["email"])
                 }
                 if(data.length == 0){
@@ -89,7 +89,7 @@ function Login({set,router}){
                     <h5>{msg}</h5>
                     <h4 style={{color:"#355093"}}>Sign Up</h4>
                     <input onChange={event=>{temp["name"] = event.target.value}} style={{width:"60%",borderRadius:"15px",height:"26px",border:"1px solid black"}}type="text" placeholder="  Name" required ></input><br></br>
-                    <input onChange={event=>{temp["contact"] = event.target.value}} style={{width:"60%",borderRadius:"15px",height:"26px",border:"1px solid black",transform:"translateY(10px)"}} type="text" placeholder="  Contact Number" required></input><br></br>
+                    <input onChange={event=>{temp["contact"] = event.target.value}} style={{width:"60%",borderRadius:"15px",height:"26px",border:"1px solid black",transform:"translateY(10px)"}} type="number" placeholder="  Contact Number" required></input><br></br>
                     <input onChange={event=>{temp["city"] = event.target.value}} style={{width:"60%",borderRadius:"15px",height:"26px",border:"1px solid black",transform:"translateY(20px)"}} type="text" placeholder="  City" required></input><br></br>
                     <input onChange={event=>{temp["address"] = event.target.value}} style={{width:"60%",borderRadius:"15px",height:"26px",border:"1px solid black",transform:"translateY(30px)"}} type="text" placeholder="  Address" required></input><br></br>
                     <input onChange={event=>{temp["email"] = event.target.value}} style={{width:"60%",borderRadius:"15px",height:"26px",border:"1px solid black",transform:"translateY(40px)"}} type="email" placeholder="  Email" required></input><br></br>

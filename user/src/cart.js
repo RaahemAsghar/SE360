@@ -93,6 +93,11 @@ function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,it
                     let temp2 = items.filter(y=>x==y)
                     temp_obj[x] = temp2.length
                 })
+                let prices = {}
+                productList.forEach(x=>{
+                    prices[x.id] = x.price
+                })
+                trans["product_prices"] = prices
                 trans["products"] = temp_obj
                 trans["user_id"] = log[1]
                 trans["delivered"] = false
