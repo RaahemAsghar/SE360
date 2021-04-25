@@ -10,6 +10,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Load from '@material-ui/core/CircularProgress';
 import Back from '@material-ui/icons/ArrowBack';
 import Carousel from 'react-material-ui-carousel'
+import image4 from './slide4.jpg'
+import image3 from './slide3.jpg'
+import image5 from './slide5.jpg'
+import image6 from './slide6.jpg'
+import image7 from './slide7.jpg'
+import image8 from './slide8.png'
+
 
 const useStyles = makeStyles((theme) => ({
     effect: {
@@ -91,22 +98,22 @@ function Content({router,addToCart}){
                 <div style={{marginLeft:"5%",marginTop:"3%"}}>
                     <Carousel interval={3000}>
                         <div>
-                            <img src="/slide4.jpg" width="95%" height="250px"/>
+                            <img src={image4} width="95%" height="250px"/>
                         </div>
                         <div>
-                            <img src="/slide3.jpg" width="95%" height="250px"/>
+                            <img src={image3} width="95%" height="250px"/>
                         </div>
                         <div>
-                            <img src="/slide5.jpg" width="95%" height="250px"/>
+                            <img src={image5} width="95%" height="250px"/>
                         </div>
                         <div>
-                            <img src="/slide6.jpg" width="95%" height="250px"/>
+                            <img src={image6} width="95%" height="250px"/>
                         </div>
                         <div>
-                            <img src="/slide7.jpg" width="95%" height="250px"/>
+                            <img src={image7} width="95%" height="250px"/>
                         </div>
                         <div>
-                            <img src="/slide8.png" width="95%" height="250px"/>
+                            <img src={image8} width="95%" height="250px"/>
                         </div>
                     </Carousel>
                 </div>
