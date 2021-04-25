@@ -56,8 +56,22 @@ function Homepage() {
         setLog(arg)
     }
 
+    const isin = (x)=>{
+        for(let y of cartItems){
+            if(x==y){
+                return true
+            }
+        }
+        return false
+    }
     const addItems = (id) => {
+        if(!isin(id)){
+            setItems([...cartItems,id])
+        }
+    }
+    const addItems2 = (id) => {
         setItems([...cartItems,id])
+        
     }
     const removeItems = (id) =>{
         if(cartItems.length==1){
@@ -78,7 +92,7 @@ function Homepage() {
             return <DisplayCategory  addToCart={addItems} label={focus[1]} router={changeFocus} navHighLight={setColor}/>
         }
         else if(focus[0] === "cart"){
-            return <ShoppingCart reset={()=>setItems([])} log={logged} router={changeFocus} removeFromCart={removeItems} addToCart={addItems} items={cartItems} navHighLight={setColor}/>
+            return <ShoppingCart reset={()=>setItems([])} log={logged} router={changeFocus} removeFromCart={removeItems} addToCart={addItems2} items={cartItems} navHighLight={setColor}/>
         }
         else if(focus[0] === "productpage"){
             return <ProductPage log={logged} router={changeFocus} current={focus[2]} addToCart={addItems} id={focus[1]}/>

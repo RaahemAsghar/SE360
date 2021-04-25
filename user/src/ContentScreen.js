@@ -54,7 +54,6 @@ function Content({router,addToCart}){
             let obje = snapshot.val()
             let data = Object.keys(obj).map((key)=>{
                 obj[key].id = key;
-                obj[key].price = Math.round(obj[key].price * (1-(obj[key].discount)/100))
                 obj[key].rating = giverating(key,obje)
                 return obj[key]
             })

@@ -166,19 +166,20 @@ function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,it
                     {productList.map((obj)=>(
                         <div>
                         <div style={{marginLeft:"10%",display:"inline-block"}}>
-                            <img style={{marginLeft:"10%"}}src={obj.url} width="120px"></img>
+                            <img style={{marginLeft:"10%"}}src={obj.url} width="120px" height="100px"></img>
                         </div>
-                        <div style={{marginLeft:"10%",display:"inline-block"}}>
+                        <div style={{marginLeft:"10%",transform:"translateY(-10px)",display:"inline-block"}}>
                             <h4 style={{transform:"translateY(6px)",fontWeight:"500"}}>{obj.name}</h4>
-                            <h4 style={{fontWeight:"normal",marginTop:"-5%"}}>Quantity: {obj.count}<span style={{marginLeft:"25px"}}><button onClick={()=>addToCart(obj.id)} style={{backgroundColor:"#84CEEB"}}>+</button><button onClick={()=>removeFromCart(obj.id)} style={{marginLeft:"5px",backgroundColor:"#84CEEB"}}>--</button></span></h4>
-                            <h4 style={{color:"#355093",fontWeight:"normal",transform:"translateY(-20px)"}}>RS: {obj.price * obj.count}</h4>
+                            <h4 style={{fontWeight:"normal",marginTop:"-5%"}}>Quantity: {obj.count}<span style={{marginLeft:"25px"}}><button onClick={()=>{if(obj.count<obj.stock_left){addToCart(obj.id)}}} style={{backgroundColor:"#84CEEB"}}>+</button><button onClick={()=>removeFromCart(obj.id)} style={{marginLeft:"5px",backgroundColor:"#84CEEB"}}>--</button></span></h4>
+                            <h4 style={{color:"#355093",fontWeight:"normal",transform:"translateY(-20px)"}}>RS: {Math.round(obj.price * obj.count)}</h4>
+                            <h6 style={{marginTop:"-37px",color:"green"}}>Only {obj.stock_left} in stock</h6>
                         </div>
                         </div>
                 ))}
                 </div>
                 <div style={{padding:"20px",marginLeft:"12%",marginRight:"12%",transform:"translateY(50px)",borderTop:"1px solid black",borderBottom:"1px solid black"}}>
                     <h3 style={{display:"inline"}}>Total</h3>
-                    <h3 style={{marginLeft:"52%",display:"inline"}}>Rs:{productList.reduce((total,obj)=>total+obj.price*obj.count,0)}</h3>
+                    <h3 style={{marginLeft:"52%",display:"inline"}}>Rs:{Math.round(productList.reduce((total,obj)=>total+obj.price*obj.count,0))}</h3>
                 </div>        
             </Grid>
         
