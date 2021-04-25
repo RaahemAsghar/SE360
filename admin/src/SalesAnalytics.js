@@ -34,11 +34,39 @@ function SalesAnalytics ({totalOrders}) {
         }
     }
     
+    const testIncorrect = () => {
+        if(pageState==="Yearly"){
+            if(yearState === "Select Year"){
+                updateIncorrectDate(true);
+            }
+        } 
+        else if (pageState === "Monthly"){
+            if(yearState === "Select Year" || monthState === "Select Month"){updateIncorrectDate(true)}
+        } else{
+            if(dayState === "Select Day" || monthState === "Select Month" || yearState === "Select Year"){
+                updateIncorrectDate(true);
+            }
+            else {
+                if(pageState === "Daily"){
+                    let smallMonths = ["February","April","June","September","November"];
+                    for(let i = 0; i<smallMonths.length; i++){
+                        if(monthState=== smallMonths[i] && dayState==="31"){
+                            updateIncorrectDate(true); break;
+                        }
+                    }
+                    let selectedYear = Number(yearState);
+                    if(!(selectedYear%4)){
+                        if (monthState === "February" && dayState === "30"){updateIncorrectDate(true)}
+                    } else {
+                        if (monthState === "February" && (dayState === "29" || dayState === "30")){updateIncorrectDate(true)}
+                    }
+                }
+            }
+        }
+    }
     const dateSearch = (event) => {
         event.preventDefault();
-        if(dayState === "Select Day" || monthState === "Select Month" || yearState === "Select Year"){
-            updateIncorrectDate(true);
-        }
+        testIncorrect();
     }
     const handleClose1 = () => {
         updateIncorrectDate(false);
@@ -46,6 +74,7 @@ function SalesAnalytics ({totalOrders}) {
     function displayIncorrectBox () {
         let myBox = []
         if(incorrectDate){
+            console.log("Hello")
             myBox = [<Dialog open={incorrectDate} onClose={handleClose1} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description"><DialogTitle id="alert-dialog-title">{"Incorrect Date"}</DialogTitle><DialogContent><DialogContentText id="alert-dialog-description">You have entered an incorrect Date. Please try again</DialogContentText></DialogContent><DialogActions><Button onClick={handleClose1} color="primary">Ok</Button></DialogActions></Dialog>]
         }
         return myBox;
