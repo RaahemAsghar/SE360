@@ -44,6 +44,7 @@ function Search({addToCart,router,navHighLight,query}){
             })
             let qry = query.toLowerCase()
             let fltr = data.filter(ele=>(ele.brand_name.toLowerCase().includes(qry) || ele.category.toLowerCase().includes(qry) || ele.description.toLowerCase().includes(qry) || ele.name.toLowerCase().includes(qry)));
+            fltr = fltr.filter(x=>x.stock_left>0)
             setList(fltr)
         })
      })

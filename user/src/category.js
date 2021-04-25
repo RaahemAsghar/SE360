@@ -60,9 +60,9 @@ function DisplayCategory({addToCart,router,label,navHighLight}){
             })
             let list = []
             if(label=="sale"){
-                list = data.filter(ele=>ele.discount>0)
+                list = data.filter(ele=>ele.discount>0 && ele.stock_left>0)
             }else{
-                list = data.filter(ele=>ele.category==label)
+                list = data.filter(ele=>ele.category==label && ele.stock_left>0)
             }
             setList(list)
         })

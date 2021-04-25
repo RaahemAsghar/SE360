@@ -112,9 +112,18 @@ function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,it
                 trans["date"] = now
                 trans["time"] = time
                 trans["bill"] = productList.reduce((total,obj)=>total+obj.price*obj.count,0)
-                db.ref("pendingOrder").push(trans)
-                setmsg("Your orders have been placed successfully!")
-                setTimeout(reset,2000)
+
+                db.ref("products").once("value").then(snapshot=>{
+                    let v = snapshot.val()
+                    Object.keys(temp_obj).forEach(z=>{
+                        let u = v[z]
+                        u.stock_left = u.stock_left - temp_obj[z]
+                        db.ref("products").child(z).set(u)
+                    })
+                    db.ref("pendingOrder").push(trans)
+                    setmsg("Your orders have been placed successfully!")
+                    setTimeout(reset,2000)
+                })
             })
         }else{
             setmsg("Please go the accounts and log in first")

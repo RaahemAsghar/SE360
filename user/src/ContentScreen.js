@@ -58,8 +58,8 @@ function Content({router,addToCart}){
                 obj[key].rating = giverating(key,obje)
                 return obj[key]
             })
-            let sale = data.filter(ele=>ele.discount>0)
-            let normal_data =  data.filter(ele=>ele.discount==0)
+            let sale = data.filter(ele=>ele.discount>0 && ele.stock_left>0)
+            let normal_data =  data.filter(ele=>ele.discount==0 && ele.stock_left>0)
             setTop(normal_data)
             setSale(sale)
         })
