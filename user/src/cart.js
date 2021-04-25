@@ -118,6 +118,7 @@ function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,it
                     Object.keys(temp_obj).forEach(z=>{
                         let u = v[z]
                         u.stock_left = u.stock_left - temp_obj[z]
+                        u.total_sold = u.total_sold + temp_obj[z]
                         db.ref("products").child(z).set(u)
                     })
                     db.ref("pendingOrder").push(trans)
