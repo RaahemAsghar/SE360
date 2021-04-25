@@ -97,6 +97,11 @@ function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,it
                 productList.forEach(x=>{
                     prices[x.id] = x.price
                 })
+                let names = {}
+                productList.forEach(x=>{
+                    names[x.id] = x.name
+                })
+                trans["product_names"] = names
                 trans["product_prices"] = prices
                 trans["products"] = temp_obj
                 trans["user_id"] = log[1]
