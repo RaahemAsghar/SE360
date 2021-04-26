@@ -118,6 +118,14 @@ function Search({addToCart,router,navHighLight,query}){
                 })()
                 }
 
+                {
+                    (()=>{
+                        if(display.length==0){
+                            return (<h4 style={{transform:"translateX(20px)",color:"red"}}>No results found</h4>)
+                        }
+                    })()
+                }
+
             </Grid> : <Load size={60} style={{top:"50%",left:"50%",position:"absolute"}} />}
 
         </>
