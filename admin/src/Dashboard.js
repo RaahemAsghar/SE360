@@ -108,11 +108,11 @@ function Dashboard ({myDatabase}) {
                     <td>{calculateSaleItems()}</td>
                 </tr>
                 <tr style = {{backgroundColor: "white",border: "1px solid #828282", height:"40px"}}>
-                    <th style = {{border: "1px solid #828282", width: "300px", textAlign: "left", textIndent: "20px"}}>Total Items Delivered</th>
+                    <th style = {{border: "1px solid #828282", width: "300px", textAlign: "left", textIndent: "20px"}}>Total Orders Delivered</th>
                     <td>{calculateTotalDelivered()}</td>
                 </tr>
                 <tr style = {{backgroundColor: "white",border: "1px solid #828282", height:"40px"}}>
-                    <th style = {{border: "1px solid #828282", width: "300px", textAlign: "left", textIndent: "20px"}}>Total Items Ordered</th>
+                    <th style = {{border: "1px solid #828282", width: "300px", textAlign: "left", textIndent: "20px"}}>Total Orders Placed</th>
                     <td>{calculateTotalOrdered()}</td>
                 </tr>
                 </table>
