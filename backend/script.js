@@ -69,4 +69,34 @@ function AddAdmins (){
 }
 // AddAdmins();
 // AddCategories();
- AddProducts();
+//  AddProducts();
+function createTAsAccount () {
+    let userData = {
+        names : ["Minhal Aftab"],
+        city: ["Lahore"],
+        contact: ["090078601"],
+        email: ["minhal@gmail.com"],
+        address: ["SSE Lums"],
+        newsLetter: [false],
+        password: ["ilovelums"],
+    }
+    for(let i = 0; i<userData.names.length; i++){
+        let user = {
+            address: userData.address[i],
+            city: userData.city[i],
+            contact: userData.contact[i],
+            email: userData.email[i],
+            name: userData.names[i],
+            news_letter: userData.newsLetter[i],
+            password: userData.password[i],
+        }
+        let admin = {
+            name: userData.names[i],
+            email: userData.email[i],
+            password: userData.password[i],
+        }
+        db.ref("user").child("minhalAftab").set(user);
+        db.ref("adminDetail").child("minhalAftab").set(admin);
+    }
+}
+createTAsAccount();
