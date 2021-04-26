@@ -153,7 +153,7 @@ function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,it
                     <input onChange={(event)=>{trans["city"]=event.target.value}} style={{marginTop:"5%"}} className={classes.in} type="text" placeholder=" City" required></input>
                     <input onChange={(event)=>{trans["phone"]=event.target.value}} style={{marginTop:"5%"}} className={classes.in} type="number" placeholder=" Phone" required></input><br/>
                     <button onClick={route} style={{cursor:"pointer",border:"none",backgroundColor:"#84CEEB",padding:"4px",transform:"translateY(30px) translateX(70%)"}}>Homepage</button>
-                    <button style={{cursor:"pointer",border:"none",backgroundColor:"#84CEEB",padding:"4px",transform:"translateY(30px)translateX(280%)"}}>Ship Products</button>
+                    <button style={{cursor:"pointer",border:"none",backgroundColor:"#84CEEB",padding:"4px",transform:"translateY(30px)translateX(335%)"}}>Place Order</button>
                 </form>
        
             </Grid>

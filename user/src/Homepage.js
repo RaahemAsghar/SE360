@@ -43,8 +43,14 @@ function Homepage() {
 
     React.useEffect(()=>{
         let id = sessionStorage.getItem("userid")
+        let crt = sessionStorage.getItem("cart")
         if(id){
             setLog([true,id])
+        }
+        if(crt){
+            crt = JSON.parse(crt)
+            console.log(crt)
+            setItems(crt)
         }
     },[])
 
@@ -66,21 +72,25 @@ function Homepage() {
     }
     const addItems = (id) => {
         if(!isin(id)){
+            sessionStorage.setItem("cart",JSON.stringify([...cartItems,id]))
             setItems([...cartItems,id])
         }
     }
     const addItems2 = (id) => {
+        sessionStorage.setItem("cart",JSON.stringify([...cartItems,id]))
         setItems([...cartItems,id])
         
     }
     const removeItems = (id) =>{
         if(cartItems.length==1){
+            sessionStorage.setItem("cart",JSON.stringify([]))
             setItems([])
         }else
         {
             let temp = [...cartItems];
             let indx = temp.indexOf(id)
             temp.splice(indx,1)
+            sessionStorage.setItem("cart",JSON.stringify(temp))
             setItems(temp)
         }
     }
@@ -173,7 +183,7 @@ function Footer({router,navHighLight}){
             </div>
         </Grid>
         <Grid item xs={3}>
-        <h4 style={{marginLeft:"5%",color:"#355093"}}>Follows us on</h4>
+        <h4 style={{marginLeft:"5%",color:"#355093"}}>Follow us on</h4>
             <div style={{marginLeft:"5%",lineHeight:"0.1",color:"#355093"}}>
                 <h5>Facebook</h5>
                 <h5>Instagram</h5>
