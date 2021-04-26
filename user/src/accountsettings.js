@@ -30,7 +30,23 @@ function Settings({router,id,set}){
     const handleClose1 = () => {
         setOpen1(false);
     };
-
+    let db = fireApp.database()
+    React.useEffect(()=>{
+        db.ref("user").once('value').then(snap=>{
+            let dta = snap.val()
+            let userdata = dta[id]
+            let q = {
+                name: userdata.name,
+                address: userdata.address,
+                contact: userdata.contact,
+                email: userdata.email,
+                city: userdata.city,
+                password:"",
+                news_letter: false
+            }
+            setobj(q)
+        })
+    },[])
 
     const [obj,setobj] = React.useState({
         name:"",
@@ -50,7 +66,6 @@ function Settings({router,id,set}){
     news_letter: false}
 
     const [msg,setmsg] = React.useState("")
-    let db = fireApp.database()
     const handlechange = ()=>{
         handleClose1()
         db.ref("user").once('value').then(snap=>{
