@@ -1,6 +1,12 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import {fireApp} from './fireapp.js';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 
 function ProductUpdate ({allProducts}) {
@@ -18,6 +24,9 @@ function ProductUpdate ({allProducts}) {
     let [category, updateCategory] = React.useState('');
     let [myCategories, updateMyCategories] = React.useState(['']);
     let [check, setCheck] = React.useState(false);
+    let [boxState, updateBoxState] = React.useState("none");
+    let [box1, updateBox1] = React.useState(false); // Product Not found Box
+    let [box2, updateBox2] = React.useState(false); // Product Updated Successfully
 
     const prodNameClick = (event) => {updateProdName(event.target.value);}
     
@@ -69,8 +78,9 @@ function ProductUpdate ({allProducts}) {
         }
         db.ref('products').child(productId).update(product);
         allProducts[productId] = product;
+        updateBox2(true); updateBoxState("updated successfully")
         // if(firstFilled){updateFirstFilled(false);}
-        updateFirstFilled(false); updateProductId(''); updateProductName(''); updateProdName(''); updateBrand(''); updateCategory(''); updatePrice(''); updateQuantity(''); updateDiscount(''); updateUrl(''); updateDescription('');
+        // updateFirstFilled(false); updateProductId(''); updateProductName(''); updateProdName(''); updateBrand(''); updateCategory(''); updatePrice(''); updateQuantity(''); updateDiscount(''); updateUrl(''); updateDescription('');
     }
     const formPrinter = () => {
         let majList = []
@@ -132,7 +142,7 @@ function ProductUpdate ({allProducts}) {
             </Grid>
             <Grid item xs = {1}></Grid>
             <Grid item xs = {5}>
-                <label for = "name" style = {{marginTop: "15px"}}>Discount</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
+                <label for = "name" style = {{marginTop: "15px"}}>Discount (%)</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
                 <input type = "number" min = "0" value = {discount} id = "name" onChange = {discountClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
             </Grid>
             </Grid>
@@ -184,11 +194,13 @@ function ProductUpdate ({allProducts}) {
                 updateMyCategories(tempCategories); updateFirstFilled(true);
             }
             else{
-                updateProductName(''); updateProductId('');
+                // updateProductName(''); updateProductId('');
+                updateBox1(true); updateBoxState("not found");
             }
         }
         else{
-            updateProductName(''); updateProductId('');
+            // updateProductName(''); updateProductId('');
+            updateBox1(true); updateBoxState("not found");
         }
         // if(!firstFilled){updateFirstFilled(true);}
         // findProduct();
@@ -215,7 +227,38 @@ function ProductUpdate ({allProducts}) {
         </div>
         </form>]
         return myDisplay;
-    }    
+    }
+
+    const close1Click = () => {
+        updateBox1(false); updateProductName(''); updateProductId('');
+    }
+    const close2Click = () => {
+        updateBox2(false); updateFirstFilled(false); updateProductId(''); updateProductName(''); updateProdName(''); updateBrand(''); updateCategory(''); updatePrice(''); updateQuantity(''); updateDiscount(''); updateUrl(''); updateDescription('');
+    }
+    function notFoundBox () {
+        let myBox = []
+        if(box1){
+            myBox = [<Dialog open={box1} onClose={close1Click} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description"><DialogTitle id="alert-dialog-title">{"Not Found"}</DialogTitle><DialogContent><DialogContentText id="alert-dialog-description">This Product is not present in your inventory</DialogContentText></DialogContent><DialogActions><Button onClick={close1Click} color="primary">close</Button></DialogActions></Dialog>]
+        }
+        return myBox;
+    }
+    function successfulUpdateBox () {
+        let myBox = []
+        if(box2){
+            myBox = [<Dialog open={box2} onClose={close2Click} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description"><DialogTitle id="alert-dialog-title">{"Successful Update"}</DialogTitle><DialogContent><DialogContentText id="alert-dialog-description">This product has been updated successfully</DialogContentText></DialogContent><DialogActions><Button onClick={close2Click} color="primary">close</Button></DialogActions></Dialog>]
+        }
+        return myBox;
+    }
+
+    function displayBox () {
+        let myBox = []
+        if (boxState === "not found"){
+            myBox = notFoundBox();
+        } else if (boxState === "updated successfully"){
+            myBox = successfulUpdateBox();
+        }
+        return myBox;
+    }
     
     React.useEffect(()=>{
         // console.log(Object.keys(allProducts).length);
@@ -237,6 +280,7 @@ function ProductUpdate ({allProducts}) {
         <div style = {{marginLeft: "90px", height: "680px", overflowY: "scroll"}}>
             <h3 style = {{marginTop: "25px", fontFamily: "Arial", fontWeight: "Bold"}}>Update Products</h3>
             {initialDisplay()}
+            {displayBox()}
             {formPrinter()}
         </div>
     )
