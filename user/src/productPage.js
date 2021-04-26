@@ -80,7 +80,7 @@ function ProductPage({id,log,addToCart,current,router}){
             <Grid item style={{backgroundColor:"#C1C8E4",height:"70%"}} xs={3}>
                 <div style={{marginLeft:"5%"}}>
                     <h4>{product.name}</h4>
-                    <h4>Price: Rs {product.price}</h4>
+                    <h4>Price: Rs {(product.price*(1-(product.discount)/100))}</h4>
                     <h4 style={{display:"inline-block",transform:"translateY(-31%)"}}>Rating: </h4>
                     <Rating style={{marginLeft:"5%"}} name="half-rating" defaultValue={product.rating} precision={0.5} readOnly/><br></br>
                     <button onClick={()=>addToCart(id)} style={{cursor:"pointer",border:"none",backgroundColor:"#84CEEB",width:"40%",height:"40px"}}><strong>ADD TO CART</strong></button>

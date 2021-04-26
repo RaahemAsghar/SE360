@@ -125,13 +125,13 @@ function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,it
                         db.ref("products").child(z).set(u)
                     })
                     db.ref("pendingOrder").push(trans)
-                    setmsg("Your orders have been placed successfully!")
+                    setmsg("Your order has been placed successfully!")
                     sessionStorage.removeItem("cart")
                     setTimeout(reset,2000)
                 })
             })
         }else{
-            setmsg("Please go the accounts and log in first")
+            setmsg("Please go to accounts and log in first")
             setTimeout(()=>setmsg(""),5000)
         }
         event.target.reset()
@@ -155,7 +155,7 @@ function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,it
                     <input onChange={(event)=>{trans["recepient_name"]=event.target.value}} className={classes.in} type="text" placeholder=" Full Name" required></input>
                     <input onChange={(event)=>{trans["address"]=event.target.value}} style={{marginTop:"5%"}} className={classes.in} type="text" placeholder=" shipping Address" required></input>
                     <input onChange={(event)=>{trans["city"]=event.target.value}} style={{marginTop:"5%"}} className={classes.in} type="text" placeholder=" City" required></input>
-                    <input onChange={(event)=>{trans["phone"]=event.target.value}} style={{marginTop:"5%"}} className={classes.in} type="number" placeholder=" Phone" required></input><br/>
+                    <input onChange={(event)=>{trans["phone"]=event.target.value}} style={{marginTop:"5%"}} className={classes.in} type="number" min="0" placeholder=" Phone" required></input><br/>
                     <button onClick={route} style={{cursor:"pointer",border:"none",backgroundColor:"#84CEEB",padding:"4px",transform:"translateY(30px) translateX(70%)"}}>Homepage</button>
                     <button style={{cursor:"pointer",border:"none",backgroundColor:"#84CEEB",padding:"4px",transform:"translateY(30px)translateX(335%)"}}>Place Order</button>
                 </form>
