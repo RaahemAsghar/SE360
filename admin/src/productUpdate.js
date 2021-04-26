@@ -132,7 +132,7 @@ function ProductUpdate ({allProducts}) {
             </Grid>
             <Grid item xs = {1}></Grid>
             <Grid item xs = {5}>
-                <label for = "name" style = {{marginTop: "15px"}}>Discount</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
+                <label for = "name" style = {{marginTop: "15px"}}>Discount (%)</label><p style = {{display: "inline", color:"red"}}>*</p><br/>
                 <input type = "number" min = "0" value = {discount} id = "name" onChange = {discountClick} style = {{width: "360px", height:"38px", borderRadius: "15px", backgroundColor: "#C1C8E4", border: "none"}} required></input>
             </Grid>
             </Grid>

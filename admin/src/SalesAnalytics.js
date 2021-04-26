@@ -104,22 +104,30 @@ function SalesAnalytics ({totalOrders}) {
     
     function tableCreator(myorders){
         let orderIds = Object.keys(myorders); let priceDict = {}; let nameDict = {}; let quantDict = {};
+        // console.log(myorders);
         for(let i = 0; i<orderIds.length; i++){
             let currentQuant = myorders[orderIds[i]]["products"];
             let currentName = myorders[orderIds[i]]["product_names"];
             let currentPrices = myorders[orderIds[i]]["product_prices"]; let prodIds = Object.keys(currentName);
+            console.log(currentPrices);
+            // for(let j = 0; j<prodIds.length; j++){
+            //     currentPrices[prodIds[j]] = (currentPrices[prodIds[j]]*currentQuant[prodIds[j]])
+            // }
+            // console.log(currentPrices);
             for(let j = 0; j<prodIds.length; j++){
                 let exists = false; let keys = Object.keys(nameDict);
                 for(let k = 0; k<keys.length; k++){
                     if(prodIds[j]===keys[k]){exists = true; break;}
                 }
                 if(exists){
+                    console.log("Hello")
                     quantDict[prodIds[j]] = quantDict[prodIds[j]] + currentQuant[prodIds[j]];
                     priceDict[prodIds[j]] = priceDict[prodIds[j]] + (currentQuant[prodIds[j]]*currentPrices[prodIds[j]])
                 }
                 else{
                     quantDict[prodIds[j]] = currentQuant[prodIds[j]];
-                    priceDict[prodIds[j]] = currentPrices[prodIds[j]];
+                    // priceDict[prodIds[j]] = currentPrices[prodIds[j]];
+                    priceDict[prodIds[j]] = (currentQuant[prodIds[j]]*currentPrices[prodIds[j]])
                     nameDict[prodIds[j]] = currentName[prodIds[j]];
                 }
             }
