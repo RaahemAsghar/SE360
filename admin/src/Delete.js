@@ -49,7 +49,7 @@ function Delete ({router}) {
     function notFound () {
         let myBox = []
         if(open2){
-            myBox = [<Dialog open={open2} onClose={close2Click} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description"><DialogTitle id="alert-dialog-title">{"Product Not Found"}</DialogTitle><DialogContent><DialogContentText id="alert-dialog-description">This item is not present in your inventory</DialogContentText></DialogContent><DialogActions><Button onClick={close2Click} color="primary">close</Button></DialogActions></Dialog>]
+            myBox = [<Dialog open={open2} onClose={close2Click} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description"><DialogTitle id="alert-dialog-title">{"Product Not Found"}</DialogTitle><DialogContent><DialogContentText id="alert-dialog-description">This product is not present in your inventory</DialogContentText></DialogContent><DialogActions><Button onClick={close2Click} color="primary">close</Button></DialogActions></Dialog>]
         }
         return myBox;
     }
