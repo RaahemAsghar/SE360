@@ -67,6 +67,6 @@ function AddAdmins (){
         db.ref("adminDetail").push(admin)
     }
 }
-AddAdmins();
+// AddAdmins();
 // AddCategories();
- //AddProducts();
+ AddProducts();
