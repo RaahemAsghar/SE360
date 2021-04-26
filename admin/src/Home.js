@@ -13,6 +13,7 @@ import {Temp2,Temp3} from './Temp2.js';
 import Inventory from './Inventory.js';
 import {ProductUpdate} from './productUpdate.js';
 import {SalesAnalytics} from './SalesAnalytics.js';
+import Dashboard from './Dashboard.js'
 // ---------------------------------------- ICONS -------------------------------------------------------
 import { Icon, InlineIcon } from '@iconify/react';
 import bxsDashboard from '@iconify/icons-bx/bxs-dashboard';
@@ -80,6 +81,8 @@ const useStyles = makeStyles((theme) => ({
             return <ProductUpdate allProducts = {page[1]}/>
         } else if (page[0] === "Sales Analytics"){
             return <SalesAnalytics totalOrders = {page[1]}/>
+        } else if (page[0] === "Dashboard"){
+            return <Dashboard myDatabase = {page[1]}/>
         }
         else{
             return <Display content={page[0]}/>
@@ -169,10 +172,6 @@ const useStyles = makeStyles((theme) => ({
         icon:addAlt
     },
     {
-        text:'Discounts',
-        icon:discount2
-    },
-    {
         text:'Add Category',
         icon:categoryIcon
     },
@@ -184,26 +183,26 @@ const useStyles = makeStyles((theme) => ({
         text:'Orders',
         icon:orderBoolDescendingVariant
     },
-    {
-        text:'Newsletter',
-        icon: emailNewsletter
-    },
+    // {
+    //     text:'Newsletter',
+    //     icon: emailNewsletter
+    // },
     {
         text:'Sales Analytics',
         icon:analyticsIcon
     },
-    {
-        text:'Website Analytics',
-        icon:googleAnalytics
-    },
-    {
-        text:'Complaints',
-        icon:dialogIcon
-    },
-    {
-        text:'Suggestions',
-        icon:sparklesIcon
-    },
+    // {
+    //     text:'Website Analytics',
+    //     icon:googleAnalytics
+    // },
+    // {
+    //     text:'Complaints',
+    //     icon:dialogIcon
+    // },
+    // {
+    //     text:'Suggestions',
+    //     icon:sparklesIcon
+    // },
     ]
 
     //menu.map( item=> console.log(item))
@@ -216,6 +215,8 @@ const useStyles = makeStyles((theme) => ({
             handleOrders(event.target.innerText);
         } else if(event.target.innerText === "View Inventory" || event.target.innerText === "Update Products"){
             handleInventory(event.target.innerText);
+        } else if (event.target.innerText === "Dashboard"){
+            handleDashboard(event.target.innerText);
         }
         else{
             router([event.target.innerText]);
@@ -244,6 +245,26 @@ const useStyles = makeStyles((theme) => ({
     const handleInventory = (pageName) => {
         let db = fireApp.database();
         db.ref("products").once('value').then((snap) => {
+            let obj = snap.val();
+            let myDict = {};
+            if(obj==null){
+                router([pageName,myDict]);
+                changeTextColor(pageName);
+            }
+            else{
+                let keys = Object.keys(obj); let values = Object.values(obj);
+                for(let i = 0; i<keys.length; i++){
+                    myDict[keys[i]] = values[i];
+                }
+                router([pageName,myDict]);
+                changeTextColor(pageName);
+            }
+        })
+    }
+
+    const handleDashboard = (pageName) => {
+        let db = fireApp.database();
+        db.ref("/").once("value").then((snap) => {
             let obj = snap.val();
             let myDict = {};
             if(obj==null){

@@ -10,6 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
 function SalesAnalytics ({totalOrders}) {
+    let [monthDict, updateMonthDict] = React.useState({"January":1, "February":2, "March":3, "April":4, "May":5, "June":6, "July":7, "August":8, "September":9, "October":10, "November":11, "December":12});
     let [bgColor, updateBgColor] = React.useState({"Daily":"#C1C8E4","Monthly":"#355093","Yearly":"#355093"})
     let [textColor, updateTextColor] = React.useState({"Daily":"black","Monthly":"white","Yearly":"white"})
     let [tempState, updateTempState] = React.useState(false);
@@ -18,9 +19,20 @@ function SalesAnalytics ({totalOrders}) {
     let [dayState, updateDayState] = React.useState("Select Day");
     let [pageState, updatePageState] = React.useState("Daily");
     let [incorrectDate, updateIncorrectDate] = React.useState(false);
-    let [ordersExist, updateOrdersExist] = React.useState(false);
-    let months = {1: "January", 2: "February", 3: "March", 4: "April"};
-    let days = {1:31,2:28,3:31,4:30};
+    let [searched, updateSearched] = React.useState(false);
+    let [searchedDay, updateSearchedDay] = React.useState("");
+    let [searchedMonth, updateSearchedMonth] = React.useState("");
+    let [searchedYear, updateSearchedYear] = React.useState("");
+    let [emptyBox, updateEmptyBox] = React.useState(false);
+    let [boxAppeared, updateBoxAppeared] = React.useState(false);
+    let [validProducts, updateValidProducts] = React.useState({});
+    let [open1, updateOpen1] = React.useState(false);
+    let [validQuantities, updateValidQuantities] = React.useState({});
+    let [validPrices, updateValidPrices] = React.useState({});
+    let [validNames, updateValidNames] = React.useState({});
+    let [bla, BlaBla] = React.useState([]);
+    let [analyticsTable, updateAnalyticsTable] = React.useState([]);
+
     const clickTypeHandler = (event) => {
         let myDictBg = bgColor; let myDictText = textColor; let keys = Object.keys(myDictBg);
         myDictBg[event.target.innerText] = "#C1C8E4"; myDictText[event.target.innerText] = "black";
@@ -29,55 +41,189 @@ function SalesAnalytics ({totalOrders}) {
                 myDictBg[keys[i]] = "#355093"; myDictText[keys[i]] = "white";
             }
         }
-        if(updateTempState){
-            updateBgColor(myDictBg); updateTextColor(myDictText); updateTempState(false); updatePageState(event.target.innerText); updateMonthState("Select Month"); updateDayState("Select Day"); updateYearState("Select Year");
+        if(tempState){
+            updateBgColor(myDictBg); updateTextColor(myDictText); updateTempState(false); updatePageState(event.target.innerText); updateMonthState("Select Month"); updateDayState("Select Day"); updateYearState("Select Year"); updateAnalyticsTable([]);
         }
     }
     
     const testIncorrect = () => {
+        // updateSearchedDay(dayState); updateSearchedMonth(monthState); updateSearchedYear(yearState);
+        let incorrect = false;
         if(pageState==="Yearly"){
             if(yearState === "Select Year"){
-                updateIncorrectDate(true);
+                // updateIncorrectDate(true); updateBoxAppeared(true);
+                incorrect = true;
             }
         } 
         else if (pageState === "Monthly"){
-            if(yearState === "Select Year" || monthState === "Select Month"){updateIncorrectDate(true)}
+            if(yearState === "Select Year" || monthState === "Select Month"){
+                // updateIncorrectDate(true); updateBoxAppeared(true);
+                incorrect = true;
+            }
         } else{
             if(dayState === "Select Day" || monthState === "Select Month" || yearState === "Select Year"){
-                updateIncorrectDate(true);
+                // updateIncorrectDate(true); updateBoxAppeared(true);
+                incorrect = true;
             }
             else {
                 if(pageState === "Daily"){
                     let smallMonths = ["February","April","June","September","November"];
                     for(let i = 0; i<smallMonths.length; i++){
                         if(monthState=== smallMonths[i] && dayState==="31"){
-                            updateIncorrectDate(true); break;
+                            // updateIncorrectDate(true); updateBoxAppeared(true);  break;
+                            incorrect = true; break;
                         }
                     }
                     let selectedYear = Number(yearState);
                     if(!(selectedYear%4)){
-                        if (monthState === "February" && dayState === "30"){updateIncorrectDate(true)}
+                        if (monthState === "February" && dayState === "30"){
+                            // updateIncorrectDate(true); updateBoxAppeared(true);
+                            incorrect = true;
+                        }
                     } else {
-                        if (monthState === "February" && (dayState === "29" || dayState === "30")){updateIncorrectDate(true)}
+                        if (monthState === "February" && (dayState === "29" || dayState === "30")){
+                            // updateIncorrectDate(true); updateBoxAppeared(true);
+                            incorrect = true;
+                        }
                     }
                 }
             }
         }
+        if(incorrect){
+            updateIncorrectDate(true); updateBoxAppeared(true); updateOpen1(true);
+        }
+        else{
+            updateIncorrectDate(false);
+            let accepted = testEmpty();
+            if(!Object.keys(accepted).length){updateEmptyBox(true);}
+            else{
+                tableCreator(accepted);
+            }
+        }
+    }
+    
+    function tableCreator(myorders){
+        let orderIds = Object.keys(myorders); let priceDict = {}; let nameDict = {}; let quantDict = {};
+        for(let i = 0; i<orderIds.length; i++){
+            let currentQuant = myorders[orderIds[i]]["products"];
+            let currentName = myorders[orderIds[i]]["product_names"];
+            let currentPrices = myorders[orderIds[i]]["product_prices"]; let prodIds = Object.keys(currentName);
+            for(let j = 0; j<prodIds.length; j++){
+                let exists = false; let keys = Object.keys(nameDict);
+                for(let k = 0; k<keys.length; k++){
+                    if(prodIds[j]===keys[k]){exists = true; break;}
+                }
+                if(exists){
+                    quantDict[prodIds[j]] = quantDict[prodIds[j]] + currentQuant[prodIds[j]];
+                    priceDict[prodIds[j]] = priceDict[prodIds[j]] + (currentQuant[prodIds[j]]*currentPrices[prodIds[j]])
+                }
+                else{
+                    quantDict[prodIds[j]] = currentQuant[prodIds[j]];
+                    priceDict[prodIds[j]] = currentPrices[prodIds[j]];
+                    nameDict[prodIds[j]] = currentName[prodIds[j]];
+                }
+            }
+        }
+        // console.log(nameDict); console.log(priceDict); console.log(quantDict);
+        let informationList = []; let productKeys = Object.keys(nameDict); let totalEarned = 0;
+        for(let i = 0; i<productKeys.length; i++){
+            let tempList = []; let currProdPrice = priceDict[productKeys[i]]; totalEarned += currProdPrice;
+            currProdPrice = "Rs "+(Math.round(currProdPrice)).toString()
+            tempList.push(nameDict[productKeys[i]]); tempList.push(productKeys[i]);
+            tempList.push(quantDict[productKeys[i]]); tempList.push(currProdPrice);
+            informationList.push(tempList);
+        }
+        let headingList = ["Product Name","Product ID","Quantity","Total Price"]; let tableHeading = []; let headingValues = []; let tableData = []; let myTable = [];
+        // for(let i = 0; i<informationList.length; i++){
+        //     totalEarned = totalEarned + informationList[i][3];
+        // }
+        totalEarned = Math.round(totalEarned);
+        
+        for(let i = 0; i<headingList.length; i++){
+            headingValues.push(<th style = {{border: "1px solid #828282"}}>{headingList[i]}</th>)
+        }
+        tableHeading.push(<tr style = {{backgroundColor: "#DBDFF0", border: "1px solid #828282", height:"30px"}}>{headingValues}</tr>);
+        for(let i = 0; i<informationList.length; i++){
+            let tempList = [];
+            for (let j = 0; j<informationList[i].length; j++){
+                tempList.push(<td style = {{border: "1px solid #828282"}}>{informationList[i][j]}</td>)
+            }
+            tableData.push(<tr style = {{backgroundColor: "white",border: "1px solid #828282", height:"30px"}}>{tempList}</tr>)
+        }
+        tableHeading.push(tableData);
+        myTable = [<div style = {{width:"820px", backgroundColor: "#C1C8E4",marginTop: "20px" , height: "420px", overflowY: "scroll"}}><table style = {{border: "1px solid #828282", marginLeft: "40px" , marginTop: "20px" , width:"740px", textAlign: "center"}}>{tableHeading}</table><h6 style = {{fontFamily: "Arial",fontWeight: "bold",marginLeft: "40px",marginTop:"40px"}}>Total Earned: Rs {totalEarned}</h6></div>];
+        updateAnalyticsTable(myTable);
     }
     const dateSearch = (event) => {
         event.preventDefault();
+        updateSearchedDay(dayState); updateSearchedMonth(monthState); updateSearchedYear(yearState); updateAnalyticsTable([]);
         testIncorrect();
+        // let accepted = testEmpty();
+        // if(!incorrectDate){
+        //     if(!Object.keys(accepted).length){updateEmptyBox(true);}
+        // }
+        updateSearched(true);
     }
     const handleClose1 = () => {
-        updateIncorrectDate(false);
+        // updateIncorrectDate(false); updateSearched(false);
+        updateOpen1(false); updateSearched(false);
     }
     function displayIncorrectBox () {
         let myBox = []
-        if(incorrectDate){
-            console.log("Hello")
-            myBox = [<Dialog open={incorrectDate} onClose={handleClose1} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description"><DialogTitle id="alert-dialog-title">{"Incorrect Date"}</DialogTitle><DialogContent><DialogContentText id="alert-dialog-description">You have entered an incorrect Date. Please try again</DialogContentText></DialogContent><DialogActions><Button onClick={handleClose1} color="primary">Ok</Button></DialogActions></Dialog>]
+        if(open1){
+            myBox = [<Dialog open={open1} onClose={handleClose1} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description"><DialogTitle id="alert-dialog-title">{"Incorrect Date"}</DialogTitle><DialogContent><DialogContentText id="alert-dialog-description">You have entered an incorrect Date. Please try again</DialogContentText></DialogContent><DialogActions><Button onClick={handleClose1} color="primary">Close</Button></DialogActions></Dialog>]
         }
         return myBox;
+    }
+    function displayEmptyBox () {
+        let myBox = []
+        const handleClose2 = () => {updateEmptyBox(false); updateSearched(false); /*updateBoxAppeared(true);*/}
+        if(emptyBox){
+            myBox = [<Dialog open={emptyBox} onClose={handleClose2} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description"><DialogTitle id="alert-dialog-title">{"No Sales"}</DialogTitle><DialogContent><DialogContentText id="alert-dialog-description">No Products were sold in this time Period</DialogContentText></DialogContent><DialogActions><Button onClick={handleClose2} color="primary">Close</Button></DialogActions></Dialog>]
+        }
+        return myBox;
+    }
+    function testEmpty() {
+        let keys = Object.keys(totalOrders); let acceptableOrders = {};
+        // console.log(keys);
+        // console.log(yearState); console.log(monthState); console.log(dayState);
+        for(let i = 0; i<keys.length; i++){
+            let orderDate = totalOrders[keys[i]]['date']; orderDate = orderDate.split("/");
+            if (pageState === "Yearly"){
+                // console.log("Yearly")
+                if(yearState === orderDate[2]){
+                    acceptableOrders[keys[i]] = totalOrders[keys[i]]; //console.log("Daily");
+                }
+            }
+            else if(pageState === "Monthly"){
+                // console.log("Monthly")
+                if(yearState === orderDate[2] && monthDict[monthState].toString() === orderDate[1]){
+                    acceptableOrders[keys[i]] = totalOrders[keys[i]]; //console.log("Daily");
+                }
+            }
+            else if(pageState === "Daily"){
+                // console.log("Daily");
+                if(yearState === orderDate[2] && monthDict[monthState].toString() === orderDate[1] && dayState === orderDate[0]){
+                    acceptableOrders[keys[i]] = totalOrders[keys[i]]; //console.log("Daily");
+                }
+            }
+        }
+        return acceptableOrders;
+        // console.log(acceptableOrders)
+        updateValidProducts(acceptableOrders);
+        if(!Object.keys(acceptableOrders).length){updateEmptyBox(true);}
+        // if(!incorrectDate){
+        //     if(!Object.keys(acceptableOrders).length){updateEmptyBox(true);}
+        // }
+        
+        // for(let i = 0; i< keys.length; i++){
+        //     let prodQuantities = totalOrders[keys[i]]["products"];
+        //     let prodPrices = totalOrders[keys[i]]["products"];
+        //     let keys2 = Object.keys(prodPrices);
+        //     for(let j = 0; j<keys2.length; j++){
+        //         let quantities = validQuantities; let prices = validPrices;
+        //     }
+        // }
     }
     function Jsx () {
         const yearChange = (event) => {updateYearState(event.target.value);}
@@ -149,6 +295,8 @@ function SalesAnalytics ({totalOrders}) {
             <div style = {{height: "100px", backgroundColor: "#C1C8E4", width: "820px"}}>
             {Jsx()}
             {displayIncorrectBox()}
+            {displayEmptyBox()}
+            {analyticsTable}
             {/* {trial()} */}
             </div>
         </div>

@@ -7,8 +7,27 @@ function Orders ({router,allOrders}) {
     // let [details, updateDetails] = React.useState([]);
     // let products = {4:2}
     const handleClick = (event) => {
-        let orderNo = event.target.innerText; let emailId = allOrders[1][orderNo]["bookers_email"]; let products = allOrders[1][orderNo]["products"]; let productPrices = allOrders[1][orderNo]["product_prices"];
-        let db = fireApp.database();
+        let orderNo = event.target.innerText; let emailId = allOrders[1][orderNo]["bookers_email"]; let products = allOrders[1][orderNo]["products"]; let productPrices = allOrders[1][orderNo]["product_prices"]; let productNames = allOrders[1][orderNo]["product_names"];
+        let prodKeys = Object.keys(products);
+            let majList = [];
+            for(let i = 0; i<prodKeys.length; i++){
+                let minList = []; //let coeff = (100 - myDict[prodKeys[i]]["discount"])/100;
+                // let price = Math.floor(coeff*myDict[prodKeys[i]]["price"]); console.log(price);
+                let price = productPrices[prodKeys[i]];
+                minList.push(productNames[prodKeys[i]]); //Name 
+                minList.push(prodKeys[i]); // Product Id
+                minList.push(products[prodKeys[i]]); // Quantity
+                let finalPrice = Math.round(minList[2]*price); let finalPriceRs = "Rs"+ " "+ finalPrice.toString(10);
+                minList.push(finalPriceRs);
+                majList.push(minList);
+            }
+            let length = (50* (majList.length))+200;
+            // console.log(length);
+            let table = MakeTable(majList);
+            // console.log(table);
+            router(["Single Order", orderNo, emailId, table,length,allOrders]);
+        // let db = fireApp.database();
+        /*
         db.ref("products").once('value').then((snap) => {
             let obj = snap.val();
             let keys = Object.keys(obj); let values = Object.values(obj); let myDict = {}
@@ -33,7 +52,7 @@ function Orders ({router,allOrders}) {
             let table = MakeTable(majList);
             // console.log(table);
             router(["Single Order", orderNo, emailId, table,length,allOrders]);
-        })
+        }) */
     }
 
     const printAllOrders = () => {
