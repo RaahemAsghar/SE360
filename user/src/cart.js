@@ -59,6 +59,9 @@ function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,it
         let finallist = cartlist.map(ele=>{
             let temp = items.filter(x=>x==ele.id)
             ele.count = temp.length
+            if(ele.count>ele.stock_left){
+                removeFromCart(ele.id)
+            }
             return ele;
         })
         if(finallist.length > 0){
@@ -123,6 +126,7 @@ function ShoppingCart({router,reset,log,navHighLight,removeFromCart,addToCart,it
                     })
                     db.ref("pendingOrder").push(trans)
                     setmsg("Your orders have been placed successfully!")
+                    sessionStorage.removeItem("cart")
                     setTimeout(reset,2000)
                 })
             })
