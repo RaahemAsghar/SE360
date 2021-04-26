@@ -10,28 +10,22 @@ function Details({id,route}){
 
     React.useEffect(()=>{
         let db = fireApp.database()
-        db.ref("products").once('value').then((snap)=>{
-            let obj = snap.val();
-            let dict = {}
-            Object.keys(obj).forEach((key)=>{
-                dict[key] = obj[key].name
-            })
 
-            db.ref("pendingOrder").once('value').then(snap=>{
-                let record = snap.val();
-                let temp = record[id].products
-                settrans(record[id])
-                let newtemp =[]
-                Object.keys(temp).forEach(key=>{
-                    newtemp.push(
-                    {
-                        "name": dict[key],
-                        "count": temp[key],
-                        "price":  Math.round(record[id].product_prices[key] * temp[key])
+        db.ref("pendingOrder").once('value').then(snap=>{
+            let record = snap.val();
+            let temp = record[id].products
+            let pro_names = record[id].product_names
+            settrans(record[id])
+            let newtemp =[]
+            Object.keys(temp).forEach(key=>{
+                newtemp.push(
+                {
+                    "name": pro_names[key],
+                    "count": temp[key],
+                    "price":  Math.round(record[id].product_prices[key] * temp[key])
                     })
                 })
-                setprod(newtemp)
-            })
+            setprod(newtemp)
         })
 
     },[id])

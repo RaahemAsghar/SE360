@@ -266,10 +266,10 @@ function Navbar({router,navHighLight,currentHighLight,checklog,fo}){
             {categories ? categories.map((val,index)=>(<h5 onClick={handleClick} style={{cursor:"pointer", paddingLeft:"8px",color: (currentHighLight==val ? "orange" :"white")}} key={index}>{val}</h5>)) : <h5></h5>}
         </div>
         
-        <div>
+        {/* <div>
             <h4>Contact Us</h4>
             <h5 style={{paddingLeft:"8px",cursor:"not-allowed"}}>Complaints</h5>
-        </div>
+        </div> */}
     </div>
     )
 }
